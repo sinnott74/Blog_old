@@ -8,8 +8,7 @@
     "build": "npm run build:client",
     "build:client": "webpack --colors --display --config ./webpack/webpack.prod.js",
     "start:server": "node server",
-    "start:client": "webpack-dev-server --open --colors --config ./webpack/webpack.dev.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "start:client": "webpack-dev-server --open --colors --config ./webpack/webpack.dev.js"
   },
   "author": "",
   "license": "ISC",
