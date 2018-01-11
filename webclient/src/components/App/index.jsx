@@ -6,6 +6,7 @@ import OptionsMenu from '../OptionsMenu';
 import Toast from '../Toast';
 import Spinner from '../Spinner';
 import Loadable from 'react-loadable';
+import { showToast } from '../../actions/toast';
 import './style.css'
 
 // import IndexPage from '../../pages/IndexPage';
@@ -39,6 +40,12 @@ const LoadableCodeListPage = Loadable({
 
 
 export default class App extends React.Component {
+
+  constructor() {
+    super();
+    this._registerServiceWorker();
+  }
+
   render() {
     return (
       <div>
@@ -56,5 +63,35 @@ export default class App extends React.Component {
         {/* <Spinner size={36}></Spinner> */}
       </div>
     )
+  }
+
+  _registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      // Service worker is not supported on this platform
+      return;
+    }
+
+    navigator.serviceWorker.register('/service-worker.js', {
+      scope: '/'
+    }).then(function(registration) {
+      console.log('Service worker is registered.');
+
+      registration.onupdatefound = function(updateEvent) {
+        console.log('A new Service Worker version has been found...');
+
+        // If an update is found the spec says that there is a new Service
+        // Worker installing, so we should wait for that to complete then
+        // show a notification to the user.
+        registration.installing.onstatechange = function(event) {
+          if (this.state === 'installed') {
+            var message = (registration.active ? 'App updated. Restart for the new version.' : 'App ready for offline use.');
+            showToast(message);
+          }
+        };
+      };
+    })
+    .catch(function(err) {
+      console.log('Unable to register service worker.', err);
+    });
   }
 }

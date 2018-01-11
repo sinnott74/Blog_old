@@ -4,8 +4,8 @@
 import { SHOW_TOAST, HIDE_TOAST } from '../../actions/toast';
 
  let initialState = {
-   showing : true,
-   message: "Text"
+   showing : false,
+   message: ""
  }
 
  const toast = (state = initialState, action)  => {
