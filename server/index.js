@@ -77,4 +77,4 @@ serverController.startServer = function(port) {
   });
 };
 
-serverController.startServer(process.env.port);
+serverController.startServer(process.env.PORT);
