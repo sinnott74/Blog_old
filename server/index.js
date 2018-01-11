@@ -68,7 +68,7 @@ serverController.startServer = function(port) {
   if (typeof port === 'undefined' ||
       port === null ||
       isNaN(parseInt(port, 10))) {
-    port = 8081;
+    port = 8080;
   }
 
   var server = expressApp.listen(port, () => {
