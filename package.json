@@ -7,7 +7,7 @@
     "start": "npm run start:server",
     "postinstall": "npm run build",
     "build": "npm run build:client",
-    "build:client": "webpack --colors --display --config ./webpack/webpack.prod.js",
+    "build:client": "webpack --config ./webpack/webpack.prod.js",
     "start:server": "node server",
     "start:client": "webpack-dev-server --open --colors --config ./webpack/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 0"

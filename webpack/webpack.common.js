@@ -78,5 +78,11 @@ module.exports = {
         ignore: ['.*']
       }
     ]),
-  ]
+  ],
+  stats: {
+    colors: true,
+    errors: true,
+    version: true,
+    warnings: true
+  }
 };
