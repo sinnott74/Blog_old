@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build",
-    "start": "node server",
-    "startdev": "webpack-dev-server --open --colors --config ./webpack/webpack.dev.js",
+    "start": "npm run build && npm run start:server",
     "build": "npm run build:client",
     "build:client": "webpack --colors --display --config ./webpack/webpack.prod.js",
+    "start:server": "node server",
+    "start:client": "webpack-dev-server --open --colors --config ./webpack/webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
