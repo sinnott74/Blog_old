@@ -15,8 +15,8 @@ module.exports = merge(common, {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
-    })
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static'
+    // })
   ]
 });
