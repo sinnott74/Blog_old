@@ -1,0 +1,19 @@
+.side-nav__link {
+  line-height: 48px;
+  height: 48px;
+  text-decoration: none;
+  border: 0;
+  padding-left: 72px;
+  display: block;
+  cursor: pointer;
+  color: var(--text-color-dark);
+  background: url('./ic_info_24px.svg') 16px 12px no-repeat;
+}
+
+.side-nav__link-active, .side-nav__link:focus, side-nav__link:active {
+  background-color: var(--background-color);
+}
+
+.no-decoration {
+  text-decoration: none;
+}
