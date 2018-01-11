@@ -7,6 +7,7 @@ var path = require('path');
 var express = require('express');
 var helmet = require('helmet');
 var cfenv = require('cfenv'); // cloud foundry environment variables
+var forceHttpsMiddleware = require('../middleware/forceHttps');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var routes = require('./src/routes');
@@ -20,7 +21,7 @@ var expressApp = express();
  * Force https when not localhost
  */
 if (!cfenv.getAppEnv().isLocal) {
-  expressApp.use(forceHttps);
+  expressApp.use(forceHttpsMiddleware);
 }
 
 /**
