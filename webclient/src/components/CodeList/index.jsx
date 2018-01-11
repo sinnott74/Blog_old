@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Card from '../Card'
-import CodeListItem from '../codeListItem'
+import CodeListItem from '../CodeListItem'
 // import './style.css'
 
 const CodeList = (props) => {
