@@ -1,17 +1,20 @@
 var router = require('express').Router();
+var Date = require('../util/Date')
 
 var blogPosts = [
   {
     id: 1,
     title: "Hello World",
     author: "Daniel Sinnott",
-    "text": "Hello world, this is my first blog post"
+    "text": "Hello world, this is my first blog post",
+    "date": new Date().toString()
   },
   {
     id: 2,
     title: "Hello World Again",
     author: "Daniel Sinnott",
-    "text": "Hello world, this is my 2nd blog post"
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
   }
 ]
 router.use(function(req, res, next){
