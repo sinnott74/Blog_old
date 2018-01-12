@@ -5,6 +5,7 @@ import SideNav from '../SideNav';
 import OptionsMenu from '../OptionsMenu';
 import Toast from '../Toast';
 import Spinner from '../Spinner';
+import ServiceWorker from '../ServiceWorker';
 import Loadable from 'react-loadable';
 import './style.css'
 
@@ -38,12 +39,7 @@ const LoadableCodeListPage = Loadable({
 })
 
 
-class App extends React.Component {
-
-  constructor() {
-    super();
-    this._registerServiceWorker();
-  }
+export default class App extends React.Component {
 
   render() {
     return (
@@ -56,60 +52,12 @@ class App extends React.Component {
           <Route exact path="/url2" component={LoadableUrl2Page} />
         </div>
         <Header title="Sinnott"></Header>
-        <SideNav></SideNav>
-        <OptionsMenu></OptionsMenu>
-        <Toast></Toast>
+        <SideNav />
+        <OptionsMenu />
+        <Toast />
+        <ServiceWorker />
         {/* <Spinner size={36}></Spinner> */}
       </div>
     )
   }
-
-  _registerServiceWorker() {
-    let _self = this;
-    if (!('serviceWorker' in navigator)) {
-      // Service worker is not supported on this platform
-      return;
-    }
-
-    navigator.serviceWorker.register('/service-worker.js', {
-      scope: '/'
-    }).then(function(registration) {
-      console.log('Service worker is registered.');
-
-      var isUpdate = false;
-
-      // If this fires we should check if there's a new Service Worker
-      // waiting to be activated. If so, ask the user to force refresh.
-      if (registration.active) {
-        isUpdate = true;
-      }
-
-      registration.onupdatefound = function(updateEvent) {
-        console.log('A new Service Worker version has been found...');
-
-        // If an update is found the spec says that there is a new Service
-        // Worker installing, so we should wait for that to complete then
-        // show a notification to the user.
-        registration.installing.onstatechange = function(event) {
-          if (this.state === 'installed') {
-            var message = (isUpdate ? 'App updated. Restart for the new version.' : 'App ready for offline use.');
-            _self.props.handleToastMessage(message);
-          }
-        };
-      };
-      console.log('After onupdatefound function set');
-    })
-    .catch(function(err) {
-      console.log('Unable to register service worker.', err);
-    });
-  }
 }
-
-import { connect } from "react-redux";
-import { showToast } from '../../actions/toast';
-
-const mapDispatchToProps = {
-  handleToastMessage: showToast
-}
-
-export default connect(null, mapDispatchToProps)(App);
