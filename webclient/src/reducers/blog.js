@@ -59,7 +59,7 @@ let initialState = {
           ...state.byId,
           ...blogPost
         },
-        allIds: [...state.allIds, action.blogPost.id.toString()]
+        allIds: Object.keys(state.byId)
       }
     default:
       return state;
