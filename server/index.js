@@ -59,8 +59,10 @@ expressApp.use(compression());
 expressApp.use('/api', routes);
 
 // Define static assets path - i.e. styles, scripts etc.
-expressApp.use('/', express.static(path.join(__dirname, '../webclient/dist')));
-
+expressApp.use('/', express.static(path.join(__dirname, '../webclient/dist'), {
+  maxage: '1y',
+  setHeaders: setCustomCacheControl
+}));
 
 expressApp.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '../webclient/dist/index.html'));
@@ -69,21 +71,17 @@ expressApp.get('/*', function(req, res) {
 /**
  * Start Express server.
  */
-var serverController = {};
-serverController.startServer = function(port) {
-  // As a failsafe use port 0 if the input isn't defined
-  // this will result in a random port being assigned
-  // See : https://nodejs.org/api/http.html for details
-  if (typeof port === 'undefined' ||
-      port === null ||
-      isNaN(parseInt(port, 10))) {
-    port = 8080;
+let port = process.env.PORT || 8080;
+let server = expressApp.listen(port, () => {
+  let serverPort = server.address().port;
+  console.log('Server running on port ' + serverPort);
+});
+
+/**
+ * Set custom Cache-Control header for Index.html
+ */
+function setCustomCacheControl (res, path) {
+  if(path.endsWith('index.html') || path.endsWith('service-worker.js')) {
+    res.setHeader('Cache-Control', 'public, max-age=0');
   }
-
-  var server = expressApp.listen(port, () => {
-    var serverPort = server.address().port;
-    console.log('Server running on port ' + serverPort);
-  });
-};
-
-serverController.startServer(process.env.PORT);
+}
