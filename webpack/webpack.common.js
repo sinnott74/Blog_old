@@ -62,7 +62,9 @@ module.exports = {
       template: './webclient/index.html'
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     new CommonsChunkPlugin({
       names: 'vendor'
 
