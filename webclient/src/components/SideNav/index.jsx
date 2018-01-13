@@ -12,7 +12,7 @@ class SideNav extends React.Component {
           onClick={this._handleScrimTap}
           ref={(scrim) => {this.scrim = scrim;}}>
         </div>
-        <div className="side-nav__content js-side-nav-content"
+        <div className="side-nav__content"
           onTouchStart={this._handleSideNavTouchStart}
           onTouchMove={this._handleSideNavTouchMove}
           onTouchEnd={this._handleSideNavTouchEnd}
@@ -20,7 +20,7 @@ class SideNav extends React.Component {
           <div className="side-nav__header">
             <h1 className="side-nav__title">App shell</h1>
           </div>
-          <div className="side-nav__body js-side-nav-body"
+          <div className="side-nav__body"
           ref={(body) => {this.body = body;}}>
             <div className="side-nav__links">
               <SideNavLink to="/">Home</SideNavLink>
@@ -30,7 +30,7 @@ class SideNav extends React.Component {
             <div className="side-nav__version">Version @VERSION@</div>
           </div>
         </div>
-        <div className="side-nav__edgearea js-side-nav-edgearea"
+        <div className="side-nav__edgearea"
           onTouchStart={this._handleEdgeTouchStart}
           onTouchMove={this._handleEdgeTouchMove}
           onTouchEnd={this._handleEdgeTouchEnd}
