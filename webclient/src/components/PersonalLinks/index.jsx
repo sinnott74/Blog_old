@@ -12,16 +12,16 @@ const PersonalLinks = (props) => {
   return (
     <div className="personallinks">
       <a href="https://github.com/sinnott74">
-        <Icon img={Github} />
+        <Icon img={Github} alt="Github"/>
       </a>
       <a href="https://facebook.com/sinnott74">
-        <Icon img={Facebook} />
+        <Icon img={Facebook} alt="Facebook"/>
       </a>
       <a href="https://twitter.com/sinnott74">
-        <Icon img={Twitter} />
+        <Icon img={Twitter} alt="Twitter"/>
       </a>
       <a href="https://ie.linkedin.com/in/daniel-sinnott-1587124b">
-        <Icon img={LinkedIn} />
+        <Icon img={LinkedIn} alt="LinkedIn"/>
       </a>
     </div>
   )

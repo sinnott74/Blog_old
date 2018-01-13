@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // Functional Component
 const Icon = (props) => {
-  return  <img src={props.img}></img>
+  return  <img src={props.img} alt={props.alt} title={props.alt}></img>
 }
 
 // Icon.propTypes = {
