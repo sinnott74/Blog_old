@@ -16,6 +16,44 @@ var blogPosts = [
     "text": "Hello world, this is my 2nd blog post",
     "date": new Date().toString()
   }
+  ,
+  {
+    id: 3,
+    title: "Hello World Again",
+    author: "Daniel Sinnott",
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
+  }
+  ,
+  {
+    id: 4,
+    title: "Hello World Again",
+    author: "Daniel Sinnott",
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
+  }
+  ,
+  {
+    id: 5,
+    title: "Hello World Again",
+    author: "Daniel Sinnott",
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
+  },
+  {
+    id: 6,
+    title: "Hello World Again",
+    author: "Daniel Sinnott",
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
+  },
+  {
+    id: 7,
+    title: "Hello World Again",
+    author: "Daniel Sinnott",
+    "text": "Hello world, this is my 2nd blog post",
+    "date": new Date().toString()
+  }
 ]
 router.use(function(req, res, next){
   console.log('Blogs requested');
