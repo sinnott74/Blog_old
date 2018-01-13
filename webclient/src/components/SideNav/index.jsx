@@ -112,7 +112,7 @@ class SideNav extends React.Component {
     }
 
     if(this.direction == "horizontal"){
-      e.preventDefault();
+      // e.preventDefault();
       requestAnimationFrame(this._updateUI);
     }
   }
@@ -170,7 +170,7 @@ class SideNav extends React.Component {
     }
 
     if(this.direction === "horizontal"){
-      e.preventDefault();
+      //e.preventDefault();
       requestAnimationFrame(this._updateUIOnEdgeTouch);
     }
   }
@@ -215,6 +215,7 @@ class SideNav extends React.Component {
     this.scrim.style.opacity = '';
     this.scrim.style.display = '';
     document.body.classList.remove('noscroll');
+    root.classList.remove('noscroll');
     setTimeout(() => {
       this.sideNavContent.classList.remove("side_nav--animatable");
     }, 500);
@@ -227,6 +228,7 @@ class SideNav extends React.Component {
     this.scrim.style.opacity = '';
     this.scrim.style.display = '';
     document.body.classList.add('noscroll');
+    root.classList.add('noscroll');
     setTimeout(() => {
       this.sideNavContent.classList.remove("side_nav--animatable");
     }, 500);
