@@ -6,6 +6,7 @@ import './style.css'
 import Github from '../../../static/images/github.svg';
 import Facebook from '../../../static/images/facebook.svg';
 import Twitter from '../../../static/images/twitter.svg';
+import LinkedIn from '../../../static/images/linkedin.svg';
 
 class SideNav extends React.Component {
 
@@ -42,6 +43,9 @@ class SideNav extends React.Component {
                 </a>
                 <a href="https://twitter.com/sinnott74">
                   <Icon img={Twitter} />
+                </a>
+                <a href="https://ie.linkedin.com/in/daniel-sinnott-1587124b">
+                  <Icon img={LinkedIn} />
                 </a>
               </div>
               <div className="side-nav__version">Version @VERSION@</div>
