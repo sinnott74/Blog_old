@@ -10,6 +10,7 @@ module.exports = merge(common, {
     hot: true,
     compress: true,
     historyApiFallback: true,
+    open: false,
     port: 8081,
     proxy: {
       '/api/*': {
