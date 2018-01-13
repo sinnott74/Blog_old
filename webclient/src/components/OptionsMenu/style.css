@@ -4,11 +4,12 @@
   background-color: white;
   top: var(--header-height);
   right: 0;
-  max-width: 200px;
-  width: 33vw;
+  max-width: 250px;
+  width: 50vw;
   max-height: calc(95% - var(--header-height));
   border-radius: 0 0 .3em .3em;
   box-shadow: 0px 4px 10px 4px rgba(0,0,0,0.25);
+  overflow-y: auto;
 }
 
 .options-menu__opened {
