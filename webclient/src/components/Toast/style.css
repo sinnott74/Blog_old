@@ -16,10 +16,12 @@
   left: 0;
   word-wrap: normal;
   width: 100%;
+  pointer-events: none
 }
 .toast.toast__opened {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: all;
 }
 .toast .btn-close {
   border: 0;
