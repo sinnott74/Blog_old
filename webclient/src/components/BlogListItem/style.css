@@ -39,3 +39,7 @@
 .bloglistitem__date {
   float: right;
 }
+
+.bloglistitem__card {
+  margin: 6px;
+}

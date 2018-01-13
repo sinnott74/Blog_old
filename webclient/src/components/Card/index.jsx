@@ -4,7 +4,11 @@ import './style.css'
 
 // Functional Component
 const Card = (props) => {
-  return <div className="card">{props.children}</div>
+  let className = "card";
+  if(props.className){
+    className += " " + props.className;
+  }
+  return <div className={className}>{props.children}</div>
 }
 
 Card.propTypes = {
