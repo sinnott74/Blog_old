@@ -1,6 +1,11 @@
 import React from 'react';
 import SideNavLink from '../SideNavLink';
+import Icon from '../Icon';
+import Link from '../Link';
 import './style.css'
+import Github from '../../../static/images/github.svg';
+import Facebook from '../../../static/images/facebook.svg';
+import Twitter from '../../../static/images/twitter.svg';
 
 class SideNav extends React.Component {
 
@@ -27,7 +32,20 @@ class SideNav extends React.Component {
               <SideNavLink to="/blog">Blog</SideNavLink>
               <SideNavLink to="/code">Code</SideNavLink>
             </div>
-            <div className="side-nav__version">Version @VERSION@</div>
+            <div className="side-nav__contentbottom">
+              <div className="side-nav__personallinks">
+                <a href="https://github.com/sinnott74">
+                  <Icon img={Github} />
+                </a>
+                <a href="https://facebook.com/sinnott74">
+                  <Icon img={Facebook} />
+                </a>
+                <a href="https://twitter.com/sinnott74">
+                  <Icon img={Twitter} />
+                </a>
+              </div>
+              <div className="side-nav__version">Version @VERSION@</div>
+            </div>
           </div>
         </div>
         <div className="side-nav__edgearea"
