@@ -27,6 +27,8 @@
   transition: opacity .333s cubic-bezier(0, 0, .21, 1);
   border: 0;
   outline: none;
+  height: var(--header-height);
+  width: var(--header-height);
 }
 .header__menu:focus,
 .header__menu:hover {
@@ -41,6 +43,8 @@
   transition: opacity .333s cubic-bezier(0, 0, .21, 1);
   border: 0;
   outline: none;
+  height: var(--header-height);
+  width: var(--header-height);
 }
 .header__options:focus,
 .header__options:hover {
