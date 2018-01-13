@@ -9,10 +9,6 @@ import ServiceWorker from '../ServiceWorker';
 import Loadable from 'react-loadable';
 import './style.css'
 
-// import IndexPage from '../../pages/IndexPage';
-// import Url1Page from '../../pages/Url1Page';
-// import Url2Page from '../../pages/Url2Page';
-
 const LoadableHomePage = Loadable({
   loader: () => import(/* webpackChunkName: "indexPage" */ '../../pages/HomePage'),
   loading: Spinner
@@ -56,7 +52,6 @@ export default class App extends React.Component {
         <OptionsMenu />
         <Toast />
         <ServiceWorker />
-        {/* <Spinner size={36}></Spinner> */}
       </div>
     )
   }
