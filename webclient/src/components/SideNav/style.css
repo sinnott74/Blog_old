@@ -108,9 +108,3 @@
   font-size: 14px;
   opacity: .54;
 }
-
-.side-nav__personallinks {
-  display: flex;
-  padding: 10px;
-  justify-content: space-around;
-}
