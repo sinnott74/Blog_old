@@ -23,11 +23,11 @@
   opacity: 0;
   background: var(--background-color-dark);
   will-change: opacity;
-  transition: opacity 130ms ease-in;
+  transition: opacity var(--transition);
 }
 
 .side_nav--animatable {
-  transition: transform 130ms ease-in;
+  transition: transform var(--transition);
 }
 
 .side_nav--opened .side-nav__scrim {
@@ -53,12 +53,11 @@
   max-width: 450px;
 }
 
-@media (min-width: var(--big-screen)) {
+@media (min-width: 1025px){
   .side-nav__content {
-      width: 31.91489%;
-      margin-right: .70922%;
-      float: left;
-      max-width: 450px;
+    transform: translate3d(0, 0, 0);
+    transition: transform var(--transition);
+    pointer-events: auto;
   }
 }
 

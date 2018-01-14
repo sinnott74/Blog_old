@@ -22,8 +22,10 @@
         --background-color: #ececec;
         --background-color-placeholder: #F5F5F5;
         --warning-color: #F00;
-        --big-screen: 900px;
+        --big-screen: 1025px;
         --font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        --transition-time: 130ms;
+        --transition: var(--transition-time) ease-in;
       }
       * {
         box-sizing: border-box;
@@ -33,7 +35,7 @@
         padding: 0;
         margin: 0;
         width: 100%;
-        height: 100%;
+        /* height: 100%; */
         font-family: var(--font-family);
         font-weight: 400;
         color: var(--text-dark);

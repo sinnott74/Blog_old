@@ -6,3 +6,11 @@
 .noscroll {
   overflow: hidden;
 }
+
+
+@media (min-width: 1025px){
+  .main{
+    margin-left: 450px;
+    transition: margin-left var(--transition);
+  }
+}
