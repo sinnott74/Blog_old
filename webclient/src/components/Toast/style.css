@@ -16,7 +16,7 @@
   left: 0;
   word-wrap: normal;
   width: 100%;
-  pointer-events: none
+  pointer-events: none;
 }
 .toast.toast__opened {
   opacity: 1;
