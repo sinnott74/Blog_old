@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import Icon from '../Icon';
+import PersonalLink from './PersonalLink.jsx';
 import Github from '../../../static/images/github.svg';
 import Facebook from '../../../static/images/facebook.svg';
 import Twitter from '../../../static/images/twitter.svg';
@@ -11,18 +11,10 @@ import './style.css'
 const PersonalLinks = (props) => {
   return (
     <div className="personallinks">
-      <a href="https://github.com/sinnott74">
-        <Icon img={Github} alt="Github"/>
-      </a>
-      <a href="https://facebook.com/sinnott74">
-        <Icon img={Facebook} alt="Facebook"/>
-      </a>
-      <a href="https://twitter.com/sinnott74">
-        <Icon img={Twitter} alt="Twitter"/>
-      </a>
-      <a href="https://ie.linkedin.com/in/daniel-sinnott-1587124b">
-        <Icon img={LinkedIn} alt="LinkedIn"/>
-      </a>
+      <PersonalLink url="https://ie.linkedin.com/in/daniel-sinnott-1587124b" icon={Github} alt="Github" />
+      <PersonalLink url="https://facebook.com/sinnott74" icon={Facebook} alt="Facebook" />
+      <PersonalLink url="https://twitter.com/sinnott74" icon={Twitter} alt="Twitter" />
+      <PersonalLink url="https://ie.linkedin.com/in/daniel-sinnott-1587124b" icon={LinkedIn} alt="LinkedIn" />
     </div>
   )
 }
