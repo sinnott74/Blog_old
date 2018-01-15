@@ -2,6 +2,7 @@ import React from 'react';
 import SideNavLink from '../SideNavLink';
 import Link from '../Link';
 import PersonalLinks from '../PersonalLinks';
+import { version } from '../../../../package.json'
 import './style.css'
 
 class SideNav extends React.Component {
@@ -31,7 +32,7 @@ class SideNav extends React.Component {
             </div>
             <div className="side-nav__contentbottom">
               <PersonalLinks />
-              <div className="side-nav__version">Version @VERSION@</div>
+              <div className="side-nav__version">Version {version}</div>
             </div>
           </div>
         </div>

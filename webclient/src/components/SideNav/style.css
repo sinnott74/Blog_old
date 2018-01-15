@@ -103,6 +103,7 @@
 }
 
 .side-nav__version {
+  float: right;
   padding: 16px;
   font-size: 14px;
   opacity: .54;
