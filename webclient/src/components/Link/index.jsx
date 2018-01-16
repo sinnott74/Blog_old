@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from "react-redux";
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { closeSideNav } from '../../actions/sidenav';
 
@@ -12,4 +13,5 @@ const mapDispatchToProps = {
   onClick: closeSideNav
 }
 
-export default connect(null, mapDispatchToProps, null, {pure:false})(NavLink)
+
+export default withRouter(connect(null, mapDispatchToProps)(NavLink))
