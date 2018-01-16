@@ -11,12 +11,12 @@ cache:
   - node_modules # NPM packages
 
 # registering to user postgresql database
-#services:
-#  - postgresql
+services:
+ - postgresql
 
-# creates the database
-#before_install:
-#  - psql -c 'create database pwadb;' -U postgres
+#creates the database
+before_install:
+ - psql -c 'create database pwadb;' -U postgres
 
 # Deploy
 # Bluemix
