@@ -6,14 +6,19 @@ import './style.css'
 class Header extends React.Component {
   render() {
     return (
-      <div className="header">
-        <button className="header__menu" onClick={this.props.handleMenuButtonClick}>Toggle nav menu</button>
-        <h1 className="header__titlecontainer">
-          <Link to={"/"} className="header__titletext">
-            {this.props.title}
-          </Link>
-        </h1>
-        <button className="header__options" onClick={this.props.handleOptionsButtonClick}>Toggle options menu</button>
+      <div className="header-layout">
+        <div className="header">
+          <button className="header__menu" onClick={this.props.handleMenuButtonClick}>Toggle nav menu</button>
+          <h1 className="header__titlecontainer">
+            <Link to={"/"} className="header__titletext">
+              {this.props.title}
+            </Link>
+          </h1>
+          <button className="header__options" onClick={this.props.handleOptionsButtonClick}>Toggle options menu</button>
+        </div>
+        <div className="header-layout_main">
+          {this.props.children}
+        </div>
       </div>
     );
   }

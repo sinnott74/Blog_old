@@ -9,38 +9,43 @@ class SideNav extends React.Component {
 
   render() {
     return (
-      <div className="side-nav"
-        ref={(sidenav) => {this.sidenav = sidenav;}}>
-        <div className="side-nav__scrim"
-          onClick={this._handleScrimTap}
-          ref={(scrim) => {this.scrim = scrim;}}>
+      <div className="side-nav-layout">
+        <div className="side-nav-layout_main">
+          {this.props.children}
         </div>
-        <div className="side-nav__content"
-          onTouchStart={this._handleSideNavTouchStart}
-          onTouchMove={this._handleSideNavTouchMove}
-          onTouchEnd={this._handleSideNavTouchEnd}
-          ref={(sideNavContent) => {this.sideNavContent = sideNavContent;}}>
-          <div className="side-nav__header">
-            <h1 className="side-nav__title">App shell</h1>
+        <div className="side-nav"
+          ref={(sidenav) => {this.sidenav = sidenav;}}>
+          <div className="side-nav__scrim"
+            onClick={this._handleScrimTap}
+            ref={(scrim) => {this.scrim = scrim;}}>
           </div>
-          <div className="side-nav__body"
-          ref={(body) => {this.body = body;}}>
-            <div className="side-nav__links">
-              <SideNavLink to="/">Home</SideNavLink>
-              <SideNavLink to="/blog">Blog</SideNavLink>
-              <SideNavLink to="/code">Code</SideNavLink>
+          <div className="side-nav__content"
+            onTouchStart={this._handleSideNavTouchStart}
+            onTouchMove={this._handleSideNavTouchMove}
+            onTouchEnd={this._handleSideNavTouchEnd}
+            ref={(sideNavContent) => {this.sideNavContent = sideNavContent;}}>
+            <div className="side-nav__header">
+              <h1 className="side-nav__title">App shell</h1>
             </div>
-            <div className="side-nav__contentbottom">
-              <PersonalLinks />
-              <div className="side-nav__version">Version {version}</div>
+            <div className="side-nav__body"
+            ref={(body) => {this.body = body;}}>
+              <div className="side-nav__links">
+                <SideNavLink to="/">Home</SideNavLink>
+                <SideNavLink to="/blog">Blog</SideNavLink>
+                <SideNavLink to="/code">Code</SideNavLink>
+              </div>
+              <div className="side-nav__contentbottom">
+                <PersonalLinks />
+                <div className="side-nav__version">Version {version}</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="side-nav__edgearea"
-          onTouchStart={this._handleEdgeTouchStart}
-          onTouchMove={this._handleEdgeTouchMove}
-          onTouchEnd={this._handleEdgeTouchEnd}
-          ref={(edge) => {this.edge = edge;}}>
+          <div className="side-nav__edgearea"
+            onTouchStart={this._handleEdgeTouchStart}
+            onTouchMove={this._handleEdgeTouchMove}
+            onTouchEnd={this._handleEdgeTouchEnd}
+            ref={(edge) => {this.edge = edge;}}>
+          </div>
         </div>
       </div>
     );
@@ -254,4 +259,4 @@ const mapDispatchToProps = {
   closeSideNav
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure:false})(SideNav)
+export default connect(mapStateToProps, mapDispatchToProps)(SideNav)
