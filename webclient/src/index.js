@@ -14,12 +14,18 @@ const middleware = routerMiddleware(history);
 import rootReducer from './reducers';
 import App from './components/App';
 
+const composeEnhancers =
+  process.env.NODE_ENV !== 'production' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+
+const enhancer = composeEnhancers(
+  applyMiddleware(middleware, thunk)
+);
+
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(middleware, thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
+  enhancer
 );
 
 ReactDOM.render(
