@@ -6,11 +6,19 @@
   "scripts": {
     "start": "npm run start:server",
     "postinstall": "npm run build",
-    "build": "npm run build:client",
-    "build:client": "webpack --config ./webpack/webpack.prod.js",
+    "build": "npm run build:client && npm run build:database",
+    "build:client": "webpack --config $npm_package_config_webpack_prod",
+    "build:database": "knex --knexfile=$npm_package_config_knexfile migrate:latest",
     "start:server": "node server",
-    "start:client": "webpack-dev-server --colors --config ./webpack/webpack.dev.js",
+    "start:client": "webpack-dev-server --colors --config $npm_package_config_webpack_dev",
     "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "config" :{
+    "knexfile" : "./server/src/config/knexfile.js",
+    "webpack": {
+      "dev": "./webpack/webpack.dev.js",
+      "prod": "./webpack/webpack.prod.js"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +29,7 @@
     "express": "^4.16.2",
     "helmet": "^3.9.0",
     "history": "^4.7.2",
+    "knex": "^0.14.2",
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "react": "^16.1.0",
@@ -31,6 +40,7 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "pg": "^7.4.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
