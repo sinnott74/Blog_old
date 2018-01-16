@@ -13,6 +13,11 @@ var bodyParser = require('body-parser');
 var routes = require('./src/routes');
 
 /**
+ * Connect to database.
+ */
+require('./src/core/database');
+
+/**
  * Create Express server.
  */
 var expressApp = express();
