@@ -19,15 +19,15 @@ The site is built with a react/redux web frontend & an node/express backend
 
 ```npm run start:client```
 
-to run the react webclient using webpack-dev-server on port 8080, with all requests to `/api*` proxied to port `localhost:8081/api*`
+to run the react webclient using webpack-dev-server on port 8081, with all requests to `/api*` proxied to port `localhost:8080/api*`
 
 ```npm run start:server```
 
-to run the express server on port 8081
+to run the express server on port 8080
 
 ### Production
 
 ```npm run start```
 
 
-to build the react web frontend, served by an express backend all running on port 8081
+to build the react web frontend, served by an express backend all running on port 8080
