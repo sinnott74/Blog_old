@@ -50,7 +50,7 @@
   width: 73.33333%;
   margin-right: 2.22222%;
   float: left;
-  max-width: 450px;
+  max-width: var(--side-nav-max-width);
 }
 
 @media (min-width: 1025px){
@@ -113,6 +113,7 @@
   position: absolute;
   height: 100vh;
   width: 100vw;
+  --side-nav-max-width: 400px;
 }
 
 .side-nav-layout_main {
@@ -123,8 +124,8 @@
 
 @media (min-width: 1025px){
   .side-nav-layout_main{
-    margin-left: 450px;
-    width: calc(100vw - 450px);
+    margin-left: var(--side-nav-max-width);
+    width: calc(100vw - var(--side-nav-max-width));
     transition: margin-left var(--transition);
   }
 }
