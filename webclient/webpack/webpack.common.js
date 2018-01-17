@@ -17,11 +17,11 @@ module.exports = {
       'redux',
       'redux-thunk',
     ],
-    app:  './webclient/src/index',
+    app:  './src/index',
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.resolve(__dirname, '..', 'webclient', 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     chunkFilename: '[name].[chunkhash].js',
   },
   module: {
@@ -59,7 +59,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './webclient/index.html'
+      template: './index.html'
     }),
     new webpack.HashedModuleIdsPlugin(),
     new ExtractTextPlugin({
@@ -76,7 +76,7 @@ module.exports = {
     // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../webclient/static'),
+        from: path.resolve(__dirname, '../static'),
         ignore: ['.*']
       }
     ]),

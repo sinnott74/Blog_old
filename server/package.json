@@ -1,0 +1,32 @@
+{
+  "name": "sinnott-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "npm run build:database && npm run start:server:dev",
+    "start:prod": "npm run build:database && npm run start:server:prod",
+    "start:server:dev": "nodemon index.js",
+    "start:server:prod": "node index.js",
+    "build:database": "knex --knexfile=$npm_package_config_knexfile migrate:latest",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "config" :{
+    "knexfile" : "./src/config/knexfile.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cfenv": "1.0.x",
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "knex": "^0.14.2",
+    "moment": "^2.20.1",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}

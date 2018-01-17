@@ -9,7 +9,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 module.exports = merge(common, {
   plugins: [
-    new CleanWebpackPlugin(['dist'], { verbose: true, root: path.resolve(__dirname, '..', 'webclient') }),
+    new CleanWebpackPlugin(['dist'], { verbose: true, root: path.resolve(__dirname, '..') }),
     new UglifyJSPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
