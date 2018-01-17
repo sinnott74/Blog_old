@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import Loadable from 'react-loadable';
 import Spinner from '../Spinner';
 import PropTypes from 'prop-types'
@@ -29,15 +29,21 @@ const LoadableCodeListPage = Loadable({
   loading: Spinner
 })
 
+const LoadableError404Page = Loadable({
+  loader: () => import(/* webpackChunkName: "Error404Page" */ '../../pages/Error404Page'),
+  loading: Spinner
+})
+
 const Routes = (props) => {
   return (
-    <div className="main">
+    <Switch className="main">
       <Route exact path="/" component={LoadableHomePage} />
       <Route exact path="/blog" component={LoadableBlogListPage} />
       <Route path="/blog/:id" component={LoadableBlogPostPage} />
       <Route exact path="/code" component={LoadableCodeListPage} />
       <Route exact path="/url2" component={LoadableUrl2Page} />
-    </div>
+      <Route component={LoadableError404Page} />
+    </Switch>
   )
 }
 
