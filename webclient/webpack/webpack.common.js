@@ -8,6 +8,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     vendor: [
+      'history',
       'react',
       'react-dom',
       'react-loadable',
@@ -67,7 +68,6 @@ module.exports = {
     }),
     new CommonsChunkPlugin({
       names: 'vendor'
-
     }),
     new CommonsChunkPlugin({
       names: 'common',
