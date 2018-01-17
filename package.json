@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run start:prod",
+    "start": "npm run start:prod",
+    "postinstall": "cd ./webclient && npm run build:prod",
     "start:prod": "cd ./webclient && npm run build:prod && cd ../server && npm run start:prod",
     "start:dev": "concurrently --kill-others \"npm run start:webclient:dev\" \"npm run start:server:dev\"",
     "start:webclient:dev": " cd ./webclient && pwd && npm run start:dev",
