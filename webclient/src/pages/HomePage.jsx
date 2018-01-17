@@ -2,6 +2,11 @@ import React from 'react';
 import Card from '../components/Card';
 
 export default class HomePage extends React.Component {
+
+  componentDidMount() {
+    document.title = "Sinnott";
+  }
+
   render() {
     return (
       <Card>

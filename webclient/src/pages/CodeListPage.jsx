@@ -18,6 +18,11 @@ export default class CodeListPage extends React.Component {
       }
     ]
   }
+
+  componentDidMount() {
+    document.title = "Code";
+  }
+
   render() {
     return <CodeList codeList={this.codeList}/>
   }
