@@ -1,6 +1,10 @@
 {
   "name": "sinnott",
   "version": "0.0.1",
+  "engines": {
+    "node": "^9",
+    "npm": "^5"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
