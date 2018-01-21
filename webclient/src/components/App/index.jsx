@@ -6,6 +6,7 @@ import Toast from '../Toast';
 import ServiceWorker from '../ServiceWorker';
 import Routes from '../Routes';
 import ScreenMediaQuery from '../ScreenMediaQuery';
+import '../Card';
 import './style.css'
 
 export default  class App extends React.Component {
