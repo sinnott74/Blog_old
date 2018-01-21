@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import './style.css'
 
-const defaultSize = 32;
+const defaultSize = 48;
 
 const Spinner = (props) => {
 
@@ -10,8 +10,8 @@ const Spinner = (props) => {
 
   return (
     <div className="loader js-global-loader is-hidden">
-    <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size}>
-      <circle className="spinner" cx={size/2} cy={size/2} r={size/2 - 2} fill="none"></circle>
+    <svg viewBox="0 0 32 32" width={size} height={size}>
+      <circle className="spinner" cx="16" cy="16" r="14" fill="none"></circle>
     </svg>
     </div>
   )
