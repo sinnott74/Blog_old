@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import PersonalLink from './PersonalLink.jsx';
 import Github from '../../images/github.svg';
 import Facebook from '../../images/facebook.svg';

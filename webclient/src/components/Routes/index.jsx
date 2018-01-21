@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import Loadable from 'react-loadable';
 import Spinner from '../Spinner';
-import PropTypes from 'prop-types'
 
 const LoadableHomePage = Loadable({
   loader: () => import(/* webpackChunkName: "indexPage" */ '../../pages/HomePage'),

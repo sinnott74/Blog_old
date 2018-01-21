@@ -11,7 +11,7 @@ const BlogListItem = (props) => {
       <Card className="bloglistitem__card">
         <div className="bloglistitem">
           <div className="bloglistitem__imagecontainer">
-            <img className="bloglistitem__image" src="https://images.unsplash.com/photo-1483199095378-ce6e77cd1c0d?auto=format&fit=crop&w=1717&q=80" />
+            <img className="bloglistitem__image" src="https://images.unsplash.com/photo-1483199095378-ce6e77cd1c0d?auto=format&fit=crop&w=1717&q=80" alt="" />
           </div>
           <div className="bloglistitem__detailscontainer">
             <Link to={`/blog/${props.id}`} className="bloglistentry__link">

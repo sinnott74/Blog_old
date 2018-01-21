@@ -1,6 +1,5 @@
 import React from 'react';
 import SideNavLink from '../SideNavLink';
-import Link from '../Link';
 import PersonalLinks from '../PersonalLinks';
 import { version } from '../../../package.json'
 import './style.css'
@@ -120,7 +119,7 @@ class SideNav extends React.Component {
       }
     }
 
-    if(this.direction == "horizontal"){
+    if(this.direction === "horizontal"){
       // e.preventDefault();
       requestAnimationFrame(this._updateUI);
     }

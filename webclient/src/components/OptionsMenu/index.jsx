@@ -4,7 +4,6 @@ import OptionsMenuItem from '../OptionsMenuItem'
 import './style.css'
 
 import { connect } from "react-redux";
-import { openSidenav } from '../../actions/sidenav';
 import { closeOptionsMenu } from '../../actions/optionsMenu';
 
 class OptionsMenu extends React.Component {

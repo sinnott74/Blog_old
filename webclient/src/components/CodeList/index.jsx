@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import Card from '../Card'
 import CodeListItem from '../CodeListItem'
 // import './style.css'
@@ -18,10 +17,5 @@ const CodeList = (props) => {
     </Card>
   );
 }
-
-// CodeList.propTypes = {
-//   fetchData: PropTypes.func.isRequired,
-//   codePostIDs: PropTypes.arrayOf(PropTypes.number).isRequired
-// }
 
 export default CodeList;
