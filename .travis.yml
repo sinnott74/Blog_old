@@ -16,7 +16,7 @@ services:
 
 #creates the database
 before_install:
- - psql -c 'create database pwadb;' -U postgres
+ - psql -c 'create database pwadb;' -U postgres --set AUTOCOMMIT=off
 
 # Deploy
 # Bluemix
