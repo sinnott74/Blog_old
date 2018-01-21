@@ -1,0 +1,40 @@
+*** Postgresql Notes ***
+
+Install:
+    brew install postgresql
+
+To Start:
+    pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+
+To Stop:
+    pg_ctl -D /usr/local/var/postgres stop -s -m fast
+
+Init:
+    initdb /usr/local/var/postgres
+
+Create Database:
+    createdb <databasename>
+
+Open Database:
+    psql pwadb --set AUTOCOMMIT off
+    psql <databasename> -U postgres
+    psql -h <host> -p <port> -U <user> -W <databasename>    // Note: -W specifies a password will be prompted
+
+Quit Database:
+    \q
+
+Turn Autocommit off:
+    \set AUTOCOMMIT off
+
+Read Autocommit:
+    \echo :AUTOCOMMIT
+
+Default port:
+    5432
+
+Created default development user:
+    CREATE USER postgres PASSWORD '';
+    GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres;
+
+Query open database connections:
+    SELECT * FROM pg_stat_activity;
