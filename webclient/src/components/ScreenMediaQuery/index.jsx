@@ -8,6 +8,7 @@ class ScreenMediaQuery extends React.Component {
   componentWillMount() {
     if(!window.matchMedia) return;
     this.mediaQueryList = window.matchMedia(this.props.mediaQuery);
+    this._onMatch = this._onMatch.bind(this);
     this.mediaQueryList.addListener(this._onMatch);
     this._onMatch(this.mediaQueryList);
   }
