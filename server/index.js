@@ -10,7 +10,11 @@ var cfenv = require('cfenv'); // cloud foundry environment variables
 var forceHttpsMiddleware = require('./src/middleware/forceHttps');
 var compression = require('compression');
 var bodyParser = require('body-parser');
-var routes = require('./src/routes');
+
+/**
+ * Adds Sync support to express routers
+ */
+require('express-async-errors');
 
 /**
  * Connect to database.
@@ -61,6 +65,7 @@ expressApp.use(compression());
 // });
 
 // Data API routes
+var routes = require('./src/routes');
 expressApp.use('/api', routes);
 
 // Define static assets path - i.e. styles, scripts etc.
@@ -69,7 +74,7 @@ expressApp.use('/', express.static(path.join(__dirname, '../webclient/dist'), {
   setHeaders: setCustomCacheControl
 }));
 
-expressApp.get('/*', function(req, res) {
+expressApp.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../webclient/dist/index.html'));
 });
 
