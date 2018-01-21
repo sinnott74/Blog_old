@@ -38,3 +38,6 @@ Created default development user:
 
 Query open database connections:
     SELECT * FROM pg_stat_activity;
+
+Show all tables:
+    SELECT * FROM pg_catalog.pg_tables;
