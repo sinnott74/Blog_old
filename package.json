@@ -9,9 +9,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start:prod",
-    "postinstall": "cd ./webclient && npm run build:prod",
-    "start:prod": "cd ./webclient && npm run build:prod && cd ../server && npm run start:prod",
-    "start:dev": "concurrently --kill-others \"cd ./webclient && npm run start:dev\" \"cd ./server && npm run start:dev\"",
+    "postinstall": "cd ./webclient && npm run build",
+    "start:prod": "cd ./webclient && npm run build && cd ../server && npm run start:prod",
+    "start:dev": "concurrently --kill-others \"cd ./webclient && npm run start\" \"cd ./server && npm run start:dev\"",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "author": "",
@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "webpack-dev-server": "^2.9.2",
     "nodemon": "^1.14.11"
   }
 }

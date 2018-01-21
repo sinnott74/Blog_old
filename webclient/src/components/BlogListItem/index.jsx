@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Card from '../Card'
 import Link from '../Link'
 import './style.css'
+import { connect } from "react-redux";
 
 const BlogListItem = (props) => {
 
@@ -26,8 +27,6 @@ const BlogListItem = (props) => {
       </Card>
   )
 }
-
-import { connect } from "react-redux";
 
 BlogListItem.propTypes = {
   id: PropTypes.number.isRequired

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import BlogListItem from '../BlogListItem'
 import './style.css'
+import { connect } from 'react-redux';
+import { loadBlogPosts } from '../../actions/blog';
 
 class BlogList extends React.Component {
 
@@ -26,9 +28,6 @@ BlogList.propTypes = {
   fetchData: PropTypes.func.isRequired,
   blogPostIDs: PropTypes.arrayOf(PropTypes.number).isRequired
 }
-
-import { connect } from 'react-redux';
-import { loadBlogPosts } from '../../actions/blog';
 
 const mapDispatchToProps = (dispatch) => ({
   fetchData: () => dispatch(loadBlogPosts())

@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import './style.css'
 
+import { connect } from "react-redux";
+import { hideToast } from '../../actions/toast';
+
 class Toast extends React.Component {
   render() {
     return (
@@ -19,9 +22,6 @@ Toast.propTypes = {
   message: PropTypes.string.isRequired,
   handleCloseButtonClick: PropTypes.func.isRequired,
 }
-
-import { connect } from "react-redux";
-import { hideToast } from '../../actions/toast';
 
 const mapStateToProps = (state) => ({
   showing: state.ui.toast.showing,

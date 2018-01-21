@@ -2,8 +2,11 @@ import React from 'react';
 import SideNavLink from '../SideNavLink';
 import Link from '../Link';
 import PersonalLinks from '../PersonalLinks';
-import { version } from '../../../../package.json'
+import { version } from '../../../package.json'
 import './style.css'
+
+import { connect } from "react-redux";
+import { openSideNav, closeSideNav } from '../../actions/sidenav';
 
 class SideNav extends React.Component {
 
@@ -245,10 +248,6 @@ class SideNav extends React.Component {
   }
 }
 
-
-
-import { connect } from "react-redux";
-import { openSideNav, closeSideNav } from '../../actions/sidenav';
 
 const mapStateToProps = (state) =>({
   opened: state.ui.sidenav.opened

@@ -5,9 +5,10 @@ import OptionsMenu from '../OptionsMenu';
 import Toast from '../Toast';
 import ServiceWorker from '../ServiceWorker';
 import Routes from '../Routes';
+import ScreenMediaQuery from '../ScreenMediaQuery';
 import './style.css'
 
-class App extends React.Component {
+export default  class App extends React.Component {
 
   render() {
     return (
@@ -20,11 +21,12 @@ class App extends React.Component {
         </SideNavLayout>
         <Toast />
         <ServiceWorker />
+        <ScreenMediaQuery mediaQuery="(min-width: 1025px)"/>
       </div>
     )
   }
 }
 
-import { connect } from "react-redux";
-import { withRouter } from 'react-router'
-export default withRouter(connect(null, null)(App));
+// import { connect } from "react-redux";
+// import { withRouter } from 'react-router'
+// export default withRouter(connect(null, null)(App));

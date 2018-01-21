@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import Link from '../Link'
 import './style.css'
 
+import { connect } from "react-redux";
+import { openSideNav } from '../../actions/sidenav';
+import { toggleOptionsMenu } from '../../actions/optionsMenu';
+
 class Header extends React.Component {
   render() {
     return (
@@ -31,10 +35,7 @@ Header.propTypes = {
 }
 
 
-import { connect } from "react-redux";
 
-import { openSideNav } from '../../actions/sidenav';
-import { toggleOptionsMenu } from '../../actions/optionsMenu';
 
 const mapStateToProps = (state) => ({});
 

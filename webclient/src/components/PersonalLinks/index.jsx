@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import PersonalLink from './PersonalLink.jsx';
-import Github from '../../../static/images/github.svg';
-import Facebook from '../../../static/images/facebook.svg';
-import Twitter from '../../../static/images/twitter.svg';
-import LinkedIn from '../../../static/images/linkedin.svg';
+import Github from '../../images/github.svg';
+import Facebook from '../../images/facebook.svg';
+import Twitter from '../../images/twitter.svg';
+import LinkedIn from '../../images/linkedin.svg';
 import './style.css'
 
 // Functional Component

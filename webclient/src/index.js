@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { ConnectedRouter as Router, routerMiddleware } from 'react-router-redux'
-
 import thunk from "redux-thunk";
 import createHistory from 'history/createBrowserHistory';
+import rootReducer from './reducers';
+import App from './components/App';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
-
-import rootReducer from './reducers';
-import App from './components/App';
 
 const composeEnhancers =
   process.env.NODE_ENV !== 'production' &&

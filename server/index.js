@@ -69,13 +69,13 @@ var routes = require('./src/routes');
 expressApp.use('/api', routes);
 
 // Define static assets path - i.e. styles, scripts etc.
-expressApp.use('/', express.static(path.join(__dirname, '../webclient/dist'), {
+expressApp.use('/', express.static(path.join(__dirname, '../webclient/build'), {
   maxage: '1y',
   setHeaders: setCustomCacheControl
 }));
 
 expressApp.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../webclient/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../webclient/build/index.html'));
 });
 
 /**

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Card from '../Card'
 import './style.css'
+import { connect } from "react-redux";
+import { loadBlogPost } from '../../actions/blog';
 
 class BlogPost extends React.Component {
 
@@ -22,9 +24,6 @@ class BlogPost extends React.Component {
     )
   }
 }
-
-import { connect } from "react-redux";
-import { loadBlogPost } from '../../actions/blog';
 
 BlogPost.propTypes = {
   id: PropTypes.string.isRequired

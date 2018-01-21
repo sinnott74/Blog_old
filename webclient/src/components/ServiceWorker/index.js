@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import { connect } from "react-redux";
+import { showToast } from '../../actions/toast';
 
 class ServiceWorker extends React.Component {
 
@@ -56,9 +58,6 @@ class ServiceWorker extends React.Component {
     });
   }
 }
-
-import { connect } from "react-redux";
-import { showToast } from '../../actions/toast';
 
 const mapDispatchToProps = {
   handleToastMessage: showToast

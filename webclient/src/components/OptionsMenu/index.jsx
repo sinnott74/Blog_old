@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import OptionsMenuItem from '../OptionsMenuItem'
 import './style.css'
 
+import { connect } from "react-redux";
+import { openSidenav } from '../../actions/sidenav';
+import { closeOptionsMenu } from '../../actions/optionsMenu';
+
 class OptionsMenu extends React.Component {
 
   render() {
@@ -79,12 +83,6 @@ OptionsMenu.propTypes = {
   handleScrimClick: PropTypes.func.isRequired,
 }
 
-
-
-
-import { connect } from "react-redux";
-import { openSidenav } from '../../actions/sidenav';
-import { closeOptionsMenu } from '../../actions/optionsMenu';
 
 const mapStateToProps = (state) =>({
   opened: state.ui.optionsMenu.opened
