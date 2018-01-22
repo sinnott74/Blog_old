@@ -66,7 +66,7 @@ class DAO {
     await this.validateID(id);
 
     let query = this.entity.where({id}).toQuery();
-    let result = await this.transaction.query(query)
+    let result = await this.transaction.query(query);
 
     if (result.rows.length === 0) {
       throw new RecordNotFoundException(`Record Not Found on ${this.entityName} with ID ${id}`);
