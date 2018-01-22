@@ -1,5 +1,4 @@
 var router = require('express').Router();
-var database = require("../core/database")
 var UserDAO = require('../DAO/UserDAO');
 
 router.get('/', async function(req, res, next) {
