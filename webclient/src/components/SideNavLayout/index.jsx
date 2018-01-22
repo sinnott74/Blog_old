@@ -4,6 +4,10 @@ import PersonalLinks from '../PersonalLinks';
 import { version } from '../../../package.json'
 import './style.css'
 
+import HomeIcon from '../../images/ic_home_24px.svg';
+import CodeIcon from '../../images/ic_code_24px.svg';
+import BlogIcon from '../../images/ic_blog_24px.svg';
+
 import { connect } from "react-redux";
 import { openSideNav, closeSideNav } from '../../actions/sidenav';
 
@@ -32,9 +36,9 @@ class SideNav extends React.Component {
             <div className="side-nav__body"
             ref={(body) => {this.body = body;}}>
               <div className="side-nav__links">
-                <SideNavLink to="/">Home</SideNavLink>
-                <SideNavLink to="/blog">Blog</SideNavLink>
-                <SideNavLink to="/code">Code</SideNavLink>
+                <SideNavLink to="/" iconImg={HomeIcon} imgAlt="Home">Home</SideNavLink>
+                <SideNavLink to="/blog" iconImg={BlogIcon} imgAlt="Blog">Blog</SideNavLink>
+                <SideNavLink to="/code" iconImg={CodeIcon} imgAlt="Code">Code</SideNavLink>
               </div>
               <div className="side-nav__contentbottom">
                 <PersonalLinks />

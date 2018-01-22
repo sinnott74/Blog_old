@@ -3,11 +3,15 @@
   height: 48px;
   text-decoration: none;
   border: 0;
-  padding-left: 72px;
-  display: block;
+  display: flex;
   cursor: pointer;
   color: var(--text-color-dark);
-  background: url('./ic_info_24px.svg') 16px 12px no-repeat;
+  justify-content: flex-start;
+  /* background: url('./ic_info_24px.svg') 16px 12px no-repeat; */
+}
+
+.side-nav-link__icon {
+  margin: 0 48px;
 }
 
 .side-nav__link-active, .side-nav__link:focus, side-nav__link:active {
