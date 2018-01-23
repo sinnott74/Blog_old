@@ -1,4 +1,4 @@
-const als = require('async-local-storage');
+const als = require('./ThreadLocal');
 const database = require('../core/database');
 const uuidV4 = require('uuid/v4');
 
