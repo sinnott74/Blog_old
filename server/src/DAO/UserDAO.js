@@ -3,6 +3,7 @@ let DAO = require('./DAO');
 let bcrypt = require('bcryptjs');
 let userConfig = require('../data/definition/User');
 let RecordNotFoundException = require('..//util/exception/RecordNotFoundException');
+let MultipleRecordsFoundException = require('..//util/exception/RecordNotFoundException');
 
 /**
  * UsersDAO control all data access to the users table.
@@ -49,9 +50,7 @@ class UserDAO extends DAO {
    * @returns {boolean} true if the username is avilable, false otherwise.
    */
   async isUserNameAvailable(userName) {
-    let query = this.entity.where({username: userName}).toQuery();
-    let result = await this.transaction.query(query);
-
+    let result = this._searchByUserName(userName);
     if(result.rows.length === 0) {
       return true;
     }
@@ -63,14 +62,38 @@ class UserDAO extends DAO {
    * @param {String} userName
    * @returns {User} true if the username is avilable, false otherwise.
    */
-  async readByUserName(userName) {
-    let query = this.entity.where({username: userName}).toQuery();
-    let result = await this.transaction.query(query);
-
-    if(result.rows.length === 1) {
+  async readByUserName(username) {
+    let result = await this._searchByUserName(username);
+    if(result.rows.length === 0) {
       throw new RecordNotFoundException();
     }
-    return entityArray[0];
+    if (result.rows.length > 1) {
+      throw new MultipleRecordsFoundException(`Multiple Records Found on ${this.entityName} with ID ${id}`);
+    }
+    return result.rows[0];
+  }
+
+  /**
+   * Searches for a user based on username
+   * @param {*} username
+   * return {Promise} to an array of Users
+   */
+  async _searchByUserName(username) {
+    let query = this.entity.where({username: username}).toQuery();
+    return await this.transaction.query(query);
+  }
+
+  /**
+   * Checks if a username & passward match
+   * @param {*} username
+   * @param {*} password
+   * @return {Promise} which resolves to true
+   *   if the username/password combination are authentic,
+   *   false otherwise
+   */
+  async authenticate(username, password) {
+    let user = await this.readByUserName(username);
+    return bcrypt.compare(password, user.password);
   }
 }
 

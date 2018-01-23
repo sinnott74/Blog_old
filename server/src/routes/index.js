@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var blogPostRouter = require('./BlogPostRouter');
 var userRouter = require('./UserRouter');
+var authRouter = require('./AuthRouter');
 var TransactionInfo = require('../core/TransactionInfo');
 
 function errorHandler(err, req, res, next) {
@@ -10,6 +11,7 @@ function errorHandler(err, req, res, next) {
 
 router.use(TransactionInfo.preMiddleware);
 
+router.use('/auth', authRouter);
 router.use('/blogposts', blogPostRouter);
 router.use('/users', userRouter);
 

@@ -10,6 +10,7 @@ var cfenv = require('cfenv'); // cloud foundry environment variables
 var forceHttpsMiddleware = require('./src/middleware/forceHttps');
 var compression = require('compression');
 var bodyParser = require('body-parser');
+var Auth = require('./src/core/Auth');
 
 /**
  * Adds Sync support to express routers
@@ -52,6 +53,11 @@ expressApp.use(bodyParser.json()); // parse application/json
 
 // prevents express setting x-powered-by header
 expressApp.disable('x-powered-by');
+
+/**
+ * Initialize passport
+ */
+expressApp.use(Auth.initialize())
 
 /**
  * use compression

@@ -49,6 +49,10 @@ class DAO {
     let transactionID = TransactionInfo.get('transactionID');
     console.log(transactionID);
 
+    if(!this.transaction){
+      throw new Error('Transation not initialized');
+    }
+
     this.entity = Sql.define(this.entityConfig);
   }
 
