@@ -1,3 +1,15 @@
 .noscroll {
   overflow: hidden;
 }
+
+form {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+form > * {
+  width: 100%;
+}
