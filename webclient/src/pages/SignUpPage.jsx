@@ -28,7 +28,7 @@ class SignUpPage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { username, password, firstname, lastname, submitted, dob } = this.state;
+    const { username, password, firstname, lastname, dob } = this.state;
     if (username && password && firstname && lastname && dob) {
        this.props.handleSubmit({
          username,

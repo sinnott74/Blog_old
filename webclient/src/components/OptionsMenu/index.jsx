@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import OptionsMenuItem from '../OptionsMenuItem'
-import Link from '../Link';
 import './style.css'
 
 import { connect } from "react-redux";
