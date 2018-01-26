@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var UserDAO = require('../DAO/UserDAO');
+var Auth = require('../core/Auth');
 
 router.get('/', async function(req, res, next) {
   let users = await new UserDAO().list();
@@ -15,8 +16,10 @@ router.get('/:id', async function(req, res, next) {
 })
 
 router.post('/', async function(req, res, next) {
-  let id = await new UserDAO().insert(req.body)
-  res.json(id);
+  let user = { ...req.body }
+  let id = await new UserDAO().insert(user)
+  let token = await Auth.login(req.body.username, req.body.password);
+  res.json(token);
   next();
 })
 

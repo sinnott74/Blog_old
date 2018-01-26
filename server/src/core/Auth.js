@@ -112,7 +112,7 @@ class Auth {
           resolve({
             token: "JWT " + token,
             expires: moment.unix(expires).format(),
-            user: username
+            username: username
           });
         });
       } catch(err) {

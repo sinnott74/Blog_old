@@ -8,11 +8,6 @@ const LoadableHomePage = Loadable({
   loading: Spinner
 })
 
-const LoadableUrl2Page = Loadable({
-  loader: () => import(/* webpackChunkName: "Url2Page" */ '../../pages/Url2Page'),
-  loading: Spinner
-})
-
 const LoadableBlogListPage = Loadable({
   loader: () => import(/* webpackChunkName: "BlogListPage" */ '../../pages/BlogListPage'),
   loading: Spinner
@@ -33,6 +28,21 @@ const LoadableError404Page = Loadable({
   loading: Spinner
 })
 
+const LoadableLoginPage = Loadable({
+  loader: () => import(/* webpackChunkName: "LoginPage" */ '../../pages/LoginPage'),
+  loading: Spinner
+})
+
+const LoadableLogoutPage = Loadable({
+  loader: () => import(/* webpackChunkName: "LogoutPage" */ '../../pages/LogoutPage'),
+  loading: Spinner
+})
+
+const LoadableSignUpPage = Loadable({
+  loader: () => import(/* webpackChunkName: "SignUpPage" */ '../../pages/SignUpPage'),
+  loading: Spinner
+})
+
 const Routes = (props) => {
   return (
     <Switch className="main">
@@ -40,7 +50,9 @@ const Routes = (props) => {
       <Route exact path="/blog" component={LoadableBlogListPage} />
       <Route path="/blog/:id" component={LoadableBlogPostPage} />
       <Route exact path="/code" component={LoadableCodeListPage} />
-      <Route exact path="/url2" component={LoadableUrl2Page} />
+      <Route exact path="/login" component={LoadableLoginPage} />
+      <Route exact path="/logout" component={LoadableLogoutPage} />
+      <Route exact path="/signup" component={LoadableSignUpPage} />
       <Route component={LoadableError404Page} />
     </Switch>
   )

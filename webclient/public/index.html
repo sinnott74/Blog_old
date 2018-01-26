@@ -26,7 +26,8 @@
         --big-screen: 1025px;
         --font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
         --transition-time: 130ms;
-        --transition: var(--transition-time) ease-in;
+        --transition-timing-function: ease-in;
+        --transition: var(--transition-time) var(--transition-timing-function);
       }
       * {
         box-sizing: border-box;
@@ -42,7 +43,7 @@
         color: var(--text-dark);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background: var(--background-color);
+        background: var(--background-color) !important;;
       }
       .noscript__container {
         display: -webkit-flex;
@@ -63,6 +64,30 @@
       .noscript__message {
         color: #f00;
         font-size: 3em;
+      }
+
+      /* https://fonts.googleapis.com/icon?family=Material+Icons */
+      @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/materialicons/v34/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2');
+      }
+
+      .material-icons {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
       }
     </style>
 
