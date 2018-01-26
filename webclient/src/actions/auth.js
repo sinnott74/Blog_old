@@ -55,6 +55,7 @@ export function login(username, password) {
     .catch((err) => {
       console.log(err);
       dispatch(loginFailed())
+      dispatch(showToast('Log In Failed'))
     })
   }
 }
@@ -83,6 +84,7 @@ export function signUp(user){
     .catch((err) => {
       console.log(err);
       dispatch(loginFailed())
+      dispatch(showToast('Sign Up Failed'))
     })
   }
 }
