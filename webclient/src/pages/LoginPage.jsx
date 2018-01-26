@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
 
         <form onSubmit={this.handleSubmit}>
           <TextField
-            type='text'
+            type='email'
             name='username'
             label='Username'
             required
