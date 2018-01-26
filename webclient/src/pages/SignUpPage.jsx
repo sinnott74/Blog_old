@@ -3,7 +3,7 @@ import Card from '../components/Card';
 import { connect } from "react-redux";
 import { signUp } from '../actions/auth';
 import { Redirect } from 'react-router';
-import Button from 'react-md/lib/Buttons/Button';
+import SubmitButton from '../components/SubmitButton';
 import TextField from 'react-md/lib/TextFields/TextField';
 import { DatePicker } from 'react-md/lib/Pickers';
 
@@ -112,7 +112,7 @@ class SignUpPage extends React.Component {
             }}
           />
 
-          <Button raised={true} primary type="submit">Submit</Button>
+          <SubmitButton isSubmitting={this.props.isSubmitting}>Login</SubmitButton>
         </form>
       </Card>
     );
@@ -126,7 +126,8 @@ class SignUpPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.auth.loggedIn
+  loggedIn: state.auth.loggedIn,
+  isSubmitting: state.auth.isLoading
 });
 
 const mapDispatchToProps = {

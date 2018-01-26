@@ -4,7 +4,7 @@ import Link from '../components/Link';
 import { connect } from "react-redux";
 import { login } from '../actions/auth';
 import { Redirect } from 'react-router';
-import Button from 'react-md/lib/Buttons/Button';
+import SubmitButton from '../components/SubmitButton';
 import TextField from 'react-md/lib/TextFields/TextField';
 
 class LoginPage extends React.Component {
@@ -64,7 +64,8 @@ class LoginPage extends React.Component {
               this.setState({password});
             }}
           />
-          <Button raised={true} primary type="submit">Login</Button>
+          {/* <Button raised={true} primary type="submit">Login</Button> */}
+          <SubmitButton isSubmitting={this.props.isSubmitting}>Login</SubmitButton>
           <Link to="/signup">Sign Up</Link>
         </form>
       </Card>
@@ -80,7 +81,8 @@ class LoginPage extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.auth.loggedIn
+  loggedIn: state.auth.loggedIn,
+  isSubmitting: state.auth.isLoading
 });
 
 const mapDispatchToProps = {
