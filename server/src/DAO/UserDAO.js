@@ -41,7 +41,6 @@ class UserDAO extends DAO {
     let salt = await bcrypt.genSalt();
     let hash = await bcrypt.hash(user.password, salt);
     user.password = hash;
-    user.dob = new Date();
   }
 
   /**
