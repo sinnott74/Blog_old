@@ -39,7 +39,7 @@ class LoginPage extends React.Component {
 
     return (
       <Card>
-        <h2>Login</h2>
+        <h1>Login</h1>
 
         <form onSubmit={this.handleSubmit}>
           <TextField

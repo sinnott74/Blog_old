@@ -47,7 +47,7 @@ class SignUpPage extends React.Component {
 
     return (
       <Card>
-        <h2>Sign Up</h2>
+        <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           <TextField
             id='username'
