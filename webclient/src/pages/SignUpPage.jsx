@@ -112,7 +112,7 @@ class SignUpPage extends React.Component {
             }}
           />
 
-          <SubmitButton isSubmitting={this.props.isSubmitting}>Login</SubmitButton>
+          <SubmitButton isSubmitting={this.props.isSubmitting}>Sign Up</SubmitButton>
         </form>
       </Card>
     );
