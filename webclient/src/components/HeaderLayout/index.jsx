@@ -7,18 +7,20 @@ import { connect } from "react-redux";
 import { openSideNav } from '../../actions/sidenav';
 import { toggleOptionsMenu } from '../../actions/optionsMenu';
 
+import Button from 'react-md/lib/Buttons/Button';
+
 class Header extends React.Component {
   render() {
     return (
       <div className="header-layout">
         <div className="header">
-          <button className="header__menu" onClick={this.props.handleMenuButtonClick}>Toggle nav menu</button>
+          <Button icon className="header__menu"  onClick={this.props.handleMenuButtonClick}>menu</Button>
           <h1 className="header__titlecontainer">
             <Link to={"/"} className="header__titletext">
               {this.props.title}
             </Link>
           </h1>
-          <button className="header__options" onClick={this.props.handleOptionsButtonClick}>Toggle options menu</button>
+          <Button icon  className="header__options" onClick={this.props.handleOptionsButtonClick}>more_vert</Button>
         </div>
         <div className="header-layout_main">
           {this.props.children}
