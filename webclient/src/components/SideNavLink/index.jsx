@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Link from '../Link';
-import Icon from '../Icon';
+import FontIcon from 'react-md/lib/FontIcons/FontIcon';
 import './style.css';
 
 // Functional Component
 const SideNavLink = (props) => {
   return  (
     <Link exact to={props.to} className="side-nav__link" activeClassName="side-nav__link-active">
-      <Icon img={props.iconImg} alt={props.iconAlt} className="side-nav-link__icon"/>
+      <FontIcon className="side-nav-link__icon">{props.icon}</FontIcon>
       <div className="side-nav-link__text">
         {props.children}
       </div>

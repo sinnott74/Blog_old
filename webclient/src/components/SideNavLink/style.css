@@ -7,11 +7,12 @@
   cursor: pointer;
   color: var(--text-color-dark);
   justify-content: flex-start;
-  /* background: url('./ic_info_24px.svg') 16px 12px no-repeat; */
 }
 
 .side-nav-link__icon {
-  margin: 0 32px;
+  margin: 0 24px;
+  line-height: 48px !important;
+  font-size: 32px !important;
 }
 
 .side-nav__link-active, .side-nav__link:focus, side-nav__link:active {
