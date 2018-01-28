@@ -5,7 +5,7 @@ import { version } from '../../../package.json'
 import './style.css'
 
 import { connect } from "react-redux";
-import { openSideNav, closeSideNav } from '../../actions/sidenav';
+// import { openSideNav, closeSideNav } from '../../actions/sidenav';
 
 class SideNav extends React.Component {
 
@@ -133,7 +133,6 @@ class SideNav extends React.Component {
 
       let opacityPercentage = Math.abs((0.85 + (this.translateX/this.sideNavContentWidth) * 0.85));
       opacityPercentage = Math.min(0.85, opacityPercentage);
-      this.scrim.style.display = 'block';
       this.scrim.style.opacity = opacityPercentage;
       requestAnimationFrame(this._updateUI);
     }
@@ -144,9 +143,11 @@ class SideNav extends React.Component {
     this.direction = "";
 
     if (this.sideNavTransform < -this.TOUCH_SLOP) {
-      this.props.closeSideNav();
+      this._close();
+      // this.props.closeSideNav();
     } else {
-      this.props.openSideNav();
+      this._open();
+      // this.props.openSideNav();
     }
   }
 
@@ -191,7 +192,6 @@ class SideNav extends React.Component {
 
       let opacityPercentage = Math.abs((this.translateX/this.sideNavContentWidth) * 0.85);
       opacityPercentage = Math.min(0.85, opacityPercentage);
-      this.scrim.style.display = 'block';
       this.scrim.style.opacity = opacityPercentage;
       requestAnimationFrame(this._updateUIOnEdgeTouch);
     }
@@ -202,9 +202,11 @@ class SideNav extends React.Component {
     this.touching = false;
 
     if (this.edgeTransform >= this.TOUCH_SLOP) {
-      this.props.openSideNav();
+      this._open();
+      // this.props.openSideNav();
     } else {
-      this.props.closeSideNav();
+      this._close();
+      // this.props.closeSideNav();
     }
   }
 
@@ -221,9 +223,8 @@ class SideNav extends React.Component {
     this.sidenav.classList.remove("side_nav--opened");
     this.sideNavContent.style.transform = '';
     this.scrim.style.opacity = '';
-    this.scrim.style.display = '';
     document.body.classList.remove('noscroll');
-    root.classList.remove('noscroll');
+    // root.classList.remove('noscroll');
     setTimeout(() => {
       this.sideNavContent.classList.remove("side_nav--animatable");
     }, 500);
@@ -234,9 +235,8 @@ class SideNav extends React.Component {
     this.sidenav.classList.add("side_nav--opened");
     this.sideNavContent.style.transform = '';
     this.scrim.style.opacity = '';
-    this.scrim.style.display = '';
     document.body.classList.add('noscroll');
-    root.classList.add('noscroll');
+    // root.classList.add('noscroll');
     setTimeout(() => {
       this.sideNavContent.classList.remove("side_nav--animatable");
     }, 500);
@@ -252,10 +252,12 @@ const mapStateToProps = (state) =>({
   opened: state.ui.sidenav.opened
 })
 
-const mapDispatchToProps = {
-  openSideNav,
-  closeSideNav
-}
+// const mapDispatchToProps = {
+//   openSideNav,
+//   closeSideNav
+// }
+
+const mapDispatchToProps = null;
 
 // Needs to be pure to keep sidenav from being keep slightly open or close.
 // i.e setting opened false always fully closes, even if opened is already false
