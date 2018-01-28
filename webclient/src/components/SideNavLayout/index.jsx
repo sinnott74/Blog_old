@@ -257,8 +257,6 @@ const mapDispatchToProps = {
   closeSideNav
 }
 
-const mapDispatchToProps = null;
-
 // Needs to be pure to keep sidenav from being keep slightly open or close.
 // i.e setting opened false always fully closes, even if opened is already false
 export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(SideNav)
