@@ -1,45 +1,45 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import Loadable from 'react-loadable';
-import Spinner from '../Spinner';
+import Spinner from './components/Spinner';
 
 const LoadableHomePage = Loadable({
-  loader: () => import(/* webpackChunkName: "indexPage" */ '../../pages/HomePage'),
+  loader: () => import(/* webpackChunkName: "indexPage" */ './pages/HomePage'),
   loading: Spinner
 })
 
 const LoadableBlogListPage = Loadable({
-  loader: () => import(/* webpackChunkName: "BlogListPage" */ '../../pages/BlogListPage'),
+  loader: () => import(/* webpackChunkName: "BlogListPage" */ './pages/BlogListPage'),
   loading: Spinner
 })
 
 const LoadableBlogPostPage = Loadable({
-  loader: () => import(/* webpackChunkName: "BlogPostPage" */ '../../pages/BlogPostPage'),
+  loader: () => import(/* webpackChunkName: "BlogPostPage" */ './pages/BlogPostPage'),
   loading: Spinner
 })
 
 const LoadableCodeListPage = Loadable({
-  loader: () => import(/* webpackChunkName: "CodeListPage" */ '../../pages/CodeListPage'),
+  loader: () => import(/* webpackChunkName: "CodeListPage" */ './pages/CodeListPage'),
   loading: Spinner
 })
 
 const LoadableError404Page = Loadable({
-  loader: () => import(/* webpackChunkName: "Error404Page" */ '../../pages/Error404Page'),
+  loader: () => import(/* webpackChunkName: "Error404Page" */ './pages/Error404Page'),
   loading: Spinner
 })
 
 const LoadableLoginPage = Loadable({
-  loader: () => import(/* webpackChunkName: "LoginPage" */ '../../pages/LoginPage'),
+  loader: () => import(/* webpackChunkName: "LoginPage" */ './pages/LoginPage'),
   loading: Spinner
 })
 
 const LoadableLogoutPage = Loadable({
-  loader: () => import(/* webpackChunkName: "LogoutPage" */ '../../pages/LogoutPage'),
+  loader: () => import(/* webpackChunkName: "LogoutPage" */ './pages/LogoutPage'),
   loading: Spinner
 })
 
 const LoadableSignUpPage = Loadable({
-  loader: () => import(/* webpackChunkName: "SignUpPage" */ '../../pages/SignUpPage'),
+  loader: () => import(/* webpackChunkName: "SignUpPage" */ './pages/SignUpPage'),
   loading: Spinner
 })
 
