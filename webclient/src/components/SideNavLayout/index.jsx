@@ -85,7 +85,7 @@ class SideNav extends React.Component {
     this.sideNavContent.removeEventListener('transitionend', this.onTransitionEnd);
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     if (nextProps.opened){
       this._open();
     } else {
@@ -144,10 +144,18 @@ class SideNav extends React.Component {
 
     if (this.sideNavTransform < -this.TOUCH_SLOP) {
       this._close();
-      // this.props.closeSideNav();
+      setTimeout(() => {
+        if(!this.isOpened && this.props.opened){
+          this.props.closeSideNav();
+        }
+      }, 130);
     } else {
       this._open();
-      // this.props.openSideNav();
+      setTimeout(() => {
+        if(this.isOpened && !this.props.opened){
+          this.props.openSideNav();
+        }
+      }, 130);
     }
   }
 
@@ -203,10 +211,18 @@ class SideNav extends React.Component {
 
     if (this.edgeTransform >= this.TOUCH_SLOP) {
       this._open();
-      // this.props.openSideNav();
+      setTimeout(() => {
+        if(this.isOpened && !this.props.opened){
+          this.props.openSideNav();
+        }
+      }, 130);
     } else {
       this._close();
-      // this.props.closeSideNav();
+      setTimeout(() => {
+        if(!this.isOpened && this.props.opened){
+          this.props.closeSideNav();
+        }
+      }, 130);
     }
   }
 
@@ -224,10 +240,7 @@ class SideNav extends React.Component {
     this.sideNavContent.style.transform = '';
     this.scrim.style.opacity = '';
     document.body.classList.remove('noscroll');
-    // root.classList.remove('noscroll');
-    setTimeout(() => {
-      this.sideNavContent.classList.remove("side_nav--animatable");
-    }, 500);
+    this.isOpened = false;
   }
 
   _open() {
@@ -236,13 +249,11 @@ class SideNav extends React.Component {
     this.sideNavContent.style.transform = '';
     this.scrim.style.opacity = '';
     document.body.classList.add('noscroll');
-    // root.classList.add('noscroll');
-    setTimeout(() => {
-      this.sideNavContent.classList.remove("side_nav--animatable");
-    }, 500);
+    this.isOpened = true;
   }
 
   onTransitionEnd() {
+    console.log('transition ended');
     this.classList.remove("side_nav--animatable");
   }
 }
@@ -257,6 +268,4 @@ const mapDispatchToProps = {
   closeSideNav
 }
 
-// Needs to be pure to keep sidenav from being keep slightly open or close.
-// i.e setting opened false always fully closes, even if opened is already false
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(SideNav)
+export default connect(mapStateToProps, mapDispatchToProps)(SideNav)
