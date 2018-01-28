@@ -5,7 +5,7 @@ import { version } from '../../../package.json'
 import './style.css'
 
 import { connect } from "react-redux";
-// import { openSideNav, closeSideNav } from '../../actions/sidenav';
+import { openSideNav, closeSideNav } from '../../actions/sidenav';
 
 class SideNav extends React.Component {
 
@@ -252,10 +252,10 @@ const mapStateToProps = (state) =>({
   opened: state.ui.sidenav.opened
 })
 
-// const mapDispatchToProps = {
-//   openSideNav,
-//   closeSideNav
-// }
+const mapDispatchToProps = {
+  openSideNav,
+  closeSideNav
+}
 
 const mapDispatchToProps = null;
 
