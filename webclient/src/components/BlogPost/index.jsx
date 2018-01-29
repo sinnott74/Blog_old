@@ -4,6 +4,7 @@ import Card from '../Card'
 import './style.css'
 import { connect } from "react-redux";
 import { loadBlogPost } from '../../actions/blog';
+import Link from '../Link';
 
 class BlogPost extends React.Component {
 
@@ -19,6 +20,7 @@ class BlogPost extends React.Component {
             <div className="blogpost__author">{this.props.author}</div>
             <div className="blogpost__date">{this.props.date}</div>
             <div className="blogpost__text">{this.props.text}</div>
+            <Link to={`/blog/${this.props.id}/edit`}>Edit</Link>
         </Card>
       </div>
     )

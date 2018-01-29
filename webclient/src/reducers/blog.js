@@ -2,12 +2,10 @@
  * Blog actions
  */
 import { LIST_BLOG_POSTS,
-          ADD_BLOG_ENTRY,
-          EDIT_BLOG_ENTRY,
           DELETE_BLOG_ENTRY,
           LOADING_BLOG_POSTS,
           BLOG_POSTS_ERRORED,
-          GET_BLOG_POST
+          STORE_BLOG_POST
         } from '../actions/blog';
 import { arrayToObject, objectToIDKeyedObject } from './util';
 
@@ -29,14 +27,6 @@ let initialState = {
         },
         allIds: Object.keys(blogPosts)
       }
-    case ADD_BLOG_ENTRY:
-      return {
-         ...state,
-      }
-    case EDIT_BLOG_ENTRY:
-      return {
-         ...state
-      }
     case DELETE_BLOG_ENTRY:
       return {
          ...state
@@ -49,9 +39,10 @@ let initialState = {
     case BLOG_POSTS_ERRORED:
       return {
         ...state,
-        hasErrored: action.hasErrored
+        hasErrored: action.hasErrored,
+        isLoading: false
       }
-    case GET_BLOG_POST:
+    case STORE_BLOG_POST:
       let blogPost = objectToIDKeyedObject(action.blogPost);
       return {
         ...state,

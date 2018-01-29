@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import Loadable from 'react-loadable';
 import Spinner from './components/Spinner';
+import AuthernticatedRouter from './components/AuthenticatedRoute';
 
 const LoadableHomePage = Loadable({
   loader: () => import(/* webpackChunkName: "indexPage" */ './pages/HomePage'),
@@ -15,6 +16,16 @@ const LoadableBlogListPage = Loadable({
 
 const LoadableBlogPostPage = Loadable({
   loader: () => import(/* webpackChunkName: "BlogPostPage" */ './pages/BlogPostPage'),
+  loading: Spinner
+})
+
+const LoadableAddBlogPage = Loadable({
+  loader: () => import(/* webpackChunkName: "AddBlogage" */ './pages/AddBlogPage'),
+  loading: Spinner
+})
+
+const LoadableEditBlogPage = Loadable({
+  loader: () => import(/* webpackChunkName: "EditBlogPage" */ './pages/EditBlogPage'),
   loading: Spinner
 })
 
@@ -48,6 +59,8 @@ const Routes = (props) => {
     <Switch className="main">
       <Route exact path="/" component={LoadableHomePage} />
       <Route exact path="/blog" component={LoadableBlogListPage} />
+      <AuthernticatedRouter exact path="/blog/new" component={LoadableAddBlogPage} />
+      <AuthernticatedRouter path="/blog/:id/edit" component={LoadableEditBlogPage} />
       <Route path="/blog/:id" component={LoadableBlogPostPage} />
       <Route exact path="/code" component={LoadableCodeListPage} />
       <Route exact path="/login" component={LoadableLoginPage} />

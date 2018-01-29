@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import BlogListItem from '../BlogListItem'
+import Spinner from '../Spinner'
 import './style.css'
 import { connect } from 'react-redux';
 import { loadBlogPosts } from '../../actions/blog';
@@ -12,6 +13,10 @@ class BlogList extends React.Component {
   }
 
   render() {
+    if(this.props.blogPostIDs.length === 0){
+      return <Spinner />
+    }
+
     let blogPosts = this.props.blogPostIDs.map(function(id){
       return <BlogListItem key= {id} id={id} />
     });
