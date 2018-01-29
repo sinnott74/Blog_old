@@ -14,6 +14,7 @@
   left: 0;
   word-wrap: normal;
   width: 100%;
+  z-index: 2;
 }
 
 .toast.toast__opened {
