@@ -4,7 +4,7 @@ import SideNavLayout from '../SideNavLayout';
 import OptionsMenu from '../OptionsMenu';
 import Toast from '../Toast';
 import ServiceWorker from '../ServiceWorker';
-import Routes from '../Routes';
+import Routes from '../../Routes';
 import ScreenMediaQuery from '../ScreenMediaQuery';
 import '../Card';
 import './style.css'
