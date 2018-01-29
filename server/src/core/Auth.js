@@ -99,9 +99,10 @@ class Auth {
    * @param {*} user
    * @returns {Promise} contains a token, time of expiration & the username
    */
-  static _getToken(username) {
+  static async _getToken(username) {
     let expires = moment().utc().add({days: 7}).unix();
 
+    let user = await new UserDAO().readByUserName(username);
     return new Promise((resolve, reject) => {
       try{
         jwt.sign({
@@ -112,7 +113,8 @@ class Auth {
           resolve({
             token: "JWT " + token,
             expires: moment.unix(expires).format(),
-            username: username
+            username: user.username,
+            user_id: user.id
           });
         });
       } catch(err) {
