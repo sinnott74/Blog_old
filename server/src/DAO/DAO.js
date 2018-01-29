@@ -93,6 +93,8 @@ class DAO {
     await this.validate(entity);
     // call subclasses preCreate implemenation
     await this.preCreate(entity);
+    // Remove all object attributes not contained in the entity definition
+    this.filterAttributesByDefinition(entity);
     // insert entity onto db
     let query = this.entity.insert(entity).returning(this.entity.star()).toQuery();
     let result = await this.transaction.query(query)
@@ -114,6 +116,8 @@ class DAO {
     // call subclasses validate implemenation
     await this.validate(entity);
     // return promise which resolves to nothing
+    // Remove all object attributes not contained in the entity definition
+    this.filterAttributesByDefinition(entity);
 
     let query = this.entity.update(entity).where({id : entity.id}).toQuery();
     let result = await this.transaction.query(query);
@@ -150,6 +154,19 @@ class DAO {
     if(isNaN(id)) {
       throw new TypeError('Invalid ID - ' + id);
     }
+  }
+
+  /**
+   * Filters out attributes which aren't defined in the Entity Definitiion
+   */
+  filterAttributesByDefinition(entity){
+    let attributes= Object.keys(entity);
+    let definedAttributes = this.entityConfig.columns.map(definedAttribute => definedAttribute.name);
+    attributes.forEach((attribute) => {
+      if(!definedAttributes.includes(attribute)){
+        delete entity[attribute];
+      }
+    })
   }
 
   /**
