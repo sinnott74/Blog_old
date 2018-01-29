@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import BlogPost from '../components/BlogPost'
 
 // Functional Component
-const BlogPostPage = (props) => {
+const ViewBlogPostPage = (props) => {
   document.title = "Blog";
   return  <BlogPost id={props.match.params.id}/>
 }
 
-BlogPostPage.propTypes = {
+ViewBlogPostPage.propTypes = {
   id: PropTypes.number
 }
 
-export default BlogPostPage;
+export default ViewBlogPostPage;

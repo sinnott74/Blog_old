@@ -3,7 +3,7 @@ import AddBlogPost from '../components/AddBlogPost'
 import Card from '../components/Card'
 
 // Functional Component
-const AddBlogPage = (props) => {
+const AddBlogPostPage = (props) => {
   document.title = "Add Blog Post";
   return  (
     <Card>
@@ -13,4 +13,4 @@ const AddBlogPage = (props) => {
   )
 }
 
-export default AddBlogPage;
+export default AddBlogPostPage;

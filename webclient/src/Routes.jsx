@@ -14,18 +14,18 @@ const LoadableBlogListPage = Loadable({
   loading: Spinner
 })
 
-const LoadableBlogPostPage = Loadable({
-  loader: () => import(/* webpackChunkName: "BlogPostPage" */ './pages/BlogPostPage'),
+const LoadableViewBlogPostPage = Loadable({
+  loader: () => import(/* webpackChunkName: "BlogPostPage" */ './pages/ViewBlogPostPage'),
   loading: Spinner
 })
 
-const LoadableAddBlogPage = Loadable({
-  loader: () => import(/* webpackChunkName: "AddBlogage" */ './pages/AddBlogPage'),
+const LoadableAddBlogPostPage = Loadable({
+  loader: () => import(/* webpackChunkName: "AddBlogage" */ './pages/AddBlogPostPage'),
   loading: Spinner
 })
 
-const LoadableEditBlogPage = Loadable({
-  loader: () => import(/* webpackChunkName: "EditBlogPage" */ './pages/EditBlogPage'),
+const LoadableEditBlogPostPage = Loadable({
+  loader: () => import(/* webpackChunkName: "EditBlogPage" */ './pages/EditBlogPostPage'),
   loading: Spinner
 })
 
@@ -59,9 +59,9 @@ const Routes = (props) => {
     <Switch className="main">
       <Route exact path="/" component={LoadableHomePage} />
       <Route exact path="/blog" component={LoadableBlogListPage} />
-      <AuthernticatedRouter exact path="/blog/new" component={LoadableAddBlogPage} />
-      <AuthernticatedRouter path="/blog/:id/edit" component={LoadableEditBlogPage} />
-      <Route path="/blog/:id" component={LoadableBlogPostPage} />
+      <AuthernticatedRouter exact path="/blog/new" component={LoadableAddBlogPostPage} />
+      <AuthernticatedRouter path="/blog/:id/edit" component={LoadableEditBlogPostPage} />
+      <Route path="/blog/:id" component={LoadableViewBlogPostPage} />
       <Route exact path="/code" component={LoadableCodeListPage} />
       <Route exact path="/login" component={LoadableLoginPage} />
       <Route exact path="/logout" component={LoadableLogoutPage} />

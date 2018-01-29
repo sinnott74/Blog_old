@@ -3,7 +3,7 @@ import EditBlogPost from '../components/EditBlogPost'
 import Card from '../components/Card'
 
 // Functional Component
-const EditBlogPage = (props) => {
+const EditBlogPostPage = (props) => {
   document.title = "Blog";
   return  (
     <Card>
@@ -13,4 +13,4 @@ const EditBlogPage = (props) => {
   )
 }
 
-export default EditBlogPage;
+export default EditBlogPostPage;
