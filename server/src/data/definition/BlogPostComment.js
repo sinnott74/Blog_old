@@ -2,26 +2,18 @@ module.exports = {
   name: 'blogpostcomment',
   schema: 'public',
   columns: [{
-      name: 'blogpostcomment_id',
+      name: 'id',
       dataType: 'serial',
       primaryKey: true,
       notNull: true
     }, {
       name: 'blogpost_id',
       dataType: 'integer',
-      notNull: true,
-      references: {
-        table: 'blogpost',
-        column: 'blogpost_id'
-      }
+      notNull: true
     }, {
       name: 'user_id',
       dataType: 'integer',
-      notNull: true,
-      references: {
-        table: 'user',
-        column: 'user_id'
-      }
+      notNull: true
     }, {
       name: 'comment',
       dataType: 'text',
@@ -32,12 +24,12 @@ module.exports = {
       schema: 'public',
       table: 'user',
       columns: ['user_id'],
-      redColumns: ['user_id']
+      refColumns: ['id']
     }, {
       schema: 'public',
       table: 'blogpost',
       columns: ['blogpost_id'],
-      redColumns: ['blogpost_id']
+      refColumns: ['id']
     }
   ]
 }

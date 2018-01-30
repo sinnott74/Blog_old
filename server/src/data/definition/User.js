@@ -2,7 +2,7 @@ module.exports = {
   name: 'user',
   schema: 'public',
   columns: [{
-      name: 'user_id',
+      name: 'id',
       dataType: 'serial',
       primaryKey: true,
       notNull: true

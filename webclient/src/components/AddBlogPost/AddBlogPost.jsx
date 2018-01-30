@@ -5,7 +5,7 @@ import BlogEditor from '../BlogEditor'
 const mapStateToProps = (state, ownProps) => ({
   blogpost: {
     title: '',
-    user_id: state.auth.user_id
+    user_id: state.auth.id
   },
   isSubmitting: state.blog.isLoading,
   username: state.auth.username

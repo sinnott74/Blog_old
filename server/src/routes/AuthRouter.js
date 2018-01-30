@@ -19,7 +19,7 @@ router.post('/login', async function(req, res, next) {
 router.post('/signup', async function(req, res, next) {
   let userCredentials = { ...req.body }
   let user = await new UserDAO().insert(userCredentials);
-  await new CredentialDAO().insert({user_id: user.user_id, password: userCredentials.password})
+  await new CredentialDAO().insert({user_id: user.id, password: userCredentials.password})
   let token = await Auth.login(userCredentials.username, userCredentials.password);
   res.json(token);
   next();

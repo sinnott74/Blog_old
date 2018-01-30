@@ -2,18 +2,14 @@ module.exports = {
   name: 'credential',
   schema: 'public',
   columns: [{
-      name: 'credential_id',
+      name: 'id',
       dataType: 'serial',
       primaryKey: true,
       notNull: true
     }, {
       name: 'user_id',
       dataType: 'integer',
-      notNull: true,
-      references: {
-        table: 'user',
-        column: 'user_id'
-      }
+      notNull: true
     }, {
       name: 'password',
       dataType: 'varchar(60)',
@@ -33,7 +29,7 @@ module.exports = {
       schema: 'public',
       table: 'user',
       columns: ['user_id'],
-      redColumns: ['user_id']
+      refColumns: ['id']
     }
   ]
 }

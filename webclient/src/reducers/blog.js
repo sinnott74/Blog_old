@@ -19,7 +19,7 @@ let initialState = {
  const blog = (state = initialState, action)  => {
   switch (action.type) {
     case LIST_BLOG_POSTS:
-      let blogPosts = arrayToObject('blogpost_id', action.blogPosts);
+      let blogPosts = arrayToObject(action.blogPosts);
       return {
         ...state,
         byId: {
@@ -43,7 +43,7 @@ let initialState = {
         isLoading: false
       }
     case STORE_BLOG_POST:
-      let blogPost = objectToIDKeyedObject('blogpost_id', action.blogPost);
+      let blogPost = objectToIDKeyedObject(action.blogPost);
       return {
         ...state,
         byId: {

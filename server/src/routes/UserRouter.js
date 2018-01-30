@@ -8,8 +8,8 @@ router.get('/', async function(req, res, next) {
   next();
 })
 
-router.get('/:user_id', async function(req, res, next) {
-  let user_id = req.params.user_id;
+router.get('/:id', async function(req, res, next) {
+  let id = req.params.user_id;
   let user = await new UserDAO().get(user_id);
   res.json(user);
   next();
@@ -17,23 +17,22 @@ router.get('/:user_id', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   let user = { ...req.body }
-  let user_id = await new UserDAO().insert(user)
-  // let token = await Auth.login(req.body.username, req.body.password);
-  res.json(user_id);
+  let insertedUser = await new UserDAO().insert(user)
+  res.json(insertedUser);
   next();
 })
 
-router.put('/:user_id', async function(req, res, next) {
-  let user_id = req.params.user_id;
-  let user = {user_id, ...req.body};
+router.put('/:id', async function(req, res, next) {
+  let id = req.params.id;
+  let user = {id, ...req.body};
   await new UserDAO().modify(user);
   res.sendStatus(200);
   next();
 })
 
-router.delete('/:user_id',async function(req, res, next) {
-  let user_id = req.params.user_id;
-  let user = await new UserDAO().delete(user_id);
+router.delete('/:id',async function(req, res, next) {
+  let id = req.params.id;
+  let user = await new UserDAO().delete(id);
   res.sendStatus(200);
   next();
 })

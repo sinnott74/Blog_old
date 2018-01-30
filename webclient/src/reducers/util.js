@@ -6,11 +6,12 @@
  * is converted to :
  * {1: {id: 1, value: "one"}, 2: {id: 2, value: "two"}}
  *
- * @param idName - name if the ID attribute
  * @param array - Array of object to convert to an object.
+ * @param idName - name if the ID attribute - optional
  *
  */
-export const arrayToObject = (idName, array) => {
+export const arrayToObject = (array, idName) => {
+  idName = idName || 'id';
   let object = array.reduce((obj, item) => {
     let id = item[idName];
     obj[id] = item;
@@ -23,8 +24,12 @@ export const arrayToObject = (idName, array) => {
  * Converts an object to another object which contains an attribute, keyed by the original objects ID & has its value.
  *
  * e.g. {id: 1, value: "one"} is converted to {1: {id: 1, value: "one"}}
+ *
+ * @param object - Object to convert into keyed object
+ * @param idName - name if the ID attribute - optional
  */
-export const objectToIDKeyedObject = (idName, obj) => {
+export const objectToIDKeyedObject = (obj, idName,) => {
+  idName = idName || 'id';
   let objectKeyedByID = {};
   let id = obj[idName];
   objectKeyedByID[id] = obj;

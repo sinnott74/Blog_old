@@ -118,14 +118,11 @@ class DAO {
     // Remove all object attributes not contained in the entity definition
     let filteredEntity = this.filterAttributesByDefinition(entity);
     // validate the ID
-    let id = filteredEntity[this.entityIDName]
-    await this.validateID(id);
+    await this.validateID(entity.id);
     // call subclasses validate implemenation
     await this.validate(filteredEntity);
     // return promise which resolves to nothing
-    let queryObject = {};
-    queryObject[this.entityIDName] = id;
-    let query = this.entity.update(filteredEntity).where(queryObject).toQuery();
+    let query = this.entity.update(filteredEntity).where({id: entity.id}).toQuery();
     let result = await this.transaction.query(query);
   }
 
@@ -135,11 +132,8 @@ class DAO {
    * @returns {Promise}
    */
   async delete(id) {
-    let id = filteredEntity[this.entityIDName]
     await this.validateID(id);
-    let queryObject = {};
-    queryObject[this.entityIDName] = id;
-    let query = this.entity.delete().where(queryObject).toQuery();
+    let query = this.entity.delete().where({id}).toQuery();
     await this.transaction.query(query);
   }
 
@@ -181,10 +175,6 @@ class DAO {
       }
     });
     return filteredEntity;
-  }
-
-  get entityIDName() {
-    return `${this.entityName}_id`;
   }
 
   /**

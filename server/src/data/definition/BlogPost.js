@@ -2,7 +2,7 @@ module.exports = {
   name: 'blogpost',
   schema: 'public',
   columns: [{
-      name: 'blogpost_id',
+      name: 'id',
       dataType: 'serial',
       primaryKey: true,
       notNull: true
@@ -17,18 +17,14 @@ module.exports = {
     }, {
       name: 'user_id',
       dataType: 'integer',
-      notNull: true,
-      references: {
-        table: 'user',
-        column: 'user_id'
-      }
+      notNull: true
     }
   ],
   foreignKeys: [{
       schema: 'public',
       table: 'user',
       columns: ['user_id'],
-      redColumns: ['user_id']
+      refColumns: ['id']
     }
   ]
 }

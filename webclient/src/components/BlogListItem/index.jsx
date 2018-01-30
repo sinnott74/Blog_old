@@ -20,7 +20,7 @@ const BlogListItem = (props) => {
             <div className="bloglistitem__date">{props.date}</div>
             <div className="bloglistitem__textcontainer">
               <div className="bloglistitem__text">{props.text}</div>
-              <Link to={`/blog/${props.blogpost_id}`} className="bloglistitem__readmore">Read more</Link>
+              <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
             </div>
           </div>
         </div>
