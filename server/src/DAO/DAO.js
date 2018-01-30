@@ -89,39 +89,44 @@ class DAO {
    * @returns {Promise<Number>} A promise which resolves to an ID of an entity
    */
   async insert(entity) {
-    // validate the entity
-    await this.validate(entity);
-    // call subclasses preCreate implemenation
-    await this.preCreate(entity);
     // Remove all object attributes not contained in the entity definition
-    this.filterAttributesByDefinition(entity);
+    let filteredEntity = this.filterAttributesByDefinition(entity);
+    // validate the entity
+    await this.validate(filteredEntity);
+    // call subclasses preInsert implemenation
+    await this.preInsert(filteredEntity);
     // insert entity onto db
-    let query = this.entity.insert(entity).returning(this.entity.star()).toQuery();
+    let query = this.entity.insert(filteredEntity).returning(this.entity.star()).toQuery();
     let result = await this.transaction.query(query)
 
     if (result.rows.length !== 1) {
       throw new Error(this.entityName + ' insertion failed');
     }
+
+    // call subclasses postInsert implemenation
+    await this.postInsert(result.rows[0]);
+
     return result.rows[0];
   }
 
   /**
    * Updates a entry on this table
    * @param {object} entity containing a valid id and the details to update to
-   * @returns {Promise}
+   * @returns {Promise<*>}
    */
   async modify(entity) {
-    // validate the ID
-    await this.validateID(entity.id);
-    // call subclasses validate implemenation
-    await this.validate(entity);
-    // return promise which resolves to nothing
     // Remove all object attributes not contained in the entity definition
-    this.filterAttributesByDefinition(entity);
-
-    let query = this.entity.update(entity).where({id : entity.id}).toQuery();
+    let filteredEntity = this.filterAttributesByDefinition(entity);
+    // validate the ID
+    let id = filteredEntity[this.entityIDName]
+    await this.validateID(id);
+    // call subclasses validate implemenation
+    await this.validate(filteredEntity);
+    // return promise which resolves to nothing
+    let queryObject = {};
+    queryObject[this.entityIDName] = id;
+    let query = this.entity.update(filteredEntity).where(queryObject).toQuery();
     let result = await this.transaction.query(query);
-    console.log(result);
   }
 
   /**
@@ -130,8 +135,11 @@ class DAO {
    * @returns {Promise}
    */
   async delete(id) {
+    let id = filteredEntity[this.entityIDName]
     await this.validateID(id);
-    let query = this.entity.delete().where({id}).toQuery();
+    let queryObject = {};
+    queryObject[this.entityIDName] = id;
+    let query = this.entity.delete().where(queryObject).toQuery();
     await this.transaction.query(query);
   }
 
@@ -158,22 +166,35 @@ class DAO {
 
   /**
    * Filters out attributes which aren't defined in the Entity Definitiion
+   * @param {*} entity
+   * @param {*} entityConfig Optional param. Uses this entities config is not supplied
+   * @returns {*} Entity which contains only attributes in the entity definitition
    */
-  filterAttributesByDefinition(entity){
+  filterAttributesByDefinition(entity, entityConfig){
+    entityConfig = entityConfig || this.entityConfig;
     let attributes= Object.keys(entity);
-    let definedAttributes = this.entityConfig.columns.map(definedAttribute => definedAttribute.name);
+    let definedAttributes = entityConfig.columns.map(definedAttribute => definedAttribute.name);
+    let filteredEntity = {};
     attributes.forEach((attribute) => {
-      if(!definedAttributes.includes(attribute)){
-        delete entity[attribute];
+      if(definedAttributes.includes(attribute)){
+        filteredEntity[attribute] = entity[attribute];
       }
-    })
+    });
+    return filteredEntity;
+  }
+
+  get entityIDName() {
+    return `${this.entityName}_id`;
   }
 
   /**
    * Hook point called before creating a record on the database.
    * @param {*} entity
    */
-  async preCreate(entity) {
+  async preInsert(entity) {
+  }
+
+  async postInsert(entity) {
   }
 }
 

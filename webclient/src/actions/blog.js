@@ -46,7 +46,7 @@ function storeBlogPost(blogPost){
 export function deleteBlogPost(id) {
   return function(dispatch) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogpo  sts/${id}`, {
+    fetch(`/api/blogposts/${id}`, {
       method: 'DELETE'
     })
     .then((response) => {
@@ -95,7 +95,7 @@ export function addBlogPost(blogpost) {
 export function editBlogPost(blogpost) {
   return function(dispatch) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${blogpost.id}`, {
+    fetch(`/api/blogposts/${blogpost.blogpost_id}`, {
       method: 'PUT',
       body: JSON.stringify(blogpost),
       headers: new Headers({
@@ -137,11 +137,11 @@ export function loadBlogPosts() {
   }
 }
 
-export function loadBlogPost(id) {
+export function loadBlogPost(blogpost_id) {
   return function(dispatch) {
     console.log('loading posts');
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${id}`)
+    fetch(`/api/blogposts/${blogpost_id}`)
     .then((response) => {
         if (!response.ok) {
             throw Error(response.statusText);

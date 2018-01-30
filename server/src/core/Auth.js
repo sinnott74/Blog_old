@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const TransactionInfo = require('./TransactionInfo');
 const UserDAO = require('../DAO/UserDAO');
+const CredentialDAO = require('../DAO/CredentialDAO');
 const AuthenticationError = require('../util/exception/AuthenticationException');
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
@@ -48,7 +49,7 @@ class Auth {
    */
   static async login(username, password) {
     try{
-      let authenticated = await new UserDAO().authenticate(username, password)
+      let authenticated = await new CredentialDAO().authenticate(username, password)
 
       if(authenticated){
         return Auth._getToken(username);
@@ -113,8 +114,7 @@ class Auth {
           resolve({
             token: "JWT " + token,
             expires: moment.unix(expires).format(),
-            username: user.username,
-            user_id: user.id
+            ...user
           });
         });
       } catch(err) {

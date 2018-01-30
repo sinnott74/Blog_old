@@ -9,10 +9,10 @@ router.get('/', async function(req, res, next) {
   next();
 })
 
-router.get('/:id', async function(req, res, next) {
-  var id = req.params.id;
+router.get('/:blogpost_id', async function(req, res, next) {
+  var blogpost_id = req.params.blogpost_id;
   let blogPostDAO = new BlogPostDAO();
-  let blogPost = await blogPostDAO.get(id);
+  let blogPost = await blogPostDAO.get(blogpost_id);
   res.json(blogPost);
   next();
 })
@@ -20,16 +20,16 @@ router.get('/:id', async function(req, res, next) {
 router.post('/', async function(req, res, next){
   let blogpost = {...req.body};
   let blogPostDAO = new BlogPostDAO();
-  let id = await blogPostDAO.insert(blogpost);
-  res.status(200).send(id);
+  let blogpost_id = await blogPostDAO.insert(blogpost);
+  res.status(200).send(blogpost_id);
   next();
 })
 
-router.put('/:id', async function(req, res, next){
+router.put('/:blogpost_id', async function(req, res, next){
   let blogpost = {...req.body};
   let blogPostDAO = new BlogPostDAO();
-  let id = await blogPostDAO.modify(blogpost);
-  res.status(200).send(id);
+  let blogpost_id = await blogPostDAO.modify(blogpost);
+  res.status(200).send(blogpost_id);
   next();
 })
 

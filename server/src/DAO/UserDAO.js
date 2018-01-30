@@ -2,8 +2,10 @@
 let DAO = require('./DAO');
 let bcrypt = require('bcryptjs');
 let userConfig = require('../data/definition/User');
+let credentialConfig = require('../data/definition/Credential');
 let RecordNotFoundException = require('..//util/exception/RecordNotFoundException');
 let MultipleRecordsFoundException = require('..//util/exception/RecordNotFoundException');
+let Sql = require('sql');
 
 /**
  * UsersDAO control all data access to the users table.
@@ -37,10 +39,10 @@ class UserDAO extends DAO {
  * Hashes a user's password.
  * @param {*} user
  */
-  async preCreate(user) {
-    let salt = await bcrypt.genSalt();
-    let hash = await bcrypt.hash(user.password, salt);
-    user.password = hash;
+  async preInsert(user) {
+  }
+
+  async postInsert(user) {
   }
 
   /**
@@ -80,19 +82,6 @@ class UserDAO extends DAO {
   async _searchByUserName(username) {
     let query = this.entity.where({username: username}).toQuery();
     return await this.transaction.query(query);
-  }
-
-  /**
-   * Checks if a username & passward match
-   * @param {*} username
-   * @param {*} password
-   * @return {Promise} which resolves to true
-   *   if the username/password combination are authentic,
-   *   false otherwise
-   */
-  async authenticate(username, password) {
-    let user = await this.readByUserName(username);
-    return bcrypt.compare(password, user.password);
   }
 }
 

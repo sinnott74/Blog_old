@@ -2,7 +2,7 @@ module.exports = {
   name: 'user',
   schema: 'public',
   columns: [{
-      name: 'id',
+      name: 'user_id',
       dataType: 'serial',
       primaryKey: true,
       notNull: true
@@ -10,10 +10,6 @@ module.exports = {
       name: 'username',
       dataType: 'varchar(30)',
       unique: true,
-      notNull: true
-    }, {
-      name: 'password',
-      dataType: 'varchar(60)',
       notNull: true
     }, {
       name: 'firstname',
@@ -25,7 +21,7 @@ module.exports = {
       notNull: true
     }, {
       name: 'dob',
-      dataType: 'Date',
+      dataType: 'TIMESTAMP WITH TIME ZONE',
       notNull: true
     }
   ],

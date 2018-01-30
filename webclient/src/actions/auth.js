@@ -64,7 +64,7 @@ export function signUp(user){
   return function(dispatch) {
 
     dispatch(loginLoading(true));
-    fetch('/api/users', {
+    fetch('/api/auth/signup', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: new Headers({
