@@ -46,6 +46,8 @@ class CredentialDAO extends DAO {
  * @param {*} user
  */
   async preInsert(credential) {
+    await this.deactivePreviousCredential(credential);
+
     let salt = await bcrypt.genSalt();
     let hash = await bcrypt.hash(credential.password, salt);
     credential.password = hash;
@@ -53,13 +55,43 @@ class CredentialDAO extends DAO {
     credential.created_on = new Date();
   }
 
-  async readActiveUserCredential(username) {
-    let query = await this.entity.from(this.entity.joinTo(this.user)).where({active: true}).toQuery();
+  /**
+   * Deactivates a user's active password
+   */
+  async deactivePreviousCredential(credential){
+    let previousCredential = await this.searchActiveUserCredentialByUserID(credential.user_id);
+    if(previousCredential){
+      previousCredential.active = false;
+      this.modify(previousCredential);
+    }
+  }
+
+  /**
+   * Reads active credential by username
+   * @param {*} username
+   */
+  async readActiveUserCredentialByUsername(username) {
+    let query = await this.entity.from(this.entity.joinTo(this.user)).where({active: true}).and(this.user.username.equals(username)).toQuery();
+    console.log(query);
     let result = await this.transaction.query(query)
 
     if(result.rows.length === 0) {
       throw new RecordNotFoundException();
     }
+    if (result.rows.length > 1) {
+      throw new MultipleRecordsFoundException(`Multiple Active Records Found on ${this.entityName} with ID ${id}`);
+    }
+    return result.rows[0];
+  }
+
+  /**
+   * Reads active credential by user ID. May return null
+   * @param {*} user_id
+   */
+  async searchActiveUserCredentialByUserID(user_id) {
+    let query = await this.entity.where({active: true, user_id: user_id}).toQuery();
+    let result = await this.transaction.query(query)
+
     if (result.rows.length > 1) {
       throw new MultipleRecordsFoundException(`Multiple Active Records Found on ${this.entityName} with ID ${id}`);
     }
@@ -75,7 +107,7 @@ class CredentialDAO extends DAO {
    *   false otherwise
    */
   async authenticate(username, password) {
-    let userCredential = await this.readActiveUserCredential(username);
+    let userCredential = await this.readActiveUserCredentialByUsername(username);
     return bcrypt.compare(password, userCredential.password);
   }
 }
