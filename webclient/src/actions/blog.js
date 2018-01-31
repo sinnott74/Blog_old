@@ -90,6 +90,7 @@ export function addBlogPost(blogpost) {
     .then(() => dispatch(showToast('Blog post saved')))
     .then(() => dispatch(push(`/blog/${blogpost.id}`)))
     .catch((err) => {
+      console.log(err);
       dispatch(blogHasErrored(true))
       dispatch(showToast('Save failed'))
     })
@@ -114,10 +115,11 @@ export function editBlogPost(blogpost) {
       return response;
     })
     // .then((response) => response.json()) // no response body on modify
-    .then((blogPost) => dispatch(storeBlogPost(blogPost)))
+    .then(() => dispatch(storeBlogPost(blogpost)))
     .then(() => dispatch(showToast('Blog post saved')))
     .then(() => dispatch(push(`/blog/${blogpost.id}`)))
     .catch((err) => {
+      console.log(err);
       dispatch(blogHasErrored(true))
       dispatch(showToast('Save failed'))
     })
@@ -137,7 +139,10 @@ export function loadBlogPosts() {
     })
     .then((response) => response.json())
     .then((blogPosts) => dispatch(listBlogPosts(blogPosts)))
-    .catch(() => dispatch(blogHasErrored(true)));
+    .catch((err) => {
+      console.log(err);
+      dispatch(blogHasErrored(true))
+    });
   }
 }
 
