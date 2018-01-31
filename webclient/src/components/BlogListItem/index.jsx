@@ -11,7 +11,7 @@ const BlogListItem = (props) => {
   return (
       <Card className="bloglistitem">
         <Link to={`/blog/${props.id}`} className="bloglistentry__link">
-          <h2 className="bloglistitem__title">{props.title}</h2>
+          <h1 className="bloglistitem__title">{props.title}</h1>
         </Link>
         <div className="blogpost__subtitle">{`${props.date} by ${props.author}`}</div>
         <div className="bloglistitem__text" dangerouslySetInnerHTML={rawMarkup(props.text)}></div>
