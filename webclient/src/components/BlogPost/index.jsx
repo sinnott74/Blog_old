@@ -18,7 +18,7 @@ class BlogPost extends React.Component {
     return (
       <Card className="blogpost">
           <h1 className="blogpost__title">{this.props.title}</h1>
-          <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author}`}</div>
+          {(this.props.date && this.props.author) && <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author}`}</div> }
           <div className="blogpost__text" dangerouslySetInnerHTML={this.rawMarkup()}></div>
           {this.getActions()}
       </Card>
@@ -34,7 +34,7 @@ class BlogPost extends React.Component {
 
   getActions() {
     // logged in user = blog post owner
-    if(this.props.auth_id === this.props.user_id){
+    if(this.props.user_id && this.props.auth_id === this.props.user_id){
       return (
         <div className="blogpost_actions">
           <Link to={`/blog/${this.props.id}/edit`}>
