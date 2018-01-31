@@ -44,7 +44,7 @@ export default class BlogEditor extends React.Component {
 
   render() {
     return (
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className='blogeditor__form'>
           <TextField
             type='text'
             name='title'
