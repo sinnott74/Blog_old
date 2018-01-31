@@ -18,6 +18,10 @@ module.exports = {
       name: 'user_id',
       dataType: 'integer',
       notNull: true
+    }, {
+      name: 'created_on',
+      dataType: 'TIMESTAMP WITH TIME ZONE',
+      notNull: true
     }
   ],
   foreignKeys: [{

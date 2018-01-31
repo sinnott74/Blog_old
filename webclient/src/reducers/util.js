@@ -28,10 +28,25 @@ export const arrayToObject = (array, idName) => {
  * @param object - Object to convert into keyed object
  * @param idName - name if the ID attribute - optional
  */
-export const objectToIDKeyedObject = (obj, idName,) => {
+export const objectToIDKeyedObject = (obj, idName) => {
   idName = idName || 'id';
   let objectKeyedByID = {};
   let id = obj[idName];
   objectKeyedByID[id] = obj;
   return objectKeyedByID;
+}
+
+/**
+ * Adds the item into an array & sorts
+ * @param {*} array
+ * @param {*} item
+ * @returns a new sorted array
+ */
+export const addToArrayAndSort = (array, item)  => {
+  let newArray = [...array];
+  if(!newArray.includes(item)){
+    newArray.push(item);
+    newArray.sort();
+  }
+  return newArray;
 }

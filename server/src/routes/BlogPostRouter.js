@@ -1,18 +1,21 @@
 var router = require('express').Router();
 var Date = require('../util/Date')
 var BlogPostDAO = require('../DAO/BlogPostDAO');
+var UserDAO = require('../DAO/UserDAO');
 
 router.get('/', async function(req, res, next) {
-  let blogPostDAO = new BlogPostDAO();
-  let blogPosts = await blogPostDAO.list();
+  let blogPosts = await new BlogPostDAO().listBlogPostDetails();
+  blogPosts.forEach((blogPost) => {
+    blogPost.date = new Date(blogPost.created_on).toString();
+  })
   res.json(blogPosts);
   next();
 })
 
 router.get('/:id', async function(req, res, next) {
   var id = req.params.id;
-  let blogPostDAO = new BlogPostDAO();
-  let blogPost = await blogPostDAO.get(id);
+  let blogPost = await new BlogPostDAO().getBlogPostDetails(id);
+  blogPost.date = new Date(blogPost.created_on).toString();
   res.json(blogPost);
   next();
 })

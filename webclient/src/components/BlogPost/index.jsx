@@ -5,6 +5,8 @@ import './style.css'
 import { connect } from "react-redux";
 import { loadBlogPost } from '../../actions/blog';
 import Link from '../Link';
+import marked from 'marked';
+import Button from 'react-md/lib/Buttons/Button';
 
 class BlogPost extends React.Component {
 
@@ -14,16 +16,36 @@ class BlogPost extends React.Component {
 
   render() {
     return (
-      <div className="blogpost">
-        <Card>
-            <div className="blogpost__title">{this.props.title}</div>
-            <div className="blogpost__author">{this.props.author}</div>
-            <div className="blogpost__date">{this.props.date}</div>
-            <div className="blogpost__text">{this.props.text}</div>
-            <Link to={`/blog/${this.props.id}/edit`}>Edit</Link>
-        </Card>
-      </div>
+      <Card className="blogpost">
+          <h1 className="blogpost__title">{this.props.title}</h1>
+          <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author}`}</div>
+          <div className="blogpost__text" dangerouslySetInnerHTML={this.rawMarkup()}></div>
+          {this.getActions()}
+      </Card>
     )
+  }
+
+  rawMarkup(){
+    if(this.props.text){
+      let rawMarkup = marked(this.props.text, {sanitize: true, breaks: true});
+      return { __html: rawMarkup };
+    }
+  }
+
+  getActions() {
+    // logged in user = blog post owner
+    if(this.props.auth_id === this.props.user_id){
+      return (
+        <div className="blogpost_actions">
+          <Link to={`/blog/${this.props.id}/edit`}>
+            <Button raised={true} secondary>Delete</Button>
+          </Link>
+          <Link to={`/blog/${this.props.id}/edit`}>
+            <Button raised={true} primary>Edit</Button>
+          </Link>
+        </div>
+      )
+    }
   }
 }
 
@@ -32,7 +54,8 @@ BlogPost.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ...state.blog.byId[ownProps.id]
+  ...state.blog.byId[ownProps.id],
+  auth_id: state.auth.id
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

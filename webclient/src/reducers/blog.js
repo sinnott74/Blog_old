@@ -7,7 +7,7 @@ import { LIST_BLOG_POSTS,
           BLOG_POSTS_ERRORED,
           STORE_BLOG_POST
         } from '../actions/blog';
-import { arrayToObject, objectToIDKeyedObject } from './util';
+import { arrayToObject, objectToIDKeyedObject, addToArrayAndSort } from './util';
 
 let initialState = {
   byId: {},
@@ -50,7 +50,7 @@ let initialState = {
           ...state.byId,
           ...blogPost
         },
-        allIds: Object.keys(state.byId)
+        allIds: addToArrayAndSort(state.allIds, action.blogPost.id)
       }
     default:
       return state;

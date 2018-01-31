@@ -1,4 +1,5 @@
 import { showToast } from './toast';
+import { push } from 'react-router-redux'
 
 export const LIST_BLOG_POSTS = 'LIST_BLOG_POSTS';
 export const EDIT_BLOG_ENTRY = 'EDIT_BLOG_ENTRY';
@@ -36,7 +37,6 @@ function blogHasErrored(bool){
 }
 
 function storeBlogPost(blogPost){
-  console.log('getting blogpost')
   return {
     type: STORE_BLOG_POST,
     blogPost
@@ -83,8 +83,12 @@ export function addBlogPost(blogpost) {
       return response;
     })
     .then((response) => response.json())
-    .then((blogPost) => dispatch(storeBlogPost(blogPost)))
+    .then((blogPost) => {
+      dispatch(storeBlogPost(blogPost))
+      blogpost = blogPost;
+    })
     .then(() => dispatch(showToast('Blog post saved')))
+    .then(() => dispatch(push(`/blog/${blogpost.id}`)))
     .catch((err) => {
       dispatch(blogHasErrored(true))
       dispatch(showToast('Save failed'))
@@ -95,7 +99,7 @@ export function addBlogPost(blogpost) {
 export function editBlogPost(blogpost) {
   return function(dispatch) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${blogpost.blogpost_id}`, {
+    fetch(`/api/blogposts/${blogpost.id}`, {
       method: 'PUT',
       body: JSON.stringify(blogpost),
       headers: new Headers({
@@ -112,6 +116,7 @@ export function editBlogPost(blogpost) {
     // .then((response) => response.json()) // no response body on modify
     .then((blogPost) => dispatch(storeBlogPost(blogPost)))
     .then(() => dispatch(showToast('Blog post saved')))
+    .then(() => dispatch(push(`/blog/${blogpost.id}`)))
     .catch((err) => {
       dispatch(blogHasErrored(true))
       dispatch(showToast('Save failed'))
@@ -121,7 +126,6 @@ export function editBlogPost(blogpost) {
 
 export function loadBlogPosts() {
   return function(dispatch) {
-    console.log('loading posts');
     dispatch(loadingBlogPosts(true));
     fetch('/api/blogposts')
     .then((response) => {
@@ -137,11 +141,10 @@ export function loadBlogPosts() {
   }
 }
 
-export function loadBlogPost(blogpost_id) {
+export function loadBlogPost(id) {
   return function(dispatch) {
-    console.log('loading posts');
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${blogpost_id}`)
+    fetch(`/api/blogposts/${id}`)
     .then((response) => {
         if (!response.ok) {
             throw Error(response.statusText);

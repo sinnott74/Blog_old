@@ -4,28 +4,27 @@ import Card from '../Card'
 import Link from '../Link'
 import './style.css'
 import { connect } from "react-redux";
+import marked from 'marked';
 
 const BlogListItem = (props) => {
 
   return (
-      <Card className="bloglistitem__card">
-        <div className="bloglistitem">
-          <div className="bloglistitem__imagecontainer">
-            <img className="bloglistitem__image" src="https://images.unsplash.com/photo-1483199095378-ce6e77cd1c0d?auto=format&fit=crop&w=1717&q=80" alt="" />
-          </div>
-          <div className="bloglistitem__detailscontainer">
-            <Link to={`/blog/${props.id}`} className="bloglistentry__link">
-              <div className="bloglistitem__title">{props.title}</div>
-            </Link>
-            <div className="bloglistitem__date">{props.date}</div>
-            <div className="bloglistitem__textcontainer">
-              <div className="bloglistitem__text">{props.text}</div>
-              <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
-            </div>
-          </div>
-        </div>
-      </Card>
+      <Card className="bloglistitem">
+        <Link to={`/blog/${props.id}`} className="bloglistentry__link">
+          <h2 className="bloglistitem__title">{props.title}</h2>
+        </Link>
+        <div className="blogpost__subtitle">{`${props.date} by ${props.author}`}</div>
+        <div className="bloglistitem__text" dangerouslySetInnerHTML={rawMarkup(props.text)}></div>
+        <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
+    </Card>
   )
+}
+
+const rawMarkup = (markDown) => {
+  if(markDown){
+    let rawMarkup = marked(markDown, {sanitize: true, breaks: true});
+    return { __html: rawMarkup };
+  }
 }
 
 BlogListItem.propTypes = {
