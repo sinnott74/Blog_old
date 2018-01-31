@@ -1,3 +1,7 @@
+.blogpost__text {
+  padding: 2em;
+}
+
 .blogpost__text * {
   max-width: 100%;
   max-height: 100%;
