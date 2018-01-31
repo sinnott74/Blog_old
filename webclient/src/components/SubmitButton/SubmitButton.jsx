@@ -4,7 +4,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 import './SubmittButton.css';
 
-export default class SubmitButton extends React.Component {
+export default class SubmitButton extends React.PureComponent {
 
   render() {
     return (
