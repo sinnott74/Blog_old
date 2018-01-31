@@ -4,10 +4,11 @@
   color: var(--text-color-dark);
 }
 .bloglistitem__title {
-  display: inline-block;
-  font-size: 25px;
+  text-align: center;
   margin-bottom: .5vw;
-  padding: 0;
+}
+.bloglistitem__subtitle {
+  margin-bottom: 2vh;
 }
 .bloglistitem__text {
   display: inline-block;
