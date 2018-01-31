@@ -64,12 +64,6 @@ expressApp.use(Auth.initialize())
  */
 expressApp.use(compression());
 
-// // log all paths
-// expressApp.use(function(req, res, next) {
-//   console.log(req.path);
-//   next();
-// });
-
 // Data API routes
 var routes = require('./src/routes');
 expressApp.use('/api', routes);

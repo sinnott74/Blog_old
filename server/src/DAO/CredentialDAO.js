@@ -72,9 +72,10 @@ class CredentialDAO extends DAO {
    */
   async readActiveUserCredentialByUsername(username) {
     let query = await this.entity
-                        .from(this.entity.join(this.user).on(this.entity.user_id.equals(this.user.id)))
-                        .where({active: true}).and(this.user.username.equals(username)).toQuery();
-    console.log(query);
+                        .from(this.entity.join(this.user)
+                        .on(this.entity.user_id.equals(this.user.id)))
+                        .where({active: true}).and(this.user.username.equals(username))
+                        .toQuery();
     let result = await this.transaction.query(query)
 
     if(result.rows.length === 0) {
