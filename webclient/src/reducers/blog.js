@@ -50,7 +50,7 @@ let initialState = {
           ...state.byId,
           ...blogPost
         },
-        allIds: addToArrayAndSort(state.allIds, action.blogPost.id)
+        allIds: addToArrayAndSort(state.allIds, action.blogPost.id.toString())
       }
     default:
       return state;
