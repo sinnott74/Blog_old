@@ -18,5 +18,5 @@ blockquote {
   padding: 0 1em;
   color: #6a737d;
   margin: 1vw;
-  border-left: 0.25em solid #dfe2e5;
+  border-left: 0.25em solid var(--primary-color);
 }
