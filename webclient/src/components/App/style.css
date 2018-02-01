@@ -20,3 +20,12 @@ blockquote {
   margin: 1vw;
   border-left: 0.25em solid var(--primary-color);
 }
+
+pre {
+  padding: 13px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #fafafa;
+  outline: 1px solid #eeeeee;
+  border-left: 5px solid var(--primary-color);;
+}
