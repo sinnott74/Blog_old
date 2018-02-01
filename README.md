@@ -1,7 +1,4 @@
-# Progressive Web Application Shell Architecture
-
 [![Build Status](https://travis-ci.org/sinnott74/Sinnott.svg?branch=master)](https://travis-ci.org/sinnott74/Sinnott)
-
 
 # Sinnott
 This is my personal site to curate a blog & various works.
