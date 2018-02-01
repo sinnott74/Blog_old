@@ -13,9 +13,6 @@
   max-width: 100%;
   max-height: 100%;
 }
-.blogpost__text h2, .blogpost__text h3 {
-  text-align: center;
-}
 .blogpost__text img {
   display: block;
   margin: auto;
