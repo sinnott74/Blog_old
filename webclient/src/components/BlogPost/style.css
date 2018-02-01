@@ -20,6 +20,9 @@
   display: block;
   margin: auto;
 }
+.blogpost__text p{
+  line-height: 25px;
+}
 .blogpost__text hr {
   background-color: var(--primary-color);
   border: 0px;

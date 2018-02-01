@@ -20,6 +20,9 @@
 .bloglistitem__text h2{
   text-align: center;
 }
+.bloglistitem__text p{
+  line-height: 25px;
+}
 .bloglistitem__readmore {
   display: inline-block;
   text-decoration: none;
