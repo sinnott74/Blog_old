@@ -25,7 +25,7 @@ pre {
   padding: 13px;
   overflow-x: auto;
   overflow-y: hidden;
-  background: #fafafa;
+  background: #f0f0f0;
   outline: 1px solid #eeeeee;
   border-left: 5px solid var(--primary-color);;
 }
