@@ -20,15 +20,3 @@ blockquote {
   margin: 1vw;
   border-left: 0.25em solid var(--primary-color);
 }
-
-hr {
-  background-color: var(--primary-color);
-  border: 0px;
-  margin: 50px auto;
-  width: 50%;
-  height: 5px;
-  border-radius: 5px;
-  max-width: 430px;
-  color: var(--primary-color);
-  clear: both;
-}
