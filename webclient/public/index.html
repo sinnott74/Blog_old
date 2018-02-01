@@ -24,7 +24,7 @@
         --background-color-placeholder: #F5F5F5;
         --warning-color: #F00;
         --big-screen: 1025px;
-        --font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        --font-family: HAvenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         --transition-time: 130ms;
         --transition-timing-function: ease-in;
         --transition: var(--transition-time) var(--transition-timing-function);
@@ -38,12 +38,15 @@
         margin: 0;
         width: 100%;
         /* height: 100%; */
-        font-family: var(--font-family);
         font-weight: 400;
         color: var(--text-dark);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background: var(--background-color) !important;;
+        background: var(--background-color) !important;
+      }
+      html, h1, h2, h3, h4, h5, h6, p, button, input, textarea, div {
+        font-family: var(--font-family) !important;
+        font-size: 101% !important;
       }
       .noscript__container {
         display: -webkit-flex;
