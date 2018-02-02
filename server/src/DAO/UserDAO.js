@@ -3,8 +3,8 @@ let DAO = require('./DAO');
 let bcrypt = require('bcryptjs');
 let userConfig = require('../data/definition/User');
 let credentialConfig = require('../data/definition/Credential');
-let RecordNotFoundException = require('..//util/exception/RecordNotFoundException');
-let MultipleRecordsFoundException = require('..//util/exception/RecordNotFoundException');
+let RecordNotFoundException = require('../exception/RecordNotFoundException');
+let MultipleRecordsFoundException = require('../exception/RecordNotFoundException');
 let Sql = require('sql');
 
 /**

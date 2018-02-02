@@ -2,6 +2,8 @@
 var DAO = require('./DAO');
 let blogPostConfig = require('../data/definition/BlogPost');
 let userConfig = require('../data/definition/User');
+let RecordNotFoundException = require('../exception/RecordNotFoundException');
+let MultipleRecordsFoundException = require('..//exception/RecordNotFoundException');
 let Sql = require('sql');
 
 /**

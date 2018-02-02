@@ -6,7 +6,7 @@ const moment = require('moment');
 const TransactionInfo = require('./TransactionInfo');
 const UserDAO = require('../DAO/UserDAO');
 const CredentialDAO = require('../DAO/CredentialDAO');
-const AuthenticationError = require('../util/exception/AuthenticationException');
+const AuthenticationError = require('../exception/AuthenticationException');
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
 

@@ -53,7 +53,6 @@ class TransactionInfo {
   }
 
   static async errorMiddleware(err, req, res, next) {
-    console.log(err);
     await TransactionInfo.transactionFailure();
     next(err);
   }

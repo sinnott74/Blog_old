@@ -6,8 +6,8 @@
  */
 
 let TransactionInfo = require('../core/TransactionInfo');
-let RecordNotFoundException = require('..//util/exception/RecordNotFoundException');
-let MultipleRecordsFoundException = require('..//util/exception/RecordNotFoundException');
+let RecordNotFoundException = require('../exception/RecordNotFoundException');
+let MultipleRecordsFoundException = require('../exception/RecordNotFoundException');
 let Sql = require('sql');
 
 /**
