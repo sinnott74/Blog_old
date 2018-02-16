@@ -7,6 +7,7 @@ let userConfig = require('../data/definition/User');
 let RecordNotFoundException = require('../exception/RecordNotFoundException');
 let MultipleRecordsFoundException = require('../exception/RecordNotFoundException');
 let Sql = require('sql');
+let Query = require('../util/ORM/Query');
 
 /**
  * CredentialDAO control all data access to the Credential table.
@@ -72,11 +73,14 @@ class CredentialDAO extends DAO {
    */
   async readActiveUserCredentialByUsername(username) {
     let query = await this.entity
+                        .select(this.entity.star(), this.user.star({ prefix: 'user.' }))
                         .from(this.entity.join(this.user)
                         .on(this.entity.user_id.equals(this.user.id)))
                         .where({active: true}).and(this.user.username.equals(username))
                         .toQuery();
     let result = await this.transaction.query(query)
+
+    let test = Query.convertDotNotationToObject(result.rows[0]);
 
     if(result.rows.length === 0) {
       throw new RecordNotFoundException();
