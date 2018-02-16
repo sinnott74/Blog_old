@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run watch-css\" \"npm run start-js\"",
-    "build": "concurrently \"npm run build-css\" \"npm run build-js\"",
+    "build": "npm run build-css && npm run build-js",
     "test": "echo \"Error: no test specified\" && exit 0",
     "react-scripts": "react-scripts",
     "build-js": "react-scripts build",
