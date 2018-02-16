@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import OptionsMenuItem from '../OptionsMenuItem'
-import './style.css'
+import './OptionsMenu.css'
 
 import { connect } from "react-redux";
 import { closeOptionsMenu } from '../../redux/modules/ui/optionsMenu';

@@ -4,7 +4,7 @@ import Github from '../../images/github.svg';
 import Facebook from '../../images/facebook.svg';
 import Twitter from '../../images/twitter.svg';
 import LinkedIn from '../../images/linkedin.svg';
-import './style.css'
+import './PersonalLinks.css'
 
 // Functional Component
 const PersonalLinks = (props) => {

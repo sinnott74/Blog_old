@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Link from '../Link'
-import './style.css'
+import './HeaderLayout.css'
 
 import { connect } from "react-redux";
 import { openSideNav } from '../../redux/modules/ui/sidenav';

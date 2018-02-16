@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Card from '../Card'
 import Link from '../Link'
-import './style.css'
+import './BlogListItem.css'
 import { connect } from "react-redux";
 import marked from 'marked';
 

@@ -2,12 +2,12 @@ import React from 'react';
 import SideNavLink from '../SideNavLink';
 import PersonalLinks from '../PersonalLinks';
 import { version } from '../../../package.json'
-import './style.css'
+import './SideNavLayout.css'
 
 import { connect } from "react-redux";
 import { openSideNav, closeSideNav } from '../../redux/modules/ui/sidenav';
 
-class SideNav extends React.Component {
+class SideNavLayout extends React.Component {
 
   render() {
     return (
@@ -268,4 +268,4 @@ const mapDispatchToProps = {
   closeSideNav
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideNav)
+export default connect(mapStateToProps, mapDispatchToProps)(SideNavLayout)
