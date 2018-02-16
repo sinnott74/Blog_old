@@ -5,7 +5,7 @@ import { version } from '../../../package.json'
 import './style.css'
 
 import { connect } from "react-redux";
-import { openSideNav, closeSideNav } from '../../actions/sidenav';
+import { openSideNav, closeSideNav } from '../../redux/modules/ui/sidenav';
 
 class SideNav extends React.Component {
 

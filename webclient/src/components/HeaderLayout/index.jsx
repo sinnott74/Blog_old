@@ -4,8 +4,8 @@ import Link from '../Link'
 import './style.css'
 
 import { connect } from "react-redux";
-import { openSideNav } from '../../actions/sidenav';
-import { toggleOptionsMenu } from '../../actions/optionsMenu';
+import { openSideNav } from '../../redux/modules/ui/sidenav';
+import { toggleOptionsMenu } from '../../redux/modules/ui/optionsMenu';
 
 import Button from 'react-md/lib/Buttons/Button';
 

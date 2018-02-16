@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { showToast } from '../../actions/toast';
+import { showToast } from '../../redux/modules/ui/toast';
 
 class ServiceWorker extends React.Component {
 

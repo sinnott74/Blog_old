@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../components/Card';
 import { connect } from "react-redux";
-import { signUp } from '../actions/auth';
+import { signUp } from '../redux/modules/auth';
 import { Redirect } from 'react-router';
 import SubmitButton from '../components/SubmitButton';
 import TextField from 'react-md/lib/TextFields/TextField';

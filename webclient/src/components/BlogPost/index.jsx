@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from '../Card'
 import './style.css'
 import { connect } from "react-redux";
-import { loadBlogPost } from '../../actions/blog';
+import { loadBlogPost } from '../../redux/modules/blog';
 import Link from '../Link';
 import marked from 'marked';
 import Button from 'react-md/lib/Buttons/Button';

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter as Router, routerMiddleware } from 'react-router-redux'
 import thunk from "redux-thunk";
 import createHistory from 'history/createBrowserHistory';
-import rootReducer from './reducers';
+import rootReducer from './redux/rootReducer';
 import App from './components/App';
 import 'react-md/dist/react-md.blue-red.min.css';
 

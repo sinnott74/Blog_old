@@ -1,10 +1,64 @@
-import { showToast } from './toast';
+/*
+ * Auth actions
+ */
+import { showToast } from './ui/toast';
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_OUT = 'LOG_OUT';
 export const LOG_IN_LOADING = 'LOG_IN_LOADING';
 export const LOG_IN_FAILED = 'LOG_IN_FAILED';
 
+/**
+ * Reducer
+ */
+let defaultState = {
+  username: "",
+  role: "",
+  token: "",
+  loggedIn: false,
+  isLoading: false,
+  hasErrored: false
+};
+
+let user = JSON.parse(localStorage.getItem('user'));
+
+let initialState = user ? {...defaultState, ...user, loggedIn: true} : defaultState
+
+export default function reducer(state = initialState, action) {
+  switch (action.type) {
+    case LOG_IN_LOADING:
+      return {
+        ...defaultState,
+        isLoading: true
+      }
+    case LOG_IN_FAILED:
+      return {
+        ...defaultState,
+        hasErrored: true
+      }
+    case LOG_IN_SUCCESS:
+      localStorage.setItem('user', JSON.stringify(action.user));
+      return {
+        ...defaultState,
+        isLoading: false,
+        hasErrored: false,
+        ...action.user,
+        loggedIn: true
+
+      }
+    case LOG_OUT:
+      localStorage.removeItem('user');
+      return {
+        ...defaultState
+      }
+    default:
+      return state;
+  }
+}
+
+/**
+ * Action Creators
+ */
 function logUserOut() {
   return {
     type: LOG_OUT

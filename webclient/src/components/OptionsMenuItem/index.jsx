@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css'
 import { connect } from "react-redux";
-import { closeOptionsMenu } from '../../actions/optionsMenu';
+import { closeOptionsMenu } from '../../redux/modules/ui/optionsMenu';
 import Link from '../Link';
 
 // Functional Component
