@@ -1,0 +1,45 @@
+/*
+ * Sidenav actions
+ */
+export const SMALL_SCREEN = 'SMALL_SCREEN';
+export const LARGE_SCREEN = 'LARGE_SCREEN';
+
+/**
+ * Reducer
+ */
+ let initialState = {
+  large : false
+ }
+
+export default function reducer(state = initialState, action) {
+  switch (action.type) {
+    case SMALL_SCREEN:
+      return {
+        ...state,
+        large: false
+      }
+    case LARGE_SCREEN:
+      return {
+        ...state,
+        large: true
+      }
+    default:
+      return state;
+  }
+}
+
+
+/**
+ * Action Creators
+ */
+export function largeScreen() {
+  return {
+    type: LARGE_SCREEN,
+  }
+}
+
+export function smallScreen() {
+  return {
+    type: SMALL_SCREEN
+  }
+}

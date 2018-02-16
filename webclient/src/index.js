@@ -1,41 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux'
+import store, { history } from './redux/store';
 import { Provider } from 'react-redux'
-import { ConnectedRouter as Router, routerMiddleware } from 'react-router-redux'
-import thunk from "redux-thunk";
-import createHistory from 'history/createBrowserHistory';
-import rootReducer from './reducers';
+import { ConnectedRouter } from 'react-router-redux'
 import App from './components/App';
-import 'react-md/dist/react-md.blue-red.min.css';
+// import 'react-md/dist/react-md.blue-red.min.css';
 
 // UI components to bundle centrally instead of within each page chunk
 import 'react-md/lib/Buttons/Button';
 import 'react-md/lib/TextFields/TextField';
 import 'react-md/lib/Pickers/DatePicker';
 
-const history = createHistory();
-const middleware = routerMiddleware(history);
-
-const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
-
-const enhancer = composeEnhancers(
-  applyMiddleware(middleware, thunk)
-);
-
-const store = createStore(
-  rootReducer,
-  enhancer
-);
-
 ReactDOM.render(
   <Provider store= {store}>
-    <Router history={history}>
+    <ConnectedRouter history={history}>
       <App />
-    </Router>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 );

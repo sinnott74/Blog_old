@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { editBlogPost, loadBlogPost } from '../../actions/blog';
+import { editBlogPost, loadBlogPost } from '../../redux/modules/blog';
 import BlogEditor from '../BlogEditor'
 
 class EditBlogPost extends BlogEditor {
