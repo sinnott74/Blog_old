@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from "react-redux";
-import { largeScreen } from '../../actions/screen';
+import { largeScreen } from '../../redux/modules/ui/screen';
 
 class ScreenMediaQuery extends React.Component {
 

@@ -4,7 +4,7 @@ import OptionsMenuItem from '../OptionsMenuItem'
 import './style.css'
 
 import { connect } from "react-redux";
-import { closeOptionsMenu } from '../../actions/optionsMenu';
+import { closeOptionsMenu } from '../../redux/modules/ui/optionsMenu';
 
 class OptionsMenu extends React.Component {
 

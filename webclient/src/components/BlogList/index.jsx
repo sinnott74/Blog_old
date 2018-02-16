@@ -4,7 +4,7 @@ import BlogListItem from '../BlogListItem'
 import Spinner from '../Spinner'
 import './style.css'
 import { connect } from 'react-redux';
-import { loadBlogPosts } from '../../actions/blog';
+import { loadBlogPosts } from '../../redux/modules/blog';
 
 class BlogList extends React.Component {
 

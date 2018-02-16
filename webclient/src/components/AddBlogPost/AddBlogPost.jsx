@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { addBlogPost } from '../../actions/blog';
+import { addBlogPost } from '../../redux/modules/blog';
 import BlogEditor from '../BlogEditor'
 
 const mapStateToProps = (state, ownProps) => ({
