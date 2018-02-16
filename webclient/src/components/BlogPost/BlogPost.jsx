@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Card from '../Card'
-import './style.css'
+import './BlogPost.css'
 import { connect } from "react-redux";
 import { loadBlogPost } from '../../redux/modules/blog';
 import Link from '../Link';

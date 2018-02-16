@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import './style.css'
+import './Toast.css'
 
 import { connect } from "react-redux";
 import { hideToast } from '../../redux/modules/ui/toast';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Link from '../Link'
-import './style.css'
+import './HeaderLayout.css'
 
 import { connect } from "react-redux";
 import { openSideNav } from '../../redux/modules/ui/sidenav';
@@ -9,7 +9,7 @@ import { toggleOptionsMenu } from '../../redux/modules/ui/optionsMenu';
 
 import Button from 'react-md/lib/Buttons/Button';
 
-class Header extends React.Component {
+class HeaderLayout extends React.Component {
   render() {
     return (
       <div className="header-layout">
@@ -30,7 +30,7 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
+HeaderLayout.propTypes = {
   title: PropTypes.string.isRequired,
   handleMenuButtonClick: PropTypes.func.isRequired,
   handleOptionsButtonClick: PropTypes.func.isRequired
@@ -46,4 +46,4 @@ const mapDispatchToProps = {
   handleOptionsButtonClick: toggleOptionsMenu
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderLayout)

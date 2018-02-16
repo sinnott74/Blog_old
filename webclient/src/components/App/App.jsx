@@ -7,7 +7,7 @@ import ServiceWorker from '../ServiceWorker';
 import Routes from '../../Routes';
 import ScreenMediaQuery from '../ScreenMediaQuery';
 import '../Card';
-import './style.css'
+import './App.css'
 
 export default  class App extends React.Component {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Link from '../Link';
 import FontIcon from 'react-md/lib/FontIcons/FontIcon';
-import './style.css';
+import './SideNavLink.css';
 
 // Functional Component
 const SideNavLink = (props) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import BlogListItem from '../BlogListItem'
 import Spinner from '../Spinner'
-import './style.css'
+import './BlogList.css'
 import { connect } from 'react-redux';
 import { loadBlogPosts } from '../../redux/modules/blog';
 
