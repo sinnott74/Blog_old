@@ -37,8 +37,13 @@ class ManyToMany extends AbstractAssociation {
    * Injects the foreign key reference attributes onto the target model
    */
   _addForeignKeyConstraints() {
+    super._addForeignKeyConstraints();
     this._addReferenceID(this.source, this.through);
     this._addReferenceID(this.target, this.through);
+  }
+
+  buildQuery(query) {
+    super.buildQuery();
   }
 }
 

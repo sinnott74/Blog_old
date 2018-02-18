@@ -32,6 +32,7 @@ class OneToMany extends AbstractAssociation {
    * Injects the foreign key reference attributes onto the target model
    */
   _addForeignKeyConstraints() {
+    super._addForeignKeyConstraints();
     this._addReferenceID(this.source, this.target);
   }
 
@@ -56,6 +57,10 @@ class OneToMany extends AbstractAssociation {
 
   _injectSourceAccessorMethods() {
 
+  }
+
+  buildQuery(query) {
+    super.buildQuery();
   }
 }
 

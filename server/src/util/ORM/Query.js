@@ -124,7 +124,17 @@ class Query {
    * @param {Object}          [options.includes] associations to include in the query
    */
   _buildSelectSQLQuery(model, attributes, options) {
+  }
 
+  /**
+   * Executes a Select Query.
+   *
+   * @param {Model}                 model           Initial model on which this query is executed.
+   * @param {object}                attributes     Attributes used in the where clause
+   * @param {object}                options        Query options
+   * @param {Array<string>}         options.includes   Array of association names
+   */
+  async select(model, attributes, options) {
     let queryBuilder = model.entity;
 
     // select
@@ -156,19 +166,7 @@ class Query {
       queryBuilder.where(attribute.equals(attributeValue));
     });
 
-    return queryBuilder.toQuery();
-  }
-
-  /**
-   * Executes a Select Query.
-   *
-   * @param {Model}                 model           Initial model on which this query is executed.
-   * @param {object}                attributes     Attributes used in the where clause
-   * @param {object}                options        Query options
-   * @param {Array<string>}         options.includes   Array of association names
-   */
-  async select(model, attributes, options) {
-    const sqlQuery = this._buildSelectSQLQuery(model, attributes, options);
+    const sqlQuery = queryBuilder.toQuery();
     return this._executeSQLQuery(sqlQuery);
   }
 

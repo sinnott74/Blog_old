@@ -14,7 +14,13 @@ class AbstractAssociation {
   }
 
   _addForeignKeyConstraints() {
-    throw new Error('_addForeignKeyConstraints must be implemented');
+  }
+
+  /**
+   *
+   * @param {Query} query
+   */
+  buildQuery(query) {
   }
 
   /**
@@ -40,17 +46,26 @@ class AbstractAssociation {
       ...referenceAttribute
     }
 
-    // Add getter & setter for foreign reference
-    Object.defineProperty(modelReferencing.prototype, referenceAttributeName, {
-      get: function() {
-        return this.get(referenceAttributeName);
-      },
-      set: function() {
-        this.set(referenceAttributeName);
-      }
-    })
+    this._addGetterAndSetter(modelReferencing, referenceAttributeName);
 
     modelReferencing.refreshAttributes();
+  }
+
+  /**
+   * Adds a getter & setter onto the prototype of the given model.
+   * @param {Model} model Model to add the getter & setter to
+   * @param {String} name Attribute name
+   */
+  _addGetterAndSetter(model, name) {
+    // Add getter & setter for foreign reference
+    Object.defineProperty(model.prototype, name, {
+      get: function() {
+        return this.get(name);
+      },
+      set: function() {
+        this.set(name);
+      }
+    })
   }
 }
 
