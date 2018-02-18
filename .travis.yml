@@ -18,6 +18,12 @@ services:
 before_install:
  - psql -c 'create database pwadb;' -U postgres --set AUTOCOMMIT=off
 
+# Block building for push requests on master & staging. Build for pull requests only
+ branches:
+  except:
+  - master
+  - staging
+
 # Deploy
 # Bluemix
 deploy:
