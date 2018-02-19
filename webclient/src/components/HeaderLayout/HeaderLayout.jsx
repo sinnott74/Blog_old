@@ -36,14 +36,9 @@ HeaderLayout.propTypes = {
   handleOptionsButtonClick: PropTypes.func.isRequired
 }
 
-
-
-
-const mapStateToProps = (state) => ({});
-
 const mapDispatchToProps = {
   handleMenuButtonClick: openSideNav,
   handleOptionsButtonClick: toggleOptionsMenu
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderLayout)
+export default connect(null, mapDispatchToProps)(HeaderLayout)

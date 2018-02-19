@@ -223,3 +223,23 @@ export function loadBlogPost(id) {
     });
   }
 }
+
+/**
+ * Selectors
+ */
+
+ /**
+  * @param {State} state Redux state object
+  * @returns {Array<BlogPosts>} List of blogposts sorted by creation date from latest to earliest
+  */
+ export function getBlogPostsSortedByCreatedByDate(state){
+  const blogPosts = state.blog.allIds.map((id) => {
+    return state.blog.byId[id];
+  }).sort((o1, o2) => {
+    const d1 = new Date(o1.created_on);
+    const d2 = new Date(o2.created_on);
+    // Latest to earliest
+    return d2 - d1;
+  });
+  return blogPosts;
+ }
