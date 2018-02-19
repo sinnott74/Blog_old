@@ -4,5 +4,5 @@ applications:
   instances: 1
   domain: mybluemix.net
   name: sinnott
-  host: sinnott
+  random-route: true
   disk_quota: 1024M
