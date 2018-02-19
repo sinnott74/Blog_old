@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Card from '../Card'
 import Link from '../Link'
 import './BlogListItem.css'
-import { connect } from "react-redux";
 
 const BlogListItem = (props) => {
 
@@ -18,11 +17,9 @@ const BlogListItem = (props) => {
 }
 
 BlogListItem.propTypes = {
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  ...state.blog.byId[ownProps.id]
-})
-
-export default connect(mapStateToProps, null)(BlogListItem)
+export default BlogListItem;

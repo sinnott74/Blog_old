@@ -58,11 +58,7 @@ class SideNavLayout extends React.Component {
 
     this.touching = false;
 
-    // Touch slop is a variable that is defined to suggest anything larger
-    // than this value was an intended gesture by the user.
-    // 8  is a value from Android platform.
-    // 3 was added as a factor made up from what felt right.
-    this.TOUCH_SLOP = 8 * window.devicePixelRatio * 3;;
+    this.TOUCH_SLOP = 12 * window.devicePixelRatio;
 
     this._close = this._close.bind(this);
     this._open = this._open.bind(this);

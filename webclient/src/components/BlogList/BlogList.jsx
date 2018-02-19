@@ -4,7 +4,7 @@ import BlogListItem from '../BlogListItem'
 import Spinner from '../Spinner'
 import './BlogList.css'
 import { connect } from 'react-redux';
-import { loadBlogPosts } from '../../redux/modules/blog';
+import { loadBlogPosts, getBlogPostsSortedByCreatedByDate } from '../../redux/modules/blog';
 
 class BlogList extends React.Component {
 
@@ -13,12 +13,12 @@ class BlogList extends React.Component {
   }
 
   render() {
-    if(this.props.blogPostIDs.length === 0){
+    if(this.props.blogPosts.length === 0){
       return <Spinner />
     }
 
-    let blogPosts = this.props.blogPostIDs.map(function(id){
-      return <BlogListItem key= {id} id={id} />
+    let blogPosts = this.props.blogPosts.map(function(blogPost){
+      return <BlogListItem key={blogPost.id} {...blogPost}/>
     });
 
     return (
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) =>({
-  blogPostIDs: state.blog.allIds
+  blogPosts: getBlogPostsSortedByCreatedByDate(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogList)
