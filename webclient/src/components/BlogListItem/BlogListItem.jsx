@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import Card from '../Card'
 import Link from '../Link'
 import './BlogListItem.css'
 import { connect } from "react-redux";
@@ -7,12 +8,12 @@ import { connect } from "react-redux";
 const BlogListItem = (props) => {
 
   return (
-      <div className="bloglistitem">
+      <Card className="bloglistitem">
         <Link to={`/blog/${props.id}`} className="bloglistentry__link">
           <span className="bloglistitem__title">{props.title}</span>
         </Link>
         <div className="bloglistitem__subtitle">{props.date}</div>
-    </div>
+    </Card>
   )
 }
 

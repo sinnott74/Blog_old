@@ -1,17 +1,17 @@
 .bloglistitem {
   display: flex;
-  width: 100%;
-  max-width: 750px;
   justify-content: space-between;
+  padding: 16px 15%;
   font-size: 1.5em;
   margin-bottom: 2vh;
-  flex-wrap: wrap;
   align-items: start;
+  flex-direction: row;
 }
 
 @media (max-width: 1025px) {
   .bloglistitem {
     flex-direction: column;
+    padding: 16px;
   }
 }
 
