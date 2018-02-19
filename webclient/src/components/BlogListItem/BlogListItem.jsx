@@ -9,14 +9,12 @@ import marked from 'marked';
 const BlogListItem = (props) => {
 
   return (
-      <Card className="bloglistitem">
+      <div className="bloglistitem">
         <Link to={`/blog/${props.id}`} className="bloglistentry__link">
-          <h1 className="bloglistitem__title">{props.title}</h1>
+          <span className="bloglistitem__title">{props.title}</span>
         </Link>
-        <div className="blogpost__subtitle">{`${props.date} by ${props.author}`}</div>
-        <div className="bloglistitem__text" dangerouslySetInnerHTML={rawMarkup(props.text)}></div>
-        <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
-    </Card>
+        <div className="bloglistitem__subtitle">{props.date}</div>
+    </div>
   )
 }
 

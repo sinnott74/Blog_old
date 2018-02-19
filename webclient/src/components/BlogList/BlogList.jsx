@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import BlogListItem from '../BlogListItem'
 import Spinner from '../Spinner'
+import Card from '../Card';
 import './BlogList.css'
 import { connect } from 'react-redux';
 import { loadBlogPosts } from '../../redux/modules/blog';
@@ -22,9 +23,9 @@ class BlogList extends React.Component {
     });
 
     return (
-      <div className="bloglist">
+      <Card className="bloglist">
         { blogPosts }
-      </div>
+      </Card>
     );
   }
 }
