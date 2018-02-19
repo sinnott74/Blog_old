@@ -17,7 +17,7 @@ class BlogList extends React.Component {
       return <Spinner />
     }
 
-    let blogPosts = this.props.blogPostIDs.map(function(id){
+    let blogPosts = this.props.blogPostIDs.reverse().map(function(id){
       return <BlogListItem key= {id} id={id} />
     });
 
