@@ -1,6 +1,7 @@
 import { arrayToObject, objectToIDKeyedObject, addToArrayAndSort } from '../util';
 import { showToast } from './ui/toast';
 import { push } from 'react-router-redux'
+import { createSelector } from 'reselect';
 
 /*
  * Blog actions
@@ -232,14 +233,14 @@ export function loadBlogPost(id) {
   * @param {State} state Redux state object
   * @returns {Array<BlogPosts>} List of blogposts sorted by creation date from latest to earliest
   */
- export function getBlogPostsSortedByCreatedByDate(state){
-  const blogPosts = state.blog.allIds.map((id) => {
-    return state.blog.byId[id];
+const getBlogPostsByID = (state) => ( state.blog.byId );
+export const getBlogPostsSortedByCreatedByDate = createSelector([getBlogPostsByID], (byID) => {
+  return Object.keys(byID).map((id) => {
+    return byID[id];
   }).sort((o1, o2) => {
     const d1 = new Date(o1.created_on);
     const d2 = new Date(o2.created_on);
     // Latest to earliest
     return d2 - d1;
   });
-  return blogPosts;
- }
+ })
