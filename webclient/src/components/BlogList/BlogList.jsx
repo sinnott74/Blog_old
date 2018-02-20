@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types'
 import BlogListItem from '../BlogListItem'
 import Spinner from '../Spinner'
@@ -22,9 +22,9 @@ class BlogList extends React.Component {
     });
 
     return (
-      <div className="bloglist">
+      <Fragment>
         { blogPosts }
-      </div>
+      </Fragment>
     );
   }
 }
