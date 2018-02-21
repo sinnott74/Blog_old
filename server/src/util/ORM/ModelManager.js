@@ -1,4 +1,3 @@
-const Model = require('./Model')
 const toposort = require ('toposort');
 
 /**
