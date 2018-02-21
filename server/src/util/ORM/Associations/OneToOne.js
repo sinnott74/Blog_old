@@ -22,10 +22,6 @@ class OneToOne extends AbstractAssociation {
       this._addReferenceID(this.target, this.source);
     }
   }
-
-  buildQuery(query) {
-    super.buildQuery();
-  }
 }
 
 module.exports = OneToOne;

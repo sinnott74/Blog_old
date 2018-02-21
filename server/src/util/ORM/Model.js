@@ -313,10 +313,7 @@ class Model {
    * User.hasMany(Profile) // This will add userId to the profile table
    */
   static oneToMany(model, options) {
-    options = {
-      ...options,
-      ORM: this.options.ORM
-    }
+    options = {...options};
     let name = options.as ? options.as : this.name;
     model.associations[name] = new Associations.OneToMany(this, model, options);
   }
@@ -326,10 +323,7 @@ class Model {
    * @param {Model} model
    */
   static oneToOne(model, options) {
-    options = {
-      ...options,
-      ORM: this.options.ORM
-    }
+    options = {...options};
     let name = options.as ? options.as : this.name;
     model.associations[name] = new Associations.OneToOne(this, model, options);
   }
@@ -339,10 +333,7 @@ class Model {
    * @param {Model} model
    */
   static manyToMany(model, options) {
-    options = {
-      ...options,
-      ORM: this.options.ORM
-    }
+    options = {...options};
     let name = options.as ? options.as : this.name;
     model.associations[name] = new Associations.ManyToMany(this, model, options);
   }

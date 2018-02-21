@@ -1,4 +1,5 @@
 const AbstractAssociation = require('./AbstractAssociation');
+const ORM = require('../ORM');
 
 class ManyToMany extends AbstractAssociation {
 
@@ -16,7 +17,7 @@ class ManyToMany extends AbstractAssociation {
       throw new Error('Many to Many Association requires a "through" option');
     }
     this.type = "ManyToMany";
-    this.through = this._getOrCreateThroughModel();
+    this.through = this._getThroughModel();
     this._addForeignKeyConstraints();
   }
 
@@ -24,13 +25,12 @@ class ManyToMany extends AbstractAssociation {
    * Gets the Model specified in the 'through' options. Creates the models if it doesn't already exist.
    * @returns intermediary Model which facilitates this Many to Many association.
    */
-  _getOrCreateThroughModel() {
+  _getThroughModel() {
     const throughModelName = this.options.through;
-    if(!this.options.ORM.isDefined(throughModelName)){
-      let throughModel = this.options.ORM.define(throughModelName, {});
+    if(!ORM.isDefined(throughModelName)){
+      ORM.define(throughModelName, {});
     }
-
-    return this.options.ORM.getModel(throughModelName);
+    return ORM.getModel(throughModelName);
   }
 
   /**
@@ -40,10 +40,6 @@ class ManyToMany extends AbstractAssociation {
     super._addForeignKeyConstraints();
     this._addReferenceID(this.source, this.through);
     this._addReferenceID(this.target, this.through);
-  }
-
-  buildQuery(query) {
-    super.buildQuery();
   }
 }
 

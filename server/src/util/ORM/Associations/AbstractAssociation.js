@@ -17,13 +17,6 @@ class AbstractAssociation {
   }
 
   /**
-   *
-   * @param {Query} query
-   */
-  buildQuery(query) {
-  }
-
-  /**
    * Adds an foreign reference to the table of modelReferencing, referencing the table of modelBeingReferenced
    * @param {*} modelBeingReferenced
    * @param {*} modelReferencing

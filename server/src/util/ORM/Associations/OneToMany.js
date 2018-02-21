@@ -45,22 +45,11 @@ class OneToMany extends AbstractAssociation {
     let sourceName = this.options.as ? this.options.as : sourceModelName;
     let sourceModel = this.source;
 
-    Object.defineProperty(this.target.prototype, sourceName, {
-      get: function() {
-        return this.get(sourceName);
-      },
-      set: function() {
-        this.set(sourceName);
-      }
-    })
+    this._addGetterAndSetter(this.target, sourceName);
   }
 
   _injectSourceAccessorMethods() {
 
-  }
-
-  buildQuery(query) {
-    super.buildQuery();
   }
 }
 
