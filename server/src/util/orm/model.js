@@ -8,7 +8,7 @@ const Util = require('./util');
 const RecordNotFoundException = require('../../exception/RecordNotFoundException');
 const MultipleRecordsFoundException = require('../../exception/RecordNotFoundException');
 
-require('./association');
+require('./associations');
 require('./hooks');
 
 /************************************************************************************
