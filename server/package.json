@@ -8,7 +8,7 @@
     "start:prod": "npm run build:database && npm run start:server:prod",
     "start:server:dev": "nodemon index.js",
     "start:server:prod": "node index.js",
-    "build:database": "node buildDatabase.js",
+    "build:database": "node buildatabase.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
 
