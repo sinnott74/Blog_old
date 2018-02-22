@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../Entity').User;
-const Credential = require('../Entity').Credential;
 const ORM = require('../util/ORM/ORM');
 
 

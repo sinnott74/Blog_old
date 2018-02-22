@@ -1,8 +1,8 @@
 // Exporting before requiring Model as theres a circular relationship
 module.exports = ORM;
-const Model = require('./Model');
-const DataTypes = require('./DataTypes');
-const ModelManager = require('./ModelManager');
+const Model = require('./model');
+const DataTypes = require('./datatypes');
+const ModelManager = require('./modelmanager');
 const TransactionInfo = require('../../core/TransactionInfo');
 
 

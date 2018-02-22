@@ -2,7 +2,7 @@
  * Start Express server.
  */
 let Models = require('./src/Entity');
-let ORM = require('./src/util/ORM/ORM');
+let ORM = require('./src/util/orm');
 
 ORM.sync()
 .then(() => {

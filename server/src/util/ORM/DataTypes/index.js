@@ -1,16 +1,16 @@
-const IntDataType = require('./IntDataType');
-const StringDataType = require('./StringDataType');
-const TextDataType = require('./TextDataType');
-const TimeStampDataType = require('./TimeStampDataType');
-const BooleanDataType = require('./BooleanDataType');
+const INT = require('./int');
+const STRING = require('./string');
+const TEXT = require('./text');
+const TIMESTAMP = require('./timestamp');
+const BOOLEAN = require('./boolean');
 
-const DataTypes = {
+const dataTypes = {
 
-  BOOLEAN: BooleanDataType,
-  INT: IntDataType,
-  STRING: StringDataType,
-  TEXT: TextDataType,
-  TIMESTAMP: TimeStampDataType
+  BOOLEAN: BOOLEAN,
+  INT: INT,
+  STRING: STRING,
+  TEXT: TEXT,
+  TIMESTAMP: TIMESTAMP
 }
 
-module.exports = DataTypes;
+module.exports = dataTypes;

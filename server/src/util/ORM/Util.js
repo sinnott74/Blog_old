@@ -174,6 +174,62 @@ class Util {
     }
     return obj;
   }
+
+  /**
+   * Defines an property which isn't writable, enumerable or configurable
+   * @param {*} object Object on which to set the property
+   * @param {String} property name of the property
+   * @param {*} value value of the property
+   */
+  defineImmutableProperty(object, property, value) {
+    Object.defineProperty(object, property, {
+        writable: false,
+        enumerable: false,
+        configurable: false,
+        value: value
+    });
+  }
+
+  /**
+   * Defines an property which isn't writable, enumerable or configurable
+   * @param {*} object Object on which to set the property
+   * @param {String} property name of the property
+   * @param {*} value value of the property
+   */
+  defineNonEnumerableProperty(object, property, value) {
+    Object.defineProperty(object, property, {
+        writable: true,
+        enumerable: false,
+        configurable: true,
+        value: value
+    });
+  }
+
+  /**
+   * Adds a getter & setter onto the prototype of the given object.
+   * @param {Model} model Model to add the getter & setter to
+   * @param {String} name Attribute name
+   */
+  defineGetterAndSetter(model, name) {
+    // Add getter & setter for foreign reference
+    Object.defineProperty(model.prototype, name, {
+      get: function() {
+        return this.get(name);
+      },
+      set: function() {
+        this.set(name);
+      },
+      enumerable: true
+    })
+  }
+
+  /**
+   * Capitalizes the first letter of the string
+   * @param {String} string
+   */
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 }
 
 module.exports = new Util();

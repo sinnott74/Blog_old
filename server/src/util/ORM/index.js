@@ -1,2 +1,2 @@
-const ORM = require('./ORM');
+const ORM = require('./orm');
 module.exports = ORM;

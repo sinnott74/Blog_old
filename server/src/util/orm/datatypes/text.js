@@ -1,4 +1,4 @@
-const AbstractDataType = require('./AbstractDataType');
+const AbstractDataType = require('./abstractdatatype');
 
 class TextDataType extends AbstractDataType {
 
