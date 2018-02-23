@@ -5,10 +5,8 @@ const DataTypes = require('./datatypes');
 const ModelManager = require('./modelmanager');
 const TransactionInfo = require('../../core/TransactionInfo');
 
-
 function ORM() {
 }
-
 
 /**
  * Define a new model, representing a table in the DB.
@@ -88,6 +86,11 @@ ORM.isDefined = function(model) {
 ORM.getModel = function(model) {
   return ModelManager.getModel(model);
 }
+
+/**
+ * Exposing datatypes on ORM
+ */
+ORM.DataTypes = DataTypes
 
 
 /**

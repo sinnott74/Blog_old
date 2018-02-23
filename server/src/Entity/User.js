@@ -1,5 +1,5 @@
 const ORM = require('../util/orm');
-const DataTypes = require('../util/ORM/datatypes');
+const DataTypes = ORM.DataTypes;
 
 const User = ORM.define('user', {
     username: {

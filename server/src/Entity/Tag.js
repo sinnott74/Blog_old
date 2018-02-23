@@ -1,5 +1,5 @@
 const ORM = require('../util/orm');
-const DataTypes = require('../util/orm/datatypes');
+const DataTypes = ORM.DataTypes;
 const BlogPost = require('./BlogPost');
 
 const Tag = ORM.define('tag', {

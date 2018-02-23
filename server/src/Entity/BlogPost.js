@@ -1,5 +1,5 @@
 const ORM = require('../util/orm');
-const DataTypes = require('../util/orm/datatypes');
+const DataTypes = ORM.DataTypes;
 const User = require('./User');
 const MomentDate = require('../util/Date');
 
