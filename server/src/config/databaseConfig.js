@@ -1,6 +1,6 @@
 var cfApp = require('cfenv').getAppEnv();
 var services = cfApp.getServices('postgresql') || {};
-var dbConfig = services['ElephantSQL-nx'] || {};
+var dbConfig = services['ElephantSQL'] || {};
 var credentials = dbConfig.credentials || {};
 var uri = credentials.uri || '';
 

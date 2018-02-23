@@ -3,36 +3,23 @@ import PropTypes from 'prop-types'
 import Card from '../Card'
 import Link from '../Link'
 import './BlogListItem.css'
-import { connect } from "react-redux";
-import marked from 'marked';
 
 const BlogListItem = (props) => {
 
   return (
-      <Card className="bloglistitem">
-        <Link to={`/blog/${props.id}`} className="bloglistentry__link">
-          <h1 className="bloglistitem__title">{props.title}</h1>
-        </Link>
-        {props.author && <div className="blogpost__subtitle">{`${props.date} by ${props.author.fullname}`}</div>}
-        <div className="bloglistitem__text" dangerouslySetInnerHTML={rawMarkup(props.text)}></div>
-        <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
+    <Card className="bloglistitem">
+      <Link to={`/blog/${props.id}`} className="bloglistentry__link">
+        <span className="bloglistitem__title">{props.title}</span>
+      </Link>
+      <div className="bloglistitem__subtitle">{props.date}</div>
     </Card>
   )
 }
 
-const rawMarkup = (markDown) => {
-  if(markDown){
-    let rawMarkup = marked(markDown, {sanitize: true, breaks: true});
-    return { __html: rawMarkup };
-  }
-}
-
 BlogListItem.propTypes = {
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  ...state.blog.byId[ownProps.id]
-})
-
-export default connect(mapStateToProps, null)(BlogListItem)
+export default BlogListItem;

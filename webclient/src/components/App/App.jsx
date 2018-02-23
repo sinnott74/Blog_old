@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import HeaderLayout from '../HeaderLayout';
 import SideNavLayout from '../SideNavLayout';
 import OptionsMenu from '../OptionsMenu';
@@ -13,7 +13,7 @@ export default  class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <SideNavLayout>
           <HeaderLayout title="Sinnott">
             <Routes />
@@ -23,11 +23,7 @@ export default  class App extends React.Component {
         <Toast />
         <ServiceWorker />
         <ScreenMediaQuery mediaQuery="(min-width: 1025px)"/>
-      </div>
+      </Fragment>
     )
   }
 }
-
-// import { connect } from "react-redux";
-// import { withRouter } from 'react-router'
-// export default withRouter(connect(null, null)(App));

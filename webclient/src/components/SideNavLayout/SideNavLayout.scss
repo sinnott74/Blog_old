@@ -57,14 +57,10 @@
 @media (min-width: 1025px){
   .side-nav__content {
     transform: translate3d(0, 0, 0);
-    transition: transform var(--transition);
     pointer-events: auto;
   }
 }
 
-.side-nav__content--animatable {
-  transition: transform .233s cubic-bezier(0, 0, .21, 1);
-}
 .side-nav__edgearea {
   pointer-events: auto;
   position: fixed;
@@ -121,12 +117,12 @@
   position: relative;;
   height: 100vh;
   width: 100vw;
+  transition: margin-left var(--transition);
 }
 
 @media (min-width: 1025px){
   .side-nav-layout_main{
     margin-left: var(--side-nav-max-width);
     width: calc(100vw - var(--side-nav-max-width));
-    transition: margin-left var(--transition);
   }
 }

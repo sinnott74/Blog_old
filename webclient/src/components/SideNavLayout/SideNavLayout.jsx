@@ -21,7 +21,7 @@ class SideNavLayout extends React.Component {
             onClick={this._handleScrimTap}
             ref={(scrim) => {this.scrim = scrim;}}>
           </div>
-          <div className="side-nav__content"
+          <div className="side-nav__content side_nav--animatable"
             onTouchStart={this._handleSideNavTouchStart}
             onTouchMove={this._handleSideNavTouchMove}
             onTouchEnd={this._handleSideNavTouchEnd}
@@ -58,11 +58,7 @@ class SideNavLayout extends React.Component {
 
     this.touching = false;
 
-    // Touch slop is a variable that is defined to suggest anything larger
-    // than this value was an intended gesture by the user.
-    // 8  is a value from Android platform.
-    // 3 was added as a factor made up from what felt right.
-    this.TOUCH_SLOP = 8 * window.devicePixelRatio * 3;;
+    this.TOUCH_SLOP = 12 * window.devicePixelRatio;
 
     this._close = this._close.bind(this);
     this._open = this._open.bind(this);
@@ -77,14 +73,6 @@ class SideNavLayout extends React.Component {
     this._handleScrimTap = this._handleScrimTap.bind(this);
   }
 
-  componentDidMount() {
-    this.sideNavContent.addEventListener('transitionend', this.onTransitionEnd, false);
-  }
-
-  componentWillUnmount() {
-    this.sideNavContent.removeEventListener('transitionend', this.onTransitionEnd);
-  }
-
   componentWillUpdate(nextProps) {
     if (nextProps.opened){
       this._open();
@@ -94,6 +82,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchStart(e) {
+    this.sideNavContent.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.touching = true;
     this.sideNavTransform = 0;
@@ -139,6 +128,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchEnd(e) {
+    this.sideNavContent.classList.add("side_nav--animatable");
     this.touching = false;
     this.direction = "";
 
@@ -160,6 +150,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleEdgeTouchStart(e) {
+    this.sideNavContent.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.edgeTransform = 0;
     this.direction = "";
@@ -206,6 +197,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleEdgeTouchEnd(e) {
+    this.sideNavContent.classList.add("side_nav--animatable");
     this.direction = "";
     this.touching = false;
 
@@ -250,11 +242,6 @@ class SideNavLayout extends React.Component {
     this.scrim.style.opacity = '';
     document.body.classList.add('noscroll');
     this.isOpened = true;
-  }
-
-  onTransitionEnd() {
-    console.log('transition ended');
-    this.classList.remove("side_nav--animatable");
   }
 }
 
