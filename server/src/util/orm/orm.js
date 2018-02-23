@@ -1,6 +1,6 @@
 // Exporting before requiring Model as theres a circular relationship
 module.exports = ORM;
-const Model = require('./model');
+const ModelClass = require('./model');
 const DataTypes = require('./datatypes');
 const ModelManager = require('./modelmanager');
 const TransactionInfo = require('../../core/TransactionInfo');
@@ -64,11 +64,11 @@ ORM.define = function(modelName, attributes, options) {
     ORM: this
   }
 
-  let ModelClass = class extends Model {};
-  ModelClass.init(attributes, options);
+  let Model = class extends ModelClass {};
+  Model.init(attributes, options);
 
-  ModelManager.addModel(ModelClass);
-  return ModelClass;
+  ModelManager.addModel(Model);
+  return Model;
 }
 
 /**
