@@ -1,4 +1,5 @@
 const TransactionInfo = require('../../core/TransactionInfo');
+const Util = require('./util');
 
 /**
  * Responsible for interacting with the Database.
@@ -15,59 +16,9 @@ class Query {
    */
   async _executeSQLQuery(sqlQuery){
     console.log(sqlQuery);
-    let transaction = TransactionInfo.get('transaction');
-    let result = await transaction.query(sqlQuery);
-    return result.rows;
-  }
-
-  /**
-   * Converts an object with attributes which are dot notation named to nest objects
-   * @param {*} obj
-   * @example
-   * {
-   *  user_id: 1,
-   *  username: 'test@test.com',
-   *  address.id: 1,
-   *  address.line1: '123 fake st',
-   *  address.planet: 'Earth'
-   * }
-   *
-   * is converted to:
-   *
-   * {
-   *  user_id: 1,
-   *  username: 'test@test.com',
-   *  address: {
-   *    id: 1
-   *    line1: '123 fake st',
-   *    planet: 'Earth'
-   *  }
-   * }
-   */
-  static convertDotNotationToObject(obj) {
-    obj = {
-      ...obj
-    };
-    for (var key in obj) {
-      if (key.indexOf('.') !== -1) {
-        // this._parseDotNotation(obj, key, obj[key]);
-        let value = obj[key];
-        let currentObj = obj;
-        let keys = key.split('.');
-        let keysLength = Math.max(1, keys.length - 1);
-        let localKey, i;
-
-        for (i = 0; i < keysLength; ++i) {
-          localKey = keys[i];
-          currentObj[localKey] = currentObj[localKey] || {};
-          currentObj = currentObj[localKey];
-        }
-        currentObj[keys[i]] = value;
-        delete obj[key];
-
-      }
-    }
-    return obj;
+    const transaction = TransactionInfo.get('transaction');
+    const result = await transaction.query(sqlQuery);
+    return Util.groupData(result.rows);
   }
 
   /**

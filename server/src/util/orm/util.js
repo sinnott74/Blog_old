@@ -91,11 +91,37 @@ class Util {
     const convertedDotObjects = arr.map((obj) => {
       return this._splitIntoNestedObjects(obj, seperator)
     })
+
+    // convert dot objects array into keyed objects
     let topList = {};
     convertedDotObjects.forEach((obj) => {
       this._combineNestedObjectIntoGroup(topList, obj);
     });
-    return topList
+
+    // convert keyed objects into object array
+    const returnArray = [];
+    this._convertKeyObjectToArrays(topList, returnArray);
+    return returnArray;
+  }
+
+  _convertKeyObjectToArrays(keyedObject, array){
+    // Loop though each ID key
+    Object.keys(keyedObject).forEach(key => {
+
+      // Get the object for that ID
+      let object = keyedObject[key];
+
+      // Loop through each attribute of that object
+      Object.keys(object).forEach(attribute => {
+        const value = object[attribute];
+        if(isPlainObject(value)){
+          const childArray = [];
+          this._convertKeyObjectToArrays(value, childArray);
+          object[attribute] = childArray
+        }
+      })
+      array.push(object);
+    });
   }
 
   /**
@@ -110,11 +136,10 @@ class Util {
     Object.keys(object).forEach((key) => {
       let value = object[key];
       if(isPlainObject(value)){
-        let keyPlural = `${key}s`;
-        if(!localGroup[keyPlural]) {
-          localGroup[keyPlural] = {};
+        if(!localGroup[key]) {
+          localGroup[key] = {};
         }
-        localGroup = localGroup[keyPlural];
+        localGroup = localGroup[key];
         this._combineNestedObjectIntoGroup(localGroup, value);
         localGroup = group[object.id];
       } else {
@@ -149,7 +174,7 @@ class Util {
    * }
    */
   _splitIntoNestedObjects(obj, seperator) {
-    seperator = seperator || kSEPERATOR;
+    seperator = seperator || this.kSEPERATOR;
 
     obj = {
       ...obj
@@ -216,8 +241,8 @@ class Util {
       get: function() {
         return this.get(name);
       },
-      set: function() {
-        this.set(name);
+      set: function(value) {
+        this.set(name, value);
       },
       enumerable: true
     })

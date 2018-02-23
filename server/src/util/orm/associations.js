@@ -39,8 +39,8 @@ class AbstractAssociation {
     this.source = source;
     this.target = target;
     this.options = options;
-    this.name = this.constructor.getAssociationName(source, target, options);
-    this.source.associations[this.name] = this;
+    this.name = this.getAssociationName(source, target, options);
+    this.target.associations[this.name] = this;
   }
 
   /**
@@ -49,7 +49,7 @@ class AbstractAssociation {
    * @param {Model} target
    * @param {Object} options
    */
-  static getAssociationName(source, target, options) {
+  getAssociationName(source, target, options) {
     return options.as ? options.as : source.name;
   }
 
@@ -58,7 +58,7 @@ class AbstractAssociation {
    * @param {*} modelReferencing
    * @param {*} modelBeingReferenced
    */
-  static addModelReference(modelReferencing, modelBeingReferenced) {
+  addModelReference(modelReferencing, modelBeingReferenced) {
     const foreignKeyName = `${modelBeingReferenced.name}_id`;
     const foreignKey = {
       type: DataTypes.INT,
@@ -86,11 +86,38 @@ class OneToOne extends AbstractAssociation {
     this.type = "OneToOne";
     this.addModelReference(target, source);
     if(this.options.bidirectional) {
-      this.constructor.addModelReference(source, target);
+      this.addModelReference(source, target);
     }
-    Util.defineGetterAndSetter(target, this.name);
+    this.defineGetterAndSetter(target, this.name);
   }
 
+  /**
+   * Adds a getter & setter onto the prototype of the given object.
+   * @param {Model} model Model to add the getter & setter to
+   * @param {String} name Attribute name
+   */
+  defineGetterAndSetter(model, name) {
+    Object.defineProperty(model.prototype, name, {
+      get: function() {
+        return this._associationAttributes[name];
+      },
+      set: function(value) {
+        if(Array.isArray(value) && value[0]){
+          const item = value[0];
+          if(item instanceof Model){
+            this._associationAttributes[name] = value;
+          } else {
+            this._associationAttributes[name] = new this.constructor.associations[name].source(value);
+          }
+        } else if(value instanceof Model) {
+          this._associationAttributes[name] = value;
+        } else {
+          this._associationAttributes[name] = new this.constructor.associations[name].source(value);
+        }
+      },
+      enumerable: true
+    })
+  }
 }
 
 /**
@@ -101,10 +128,37 @@ class OneToMany extends AbstractAssociation {
   constructor(source, target, options = {}) {
     super(source, target, options);
     this.type = "OneToMany";
-    this.constructor.addModelReference(target, source);
-    Util.defineGetterAndSetter(target, this.name);
+    this.addModelReference(target, source);
+    this.defineGetterAndSetter(target, this.name);
   }
 
+  /**
+   * Adds a getter & setter onto the prototype of the given object.
+   * @param {Model} model Model to add the getter & setter to
+   * @param {String} name Attribute name
+   */
+  defineGetterAndSetter(model, name) {
+    Object.defineProperty(model.prototype, name, {
+      get: function() {
+        return this._associationAttributes[name];
+      },
+      set: function(value) {
+        if(Array.isArray(value) && value[0]){
+          const item = value[0];
+          if(item instanceof Model){
+            this._associationAttributes[name] = value;
+          } else {
+            this._associationAttributes[name] = new this.constructor.associations[name].source(item);
+          }
+        } else if(value instanceof Model) {
+          this._associationAttributes[name] = value;
+        } else {
+          this._associationAttributes[name] = new this.constructor.associations[name].source(value);
+        }
+      },
+      enumerable: true
+    })
+  }
 }
 
 /**
@@ -117,8 +171,8 @@ class ManyToMany extends AbstractAssociation {
     this.type = "ManyToMany";
     const throughName = options.through || source.name + target.name;
     this.through = this.constructor.getThroughModel(throughName);
-    this.constructor.addModelReference(this.through, this.target);
-    this.constructor.addModelReference(this.through, this.source);
+    this.addModelReference(this.through, this.target);
+    this.addModelReference(this.through, this.source);
   }
 
   /**

@@ -13,7 +13,7 @@ require('./hooks');
 
 /************************************************************************************
  ******                         MODEL CLASS METHODS                            ******
-  ************************************************************************************/
+ ************************************************************************************/
 
 /**
  * Class method which Initialize a model, representing a table in the DB, with attributes and options.
@@ -107,21 +107,22 @@ Model._configureAttributeGettersAndSetters = function() {
   // Create getter & setters for attributes
   const _self = this;
   Object.keys(_self.rawAttributes).forEach((attributeName) => {
-
     let attribute = _self.rawAttributes[attributeName];
     Util.defineGetterAndSetter(_self, attributeName);
-
-    // Define custom attribute getters & setters
-    // if (attribute.hasOwnProperty('get')) {
-    //   this.prototype._customGetters[attributeName] = attribute.get;
-    // }
-    // if (attribute.hasOwnProperty('set')) {
-    //   this.prototype._customSetters[attributeName] = attribute.set;
-    // }
   })
 
-  // TODO
   // Create custom properties/attributes
+  if(this.options.customAttributes) {
+    const customAttributes = this.options.customAttributes;
+    Object.keys(customAttributes).forEach((customAttribute) => {
+      const action = customAttributes[customAttribute];
+      Object.defineProperty(_self.prototype, customAttribute, {
+        get: action.get,
+        set: action.set,
+        enumerable: true
+      })
+    });
+  }
 }
 
 /**
@@ -157,9 +158,9 @@ Model.refreshAttributes = function() {
  * @returns {*} Entity which contains only attributes in the entity definitition
  */
 Model._filterAttributesByDefinition = function(entity) {
-  let attributes= Object.keys(entity);
-  let definedAttributes = this.sqlConfig.columns.map(definedAttribute => definedAttribute.name);
-  let filteredEntity = {};
+  const attributes = Object.keys(entity);
+  const definedAttributes = this.sqlConfig.columns.map(definedAttribute => definedAttribute.name);
+  const filteredEntity = {};
   attributes.forEach((attribute) => {
     if(definedAttributes.includes(attribute)){
       filteredEntity[attribute] = entity[attribute];
@@ -223,7 +224,6 @@ Model.findAll = async function(attributes, options) {
   const _self = this;
   return rows.map((data) => {
     let model = new _self(data);
-    model._isNewRecord = false;
     return model;
   });
 }
@@ -302,10 +302,24 @@ Model.sync = async function(){
  * Constructor
  */
 function Model(values = {}, options = {}) {
-  Util.defineNonEnumerableProperty(this, '_dataAttributes', this._getDataAttributes(values));
+  const _self = this;
+  // this._configureAttributeGettersAndSetters();
+  Util.defineNonEnumerableProperty(this, '_dataAttributes', {});
+  Util.defineNonEnumerableProperty(this, '_associationAttributes', {});
   Util.defineNonEnumerableProperty(this, '_options', options);
-  Util.defineNonEnumerableProperty(this, '_isNewRecord', true);
+
+  Object.keys(values).map((attribute) => {
+    _self[attribute] = values[attribute];
+  });
+
 };
+
+Util.defineNonEnumerableProperty(Model.prototype, 'get', get);
+Util.defineNonEnumerableProperty(Model.prototype, 'set', set);
+Util.defineNonEnumerableProperty(Model.prototype, 'save', save);
+Util.defineNonEnumerableProperty(Model.prototype, 'toJSON', toJSON);
+Util.defineNonEnumerableProperty(Model.prototype, 'toString', toString);
+// Util.defineNonEnumerableProperty(Model.prototype, '_configureAttributeGettersAndSetters', _configureAttributeGettersAndSetters);
 
 /**
  * Gets the models internal value of an attribute.
@@ -313,9 +327,10 @@ function Model(values = {}, options = {}) {
  * @param {object} options
  */
 function get(key, options) {
-  return this._dataAttributes[key].value;
+  if (this._dataAttributes && this._dataAttributes[key]){
+    return this._dataAttributes[key].value;
+  }
 }
-Util.defineNonEnumerableProperty(Model.prototype, 'get', get);
 
 /**
  * Sets the models internal value of an attribute.
@@ -325,30 +340,33 @@ Util.defineNonEnumerableProperty(Model.prototype, 'get', get);
  */
 function set(key, value, options) {
   // console.log('set', key, value);
-  this._dataAttributes[key].value = value;
+  if(this._dataAttributes[key]){
+    this._dataAttributes[key].value = value;
+  } else {
+    this._dataAttributes[key] = new Attribute(value);
+  }
 }
-Util.defineNonEnumerableProperty(Model.prototype, 'set', set);
 
-function _getDataAttributes(values = {}) {
-  const attributes = {};
-  Object.keys(values).forEach((key) => {
-    attributes[key] = new Attribute(values[key]);
-  })
-  return attributes;
+async function save() {
+
 }
-Util.defineNonEnumerableProperty(Model.prototype, '_getDataAttributes', _getDataAttributes);
 
 /**
  * Returns Object which contains only the attributes which are configured
  */
 function toJSON() {
   let object = {};
-  Object.keys(this.constructor.rawAttributes).forEach((attributeName) => {
-    object[attributeName] = this.get(attributeName);
-  });
+  // loop through enumerable properties
+  for(key in this){
+    const value = this[key];
+    if(value instanceof Object){
+      object[key] = value.toJSON();
+    } else {
+      object[key] = value;
+    }
+  }
   return object;
 }
-Util.defineNonEnumerableProperty(Model.prototype, 'toJSON', toJSON);
 
 /**
  * Gets a string representation of this model
@@ -356,4 +374,3 @@ Util.defineNonEnumerableProperty(Model.prototype, 'toJSON', toJSON);
 function toString() {
   return `Model ${this.constructor.name} - ${JSON.stringify(this.toJSON())}`;
 }
-Util.defineNonEnumerableProperty(Model.prototype, 'toString', toString);
