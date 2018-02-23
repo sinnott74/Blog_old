@@ -12,7 +12,6 @@ router.post('/login', async function(req, res, next) {
 
   let token = await Auth.login(username, password);
   res.json(token);
-  next();
 });
 
 router.post('/signup', async function(req, res, next) {
@@ -21,7 +20,6 @@ router.post('/signup', async function(req, res, next) {
   let credential = await Credential.create({user_id: user.id, password: userCredentials.password})
   let token = await Auth.login(userCredentials.username, userCredentials.password);
   res.json(token);
-  next();
 });
 
 module.exports = router;

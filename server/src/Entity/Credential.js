@@ -1,4 +1,4 @@
-const ORM = require('../util/orm');
+const ORM = require('sinnott-orm');
 const DataTypes = ORM.DataTypes;
 const User = require('./User');
 const bcrypt = require('bcryptjs');

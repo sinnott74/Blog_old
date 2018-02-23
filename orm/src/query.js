@@ -1,4 +1,4 @@
-const TransactionInfo = require('../../core/TransactionInfo');
+const Transaction = require('./transaction');
 const Util = require('./util');
 
 /**
@@ -16,7 +16,7 @@ class Query {
    */
   async _executeSQLQuery(sqlQuery){
     console.log(sqlQuery);
-    const transaction = TransactionInfo.get('transaction');
+    const transaction = Transaction.get('transaction');
     const result = await transaction.query(sqlQuery);
     return Util.groupData(result.rows);
   }

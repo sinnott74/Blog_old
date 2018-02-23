@@ -5,8 +5,9 @@ const Sql = require('sql');
 const Query = require('./query');
 const Attribute = require('./attribute');
 const Util = require('./util');
-const RecordNotFoundException = require('../../exception/RecordNotFoundException');
-const MultipleRecordsFoundException = require('../../exception/RecordNotFoundException');
+const Exceptions = require('./exceptions');
+const RecordNotFoundException = Exceptions.RecordNotFoundException;
+const MultipleRecordsFoundException = Exceptions.MultipleRecordsFoundException;
 
 require('./associations');
 require('./hooks');
