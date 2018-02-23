@@ -4,7 +4,7 @@ const ORM = require('../util/ORM/ORM');
 
 
 router.get('/', async function(req, res, next) {
-  let users = await new UserDAO().list();
+  let users = await User.findAll();
   res.json(users);
   next();
 })
