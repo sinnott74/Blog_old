@@ -13,7 +13,7 @@ const BlogListItem = (props) => {
         <Link to={`/blog/${props.id}`} className="bloglistentry__link">
           <h1 className="bloglistitem__title">{props.title}</h1>
         </Link>
-        <div className="blogpost__subtitle">{`${props.date} by ${props.author}`}</div>
+        {props.author && <div className="blogpost__subtitle">{`${props.date} by ${props.author.fullname}`}</div>}
         <div className="bloglistitem__text" dangerouslySetInnerHTML={rawMarkup(props.text)}></div>
         <Link to={`/blog/${props.id}`} className="bloglistitem__readmore">Read more</Link>
     </Card>
