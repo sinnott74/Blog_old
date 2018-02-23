@@ -22,6 +22,14 @@ const User = ORM.define('user', {
       type: DataTypes.TIMESTAMP,
       notNull: true
     }
+  }, {
+    customAttributes: {
+      fullname: {
+        get: function() {
+          return `${this.firstname} ${this.lastname}`;
+        }
+      }
+    }
   }
 );
 
