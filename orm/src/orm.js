@@ -3,7 +3,8 @@ module.exports = ORM;
 const ModelClass = require('./model');
 const DataTypes = require('./datatypes');
 const ModelManager = require('./modelmanager');
-const TransactionInfo = require('../../core/TransactionInfo');
+const Transaction = require('./transaction');
+const pg = require('pg');
 
 function ORM() {
 }
@@ -90,23 +91,33 @@ ORM.getModel = function(model) {
 /**
  * Exposing datatypes on ORM
  */
-ORM.DataTypes = DataTypes
-
+ORM.DataTypes = DataTypes;
 
 /**
  * Creates a database table for each model.
  */
-ORM.sync = async function() {
+ORM.sync = async function(config) {
+  const pool = new pg.Pool(config);
   const models = ModelManager.getModels();
-  TransactionInfo.startTransaction(async function() {
+  Transaction.startTransaction(pool, async function() {
     try {
       models.forEach(async (model) => {
         await model.sync();
       })
-      await TransactionInfo.transactionSuccess();
+      await Transaction.transactionSuccess();
     } catch(err) {
       console.log(err);
-      await TransactionInfo.transactionFailure();
+      await Transaction.transactionFailure();
     }
   });
+}
+
+/**
+ * Express Middleware
+ */
+ORM.init = function(config) {
+  const pool = new pg.Pool(config);
+  return async function(req, res, next) {
+    await Transaction.startTransactionMiddle(pool, req, res, next);
+  }
 }

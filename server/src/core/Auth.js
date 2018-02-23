@@ -3,7 +3,7 @@ const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
-const TransactionInfo = require('./TransactionInfo');
+// const TransactionInfo = require('./TransactionInfo');
 const AuthenticationError = require('../exception/AuthenticationException');
 const User = require('../Entity').User;
 const Credential = require('../Entity').Credential;
@@ -23,24 +23,24 @@ class Auth {
     return passport.initialize();
   }
 
-  /**
-   * Authorization Middleware.
-   * Sets the user onto the Transaction under 'user' upon successful authentication.
-   *
-   * @param {*} req
-   * @param {*} res
-   * @param {*} next
-   */
-  static middleware(req, res, next) {
-    Auth._authenticate((err, user, info) => {
-      if(err || !user) {
-        console.log(err);
-        return next(new AuthenticationError());
-      }
-      TransactionInfo.set('user', user);
-      next();
-    })(req, res, next);
-  }
+  // /**
+  //  * Authorization Middleware.
+  //  * Sets the user onto the Transaction under 'user' upon successful authentication.
+  //  *
+  //  * @param {*} req
+  //  * @param {*} res
+  //  * @param {*} next
+  //  */
+  // static middleware(req, res, next) {
+  //   Auth._authenticate((err, user, info) => {
+  //     if(err || !user) {
+  //       console.log(err);
+  //       return next(new AuthenticationError());
+  //     }
+  //     TransactionInfo.set('user', user);
+  //     next();
+  //   })(req, res, next);
+  // }
 
   /**
    *

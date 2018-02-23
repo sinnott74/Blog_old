@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async-local-storage": "^1.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cfenv": "1.0.x",
@@ -24,14 +23,10 @@
     "express-async-errors": "^2.1.0",
     "helmet": "^3.9.0",
     "jsonwebtoken": "^8.1.1",
-    "lodash.isplainobject": "^4.0.6",
     "moment": "^2.20.1",
+    "sinnott-orm": "file:../orm",
     "passport": "^0.4.0",
-    "passport-jwt": "^3.0.1",
-    "pg": "^7.4.1",
-    "sql": "^0.78.0",
-    "toposort": "^1.0.6",
-    "uuid": "^3.2.1"
+    "passport-jwt": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.14.11"
