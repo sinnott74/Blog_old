@@ -1,7 +1,7 @@
 const toposort = require ('toposort');
 
 /**
- * Responsible for managing all Models created by ORM.
+ * Responsible for keeping track of all Models created by ORM.
  */
 class ModelManager {
 
@@ -53,7 +53,6 @@ class ModelManager {
     return !!this.getModel(modelName);
   }
 
-
   /**
    * Get a list of all Models, sorted based on model foregin references.
    * @returns A sorted array of Models
@@ -68,7 +67,6 @@ class ModelManager {
     this._addStandaloneModels(sortedModels);
     return sortedModels;
   }
-
 
   /**
    * Gets a list of all directed foreign key vertices the model name. E.g. [blogpost -> user]
