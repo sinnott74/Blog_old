@@ -18,7 +18,7 @@ class BlogPost extends React.Component {
     return (
       <Card className="blogpost">
           <h1 className="blogpost__title">{this.props.title}</h1>
-          {(this.props.date && this.props.author) && <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author}`}</div> }
+          {this.props.author && <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author.fullname}`}</div>}
           <div className="blogpost__text" dangerouslySetInnerHTML={this.rawMarkup()}></div>
           {this.getActions()}
       </Card>

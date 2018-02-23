@@ -11,16 +11,18 @@ var forceHttpsMiddleware = require('./src/middleware/forceHttps');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var Auth = require('./src/core/Auth');
+const ORM = require('sinnott-orm');
+const databaseConfig = require('./src/config/databaseConfig');
 
 /**
  * Adds Sync support to express routers
  */
 require('express-async-errors');
 
-/**
- * Connect to database.
- */
-require('./src/core/database');
+// /**
+//  * Connect to database.
+//  */
+// require('./src/core/database');
 
 /**
  * Create Express server.
@@ -64,10 +66,6 @@ expressApp.use(Auth.initialize())
  */
 expressApp.use(compression());
 
-// Data API routes
-var routes = require('./src/routes');
-expressApp.use('/api', routes);
-
 // Define static assets path - i.e. styles, scripts etc.
 expressApp.use('/', express.static(path.join(__dirname, '../webclient/build'), {
   maxage: '1y',
@@ -77,6 +75,15 @@ expressApp.use('/', express.static(path.join(__dirname, '../webclient/build'), {
 expressApp.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../webclient/build/index.html'));
 });
+
+const mode = process.env.NODE_ENV || 'development';
+const dbConfig = databaseConfig[mode]
+expressApp.use(ORM.init(dbConfig));
+
+// Data API routes
+var routes = require('./src/routes');
+expressApp.use('/api', routes);
+
 
 /**
  * Start Express server.
