@@ -21,7 +21,7 @@ class SideNavLayout extends React.Component {
             onClick={this._handleScrimTap}
             ref={(scrim) => {this.scrim = scrim;}}>
           </div>
-          <div className="side-nav__content"
+          <div className="side-nav__content side_nav--animatable"
             onTouchStart={this._handleSideNavTouchStart}
             onTouchMove={this._handleSideNavTouchMove}
             onTouchEnd={this._handleSideNavTouchEnd}
@@ -73,14 +73,6 @@ class SideNavLayout extends React.Component {
     this._handleScrimTap = this._handleScrimTap.bind(this);
   }
 
-  componentDidMount() {
-    this.sideNavContent.addEventListener('transitionend', this.onTransitionEnd, false);
-  }
-
-  componentWillUnmount() {
-    this.sideNavContent.removeEventListener('transitionend', this.onTransitionEnd);
-  }
-
   componentWillUpdate(nextProps) {
     if (nextProps.opened){
       this._open();
@@ -90,6 +82,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchStart(e) {
+    this.sideNavContent.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.touching = true;
     this.sideNavTransform = 0;
@@ -135,6 +128,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchEnd(e) {
+    this.sideNavContent.classList.add("side_nav--animatable");
     this.touching = false;
     this.direction = "";
 
@@ -156,6 +150,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleEdgeTouchStart(e) {
+    this.sideNavContent.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.edgeTransform = 0;
     this.direction = "";
@@ -202,6 +197,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleEdgeTouchEnd(e) {
+    this.sideNavContent.classList.add("side_nav--animatable");
     this.direction = "";
     this.touching = false;
 
@@ -246,11 +242,6 @@ class SideNavLayout extends React.Component {
     this.scrim.style.opacity = '';
     document.body.classList.add('noscroll');
     this.isOpened = true;
-  }
-
-  onTransitionEnd() {
-    console.log('transition ended');
-    this.classList.remove("side_nav--animatable");
   }
 }
 
