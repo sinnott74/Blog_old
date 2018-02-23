@@ -7,11 +7,11 @@ import './BlogListItem.css'
 const BlogListItem = (props) => {
 
   return (
-      <Card className="bloglistitem">
-        <Link to={`/blog/${props.id}`} className="bloglistentry__link">
-          <span className="bloglistitem__title">{props.title}</span>
-        </Link>
-        <div className="bloglistitem__subtitle">{props.date}</div>
+    <Card className="bloglistitem">
+      <Link to={`/blog/${props.id}`} className="bloglistentry__link">
+        <span className="bloglistitem__title">{props.title}</span>
+      </Link>
+      <div className="bloglistitem__subtitle">{props.date}</div>
     </Card>
   )
 }
