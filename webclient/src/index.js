@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import store, { history } from './redux/store';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import App from './components/App';
-// import 'react-md/dist/react-md.blue-red.min.css';
+import App from 'core/components/App';
 
 // UI components to bundle centrally instead of within each page chunk
 import 'react-md/lib/Buttons/Button';
