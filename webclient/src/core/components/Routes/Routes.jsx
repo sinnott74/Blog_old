@@ -13,7 +13,8 @@ function importAll(r) {
     return r(item).default;
   })
 }
-const pages = importAll(require.context('./', true, /.+\/pages\/pages.js/));
+// Relative to Src, recursively look for all files that match **/pages/pages.js
+const pages = importAll(require.context('../../../', true, /.+\/pages\/pages.js/));
 
 /**
  * Combine the page configurations

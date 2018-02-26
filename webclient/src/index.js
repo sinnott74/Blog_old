@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store, { history } from './redux/store';
+import store, { history } from 'core/redux/store';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import App from 'core/components/App';

@@ -1,4 +1,4 @@
-import { arrayToObject, objectToIDKeyedObject, addToArrayAndSort } from 'redux/util';
+import { arrayToObject, objectToIDKeyedObject, addToArrayAndSort } from 'core/redux/util';
 import { showToast } from 'core/ducks/toast';
 import { push } from 'react-router-redux'
 import { createSelector } from 'reselect';
