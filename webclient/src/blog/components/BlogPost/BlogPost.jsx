@@ -5,8 +5,8 @@ import './BlogPost.css'
 import { connect } from "react-redux";
 import { loadBlogPost } from 'blog/ducks/blog';
 import Link from 'core/components/Link';
-import marked from 'marked';
 import Button from 'react-md/lib/Buttons/Button';
+import ViewBlogPost from 'blog/components/ViewBlogPost';
 
 class BlogPost extends React.Component {
 
@@ -15,21 +15,13 @@ class BlogPost extends React.Component {
   }
 
   render() {
+    const authorName = this.props.author ? this.props.author.fullname : "";
     return (
       <Card className="blogpost">
-          <h1 className="blogpost__title">{this.props.title}</h1>
-          {this.props.author && <div className="blogpost__subtitle">{`${this.props.date} by ${this.props.author.fullname}`}</div>}
-          <div className="blogpost__text" dangerouslySetInnerHTML={this.rawMarkup()}></div>
+          <ViewBlogPost title={this.props.title} text={this.props.text} author={authorName} date={this.props.date} />
           {this.getActions()}
       </Card>
     )
-  }
-
-  rawMarkup(){
-    if(this.props.text){
-      let rawMarkup = marked(this.props.text, {sanitize: true, breaks: true});
-      return { __html: rawMarkup };
-    }
   }
 
   getActions() {
