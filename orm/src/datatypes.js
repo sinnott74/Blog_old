@@ -2,15 +2,14 @@
  * Abstract Super Class
  */
 class AbstractDataType {
-
   constructor() {
     if (this.constructor === AbstractDataType) {
-      throw new Error('This Class should not be instantiated, please extend');
+      throw new Error("This Class should not be instantiated, please extend");
     }
   }
 
   static getSQLType(attributeOptions) {
-    throw new Error('get postgresType must be implemented');
+    throw new Error("get postgresType must be implemented");
   }
 }
 
@@ -18,7 +17,6 @@ class AbstractDataType {
  * Boolean
  */
 class BooleanDataType extends AbstractDataType {
-
   static getSQLType(attributeOptions) {
     return "boolean";
   }
@@ -28,13 +26,11 @@ class BooleanDataType extends AbstractDataType {
  * INT
  */
 class IntDataType extends AbstractDataType {
-
   static getSQLType(attributeOptions) {
-
-    if(attributeOptions.autoIncrement){
-      return 'SERIAL';
+    if (attributeOptions.autoIncrement) {
+      return "SERIAL";
     }
-    return 'INT';
+    return "INT";
   }
 }
 
@@ -42,12 +38,13 @@ class IntDataType extends AbstractDataType {
  * String
  */
 class StringDataType extends AbstractDataType {
-
   static getSQLType(attributeOptions) {
-    if(attributeOptions.length && attributeOptions.length > 255 ){
-      throw new Error('String too long, use TextDataType instead');
+    if (attributeOptions.length && attributeOptions.length > 255) {
+      throw new Error("String too long, use TextDataType instead");
     }
-    return attributeOptions.length ? `varchar${attributeOptions.length}` : 'varchar';
+    return attributeOptions.length
+      ? `varchar${attributeOptions.length}`
+      : "varchar";
   }
 }
 
@@ -55,9 +52,8 @@ class StringDataType extends AbstractDataType {
  * Text
  */
 class TextDataType extends AbstractDataType {
-
   static getSQLType(attributeOptions) {
-    return 'TEXT';
+    return "TEXT";
   }
 }
 
@@ -65,9 +61,8 @@ class TextDataType extends AbstractDataType {
  * Timestamp
  */
 class TimeStampDataType extends AbstractDataType {
-
   static getSQLType(attributeOptions) {
-    return 'TIMESTAMPZ';
+    return "TIMESTAMPZ";
   }
 }
 
@@ -77,4 +72,4 @@ module.exports = {
   STRING: StringDataType,
   TEXT: TextDataType,
   TIMESTAMP: TimeStampDataType
-}
+};

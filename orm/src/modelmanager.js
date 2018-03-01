@@ -1,10 +1,9 @@
-const toposort = require ('toposort');
+const toposort = require("toposort");
 
 /**
  * Responsible for keeping track of all Models created by ORM.
  */
 class ModelManager {
-
   constructor() {
     this.models = {};
   }
@@ -61,7 +60,7 @@ class ModelManager {
     // toposort the models
     let vertices = this._getModelVerticies();
     let modelNameOrder = toposort(vertices);
-    let sortedModels = modelNameOrder.map((modelName) => {
+    let sortedModels = modelNameOrder.map(modelName => {
       return this.models[modelName];
     });
     this._addStandaloneModels(sortedModels);
@@ -75,13 +74,13 @@ class ModelManager {
    */
   _getModelVerticies() {
     let vertices = [];
-      Object.values(this.models).forEach((model) => {
-        Object.values(model.rawAttributes).forEach((attribute) => {
-        if(attribute.references){
-          vertices.push([attribute.references.table, model.name])
+    Object.values(this.models).forEach(model => {
+      Object.values(model.rawAttributes).forEach(attribute => {
+        if (attribute.references) {
+          vertices.push([attribute.references.table, model.name]);
         }
-      })
-    })
+      });
+    });
     return vertices;
   }
 
@@ -91,12 +90,12 @@ class ModelManager {
    */
   _addStandaloneModels(sortedModels) {
     //Add models which aren't in an foreign key reference
-    Object.keys(this.models).forEach((modelName) =>{
-      const model = this.models[modelName]
-      if(!sortedModels.includes(model)){
+    Object.keys(this.models).forEach(modelName => {
+      const model = this.models[modelName];
+      if (!sortedModels.includes(model)) {
         sortedModels.push(model);
       }
-    })
+    });
   }
 }
 

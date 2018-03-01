@@ -1,8 +1,8 @@
-const User = require('./User');
-const Credential = require('./Credential');
-const Tag = require('./Tag');
-const BlogPost = require('./BlogPost');
-const BlogPostComment = require('./BlogPostComment');
+const User = require("./User");
+const Credential = require("./Credential");
+const Tag = require("./Tag");
+const BlogPost = require("./BlogPost");
+const BlogPostComment = require("./BlogPostComment");
 
 module.exports = {
   User: User,
@@ -10,4 +10,4 @@ module.exports = {
   Tag: Tag,
   BlogPost: BlogPost,
   BlogPostComment: BlogPostComment
-}
+};

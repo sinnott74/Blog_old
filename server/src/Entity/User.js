@@ -1,7 +1,9 @@
-const ORM = require('sinnott-orm');
+const ORM = require("sinnott-orm");
 const DataTypes = ORM.DataTypes;
 
-const User = ORM.define('user', {
+const User = ORM.define(
+  "user",
+  {
     username: {
       type: DataTypes.STRING,
       length: 30,
@@ -22,7 +24,8 @@ const User = ORM.define('user', {
       type: DataTypes.TIMESTAMP,
       notNull: true
     }
-  }, {
+  },
+  {
     customAttributes: {
       fullname: {
         get: function() {
@@ -34,15 +37,15 @@ const User = ORM.define('user', {
 );
 
 User.isUsernameAvailable = async function(username) {
-  let count = await User.count({username});
-  if(count > 0) {
+  let count = await User.count({ username });
+  if (count > 0) {
     return false;
   }
   return true;
-}
+};
 
 User.readByUsername = async function(username) {
-  return User.findOne({username: username});
-}
+  return User.findOne({ username: username });
+};
 
 module.exports = User;

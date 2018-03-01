@@ -139,9 +139,16 @@ class Query {
    * @returns the rows created
    * @see Model
    */
-  async create(model, attributes) {
-    const sqlQuery = model.entity.insert(attributes).returning(model.entity.star()).toQuery();
-    return this._executeSQLQuery(sqlQuery);
+  async create(model) {
+
+    const modelDefinition = model.constructor;
+    const attributes = model._getDirtyData();
+
+    if(Object.keys(attributes).length !== 0){
+      const sqlQuery = modelDefinition.entity.insert(attributes).returning(modelDefinition.entity.star()).toQuery();
+      const groupedDataArray = await this._executeSQLQuery(sqlQuery);
+      model.id = groupedDataArray[0].id;
+    }
   }
 
   /**
@@ -164,9 +171,15 @@ class Query {
    * @param {Number} id ID of the entity
    * @param {Object} attributes
    */
-  async modify(model, id, attributes) {
-    let sqlQuery = model.entity.update(attributes).where({id: attributes.id}).returning(model.entity.star()).toQuery();
-    return this._executeSQLQuery(sqlQuery);
+  async modify(model) {
+    const modelDefinition = model.constructor;
+    const id = model.id;
+    const attributes = model._getDirtyData();
+
+    if(Object.keys(attributes).length !== 0){
+      let sqlQuery = modelDefinition.entity.update(attributes).where({id}).returning(modelDefinition.entity.star()).toQuery();
+      return this._executeSQLQuery(sqlQuery);
+    }
   }
 
    /**

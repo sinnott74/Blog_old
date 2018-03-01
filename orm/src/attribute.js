@@ -4,9 +4,10 @@
  */
 class Attribute {
 
-  constructor(value){
-    this._value = value;
-    this._isDirty = false;
+  constructor(name, value){
+    this.name = name;
+    this.value = value;
+    this.isDirty = true;
   }
 
   get value() {
@@ -15,7 +16,7 @@ class Attribute {
 
   set value(value){
     if(value !== this.value){
-      this._isDirty = true;
+      this.isDirty = true;
       this._value = value;
     }
   }

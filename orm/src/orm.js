@@ -5,6 +5,7 @@ const DataTypes = require('./datatypes');
 const ModelManager = require('./modelmanager');
 const Transaction = require('./transaction');
 const pg = require('pg');
+const Util = require('./util');
 
 function ORM() {
 }
@@ -97,11 +98,11 @@ ORM.DataTypes = DataTypes;
  * Creates a database table for each model.
  */
 ORM.sync = async function(config) {
-  const pool = new pg.Pool(config);
+  const pool = createDBPool(config);
   const models = ModelManager.getModels();
-  Transaction.startTransaction(pool, async function() {
+  await Transaction.startTransaction(pool, async function() {
     try {
-      models.forEach(async (model) => {
+      await Util.asyncForEach(models, async(model) => {
         await model.sync();
       })
       await Transaction.transactionSuccess();
@@ -116,8 +117,14 @@ ORM.sync = async function(config) {
  * Express Middleware
  */
 ORM.init = function(config) {
-  const pool = new pg.Pool(config);
+  const pool = createDBPool(config);
   return async function(req, res, next) {
     await Transaction.startTransactionMiddle(pool, req, res, next);
   }
+}
+
+function createDBPool(dbConfig){
+  const pool = new pg.Pool(dbConfig);
+  pool.on('error', Transaction.transactionFailure);
+  return pool;
 }
