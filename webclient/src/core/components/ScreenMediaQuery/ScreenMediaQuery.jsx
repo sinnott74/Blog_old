@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
 import { connect } from "react-redux";
-import { largeScreen } from 'core/ducks/screen';
+import { largeScreen } from "core/ducks/screen";
 
 class ScreenMediaQuery extends React.Component {
-
   componentWillMount() {
-    if(!window.matchMedia) return;
+    if (!window.matchMedia) return;
     this.mediaQueryList = window.matchMedia(this.props.mediaQuery);
     this._onMatch = this._onMatch.bind(this);
     this.mediaQueryList.addListener(this._onMatch);
@@ -22,15 +21,14 @@ class ScreenMediaQuery extends React.Component {
   }
 
   _onMatch(mediaQueryList) {
-    if(mediaQueryList.matches) {
+    if (mediaQueryList.matches) {
       this.props.onMatch();
     }
   }
 }
 
-
 const mapDispatchToProps = {
   onMatch: largeScreen
-}
+};
 
 export default connect(null, mapDispatchToProps)(ScreenMediaQuery);

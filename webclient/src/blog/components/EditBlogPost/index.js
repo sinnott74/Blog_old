@@ -1,2 +1,2 @@
-import EditBlogPost from './EditBlogPost';
+import EditBlogPost from "./EditBlogPost";
 export default EditBlogPost;

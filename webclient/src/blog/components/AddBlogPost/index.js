@@ -1,2 +1,2 @@
-import AddBlogPost from './AddBlogPost';
+import AddBlogPost from "./AddBlogPost";
 export default AddBlogPost;

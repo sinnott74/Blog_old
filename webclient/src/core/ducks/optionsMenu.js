@@ -1,15 +1,15 @@
-import reducerRegistry from 'core/redux/ReducerRegistry';
+import reducerRegistry from "core/redux/ReducerRegistry";
 
 /*
  * Sidenav actions
  */
-export const OPEN_OPTIONS_MENU = 'OPEN_OPTIONS_MENU';
-export const CLOSE_OPTIONS_MENU = 'CLOSE_OPTIONS_MENU';
-export const TOGGLE_OPTIONS_MENU = 'TOGGLE_OPTIONS_MENU';
+export const OPEN_OPTIONS_MENU = "OPEN_OPTIONS_MENU";
+export const CLOSE_OPTIONS_MENU = "CLOSE_OPTIONS_MENU";
+export const TOGGLE_OPTIONS_MENU = "TOGGLE_OPTIONS_MENU";
 
- let initialState = {
-   opened : false
- }
+let initialState = {
+  opened: false
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -17,48 +17,48 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         opened: true
-      }
+      };
     case CLOSE_OPTIONS_MENU:
       return {
         ...state,
         opened: false
-      }
+      };
     case TOGGLE_OPTIONS_MENU:
       return {
         ...state,
         opened: !state.opened
-      }
+      };
     default:
       return state;
   }
 }
 
-reducerRegistry.register('optionsMenu', reducer);
+reducerRegistry.register("optionsMenu", reducer);
 
 /**
  * Action Creators
  */
-export function openOptionsMenu(){
+export function openOptionsMenu() {
   return {
     type: OPEN_OPTIONS_MENU
-  }
+  };
 }
 
-export function closeOptionsMenu(){
+export function closeOptionsMenu() {
   return {
     type: CLOSE_OPTIONS_MENU
-  }
+  };
 }
 
-export function toggleOptionsMenu(){
+export function toggleOptionsMenu() {
   return {
     type: TOGGLE_OPTIONS_MENU
-  }
+  };
 }
 
 /**
  * Selectors
  */
 export function isOpened(state) {
-  return state.optionsMenu.opened
+  return state.optionsMenu.opened;
 }

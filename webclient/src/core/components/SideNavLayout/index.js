@@ -1,2 +1,2 @@
-import SideNavLayout from './SideNavLayout';
+import SideNavLayout from "./SideNavLayout";
 export default SideNavLayout;

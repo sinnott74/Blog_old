@@ -1,2 +1,2 @@
-import CodeListItem from './CodeListItem';
+import CodeListItem from "./CodeListItem";
 export default CodeListItem;

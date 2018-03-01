@@ -1,2 +1,2 @@
-import ServiceWorker from './ServiceWorker';
+import ServiceWorker from "./ServiceWorker";
 export default ServiceWorker;

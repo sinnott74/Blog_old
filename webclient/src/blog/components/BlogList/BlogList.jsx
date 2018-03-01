@@ -1,45 +1,43 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types'
-import BlogListItem from 'blog/components/BlogListItem'
-import Spinner from 'core/components/Spinner'
-import './BlogList.css'
-import { connect } from 'react-redux';
-import { loadBlogPosts, getBlogPostsSortedByCreatedByDate } from 'blog/ducks/blog';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import BlogListItem from "blog/components/BlogListItem";
+import Spinner from "core/components/Spinner";
+import "./BlogList.css";
+import { connect } from "react-redux";
+import {
+  loadBlogPosts,
+  getBlogPostsSortedByCreatedByDate
+} from "blog/ducks/blog";
 
 class BlogList extends React.Component {
-
   componentDidMount() {
     this.props.fetchData();
   }
 
   render() {
-    if(this.props.blogPosts.length === 0){
-      return <Spinner />
+    if (this.props.blogPosts.length === 0) {
+      return <Spinner />;
     }
 
-    let blogPosts = this.props.blogPosts.map(function(blogPost){
-      return <BlogListItem key={blogPost.id} {...blogPost}/>
+    let blogPosts = this.props.blogPosts.map(function(blogPost) {
+      return <BlogListItem key={blogPost.id} {...blogPost} />;
     });
 
-    return (
-      <Fragment>
-        { blogPosts }
-      </Fragment>
-    );
+    return <Fragment>{blogPosts}</Fragment>;
   }
 }
 
 BlogList.propTypes = {
   fetchData: PropTypes.func.isRequired,
   blogPostIDs: PropTypes.arrayOf(PropTypes.number).isRequired
-}
+};
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchData: () => dispatch(loadBlogPosts())
-})
+});
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = state => ({
   blogPosts: getBlogPostsSortedByCreatedByDate(state)
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlogList)
+export default connect(mapStateToProps, mapDispatchToProps)(BlogList);

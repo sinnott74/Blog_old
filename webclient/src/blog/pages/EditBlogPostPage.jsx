@@ -1,16 +1,16 @@
-import React from 'react';
-import EditBlogPost from 'blog/components/EditBlogPost'
-import Card from 'core/components/Card'
+import React from "react";
+import EditBlogPost from "blog/components/EditBlogPost";
+import Card from "core/components/Card";
 
 // Functional Component
-const EditBlogPostPage = (props) => {
+const EditBlogPostPage = props => {
   document.title = "Blog";
-  return  (
+  return (
     <Card>
       <h1>Edit Blog Post</h1>
-      <EditBlogPost id={props.match.params.id}/>
+      <EditBlogPost id={props.match.params.id} />
     </Card>
-  )
-}
+  );
+};
 
 export default EditBlogPostPage;

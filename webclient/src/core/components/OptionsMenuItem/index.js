@@ -1,2 +1,2 @@
-import OptionsMenuItem from './OptionsMenuItem';
+import OptionsMenuItem from "./OptionsMenuItem";
 export default OptionsMenuItem;

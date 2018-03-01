@@ -1,2 +1,2 @@
-import BlogEditor from './BlogEditor';
+import BlogEditor from "./BlogEditor";
 export default BlogEditor;

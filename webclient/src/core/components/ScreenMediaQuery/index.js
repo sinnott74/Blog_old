@@ -1,2 +1,2 @@
-import ScreenMediaQuery from './ScreenMediaQuery';
+import ScreenMediaQuery from "./ScreenMediaQuery";
 export default ScreenMediaQuery;

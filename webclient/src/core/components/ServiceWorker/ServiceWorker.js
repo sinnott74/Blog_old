@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
-import { showToast } from 'core/ducks/toast';
+import { showToast } from "core/ducks/toast";
 
 class ServiceWorker extends React.Component {
-
   constructor() {
     super();
     this._registerServiceWorker();
@@ -19,47 +18,51 @@ class ServiceWorker extends React.Component {
 
   _registerServiceWorker() {
     let _self = this;
-    if (!('serviceWorker' in navigator)) {
+    if (!("serviceWorker" in navigator)) {
       // Service worker is not supported on this platform
       return;
     }
 
-    navigator.serviceWorker.register('/service-worker.js', {
-      scope: '/'
-    }).then(function(registration) {
-      console.log('Service worker is registered.');
+    navigator.serviceWorker
+      .register("/service-worker.js", {
+        scope: "/"
+      })
+      .then(function(registration) {
+        console.log("Service worker is registered.");
 
-      var isUpdate = false;
+        var isUpdate = false;
 
-      // If this fires we should check if there's a new Service Worker
-      // waiting to be activated. If so, ask the user to force refresh.
-      if (registration.active) {
-        isUpdate = true;
-      }
+        // If this fires we should check if there's a new Service Worker
+        // waiting to be activated. If so, ask the user to force refresh.
+        if (registration.active) {
+          isUpdate = true;
+        }
 
-      registration.onupdatefound = function(updateEvent) {
-        console.log('A new Service Worker version has been found...');
+        registration.onupdatefound = function(updateEvent) {
+          console.log("A new Service Worker version has been found...");
 
-        // If an update is found the spec says that there is a new Service
-        // Worker installing, so we should wait for that to complete then
-        // show a notification to the user.
-        registration.installing.onstatechange = function(event) {
-          if (this.state === 'installed') {
-            var message = (isUpdate ? 'App updated. Restart for the new version.' : 'App ready for offline use.');
-            _self.props.handleToastMessage(message);
-          }
+          // If an update is found the spec says that there is a new Service
+          // Worker installing, so we should wait for that to complete then
+          // show a notification to the user.
+          registration.installing.onstatechange = function(event) {
+            if (this.state === "installed") {
+              var message = isUpdate
+                ? "App updated. Restart for the new version."
+                : "App ready for offline use.";
+              _self.props.handleToastMessage(message);
+            }
+          };
         };
-      };
-      console.log('After onupdatefound function set');
-    })
-    .catch(function(err) {
-      console.log('Unable to register service worker.', err);
-    });
+        console.log("After onupdatefound function set");
+      })
+      .catch(function(err) {
+        console.log("Unable to register service worker.", err);
+      });
   }
 }
 
 const mapDispatchToProps = {
   handleToastMessage: showToast
-}
+};
 
 export default connect(null, mapDispatchToProps)(ServiceWorker);
