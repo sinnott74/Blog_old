@@ -1,7 +1,7 @@
-const asyncHooks = require('async_hooks');
-const nano = require('nano-seconds');
+const asyncHooks = require("async_hooks");
+const nano = require("nano-seconds");
 
-const debug = require('debug')('async-local-storage');
+const debug = require("debug")("async-local-storage");
 
 const map = new Map();
 
@@ -35,7 +35,7 @@ const hooks = asyncHooks.createHook({
     // }
     // init, set the created time
     const data = {
-      created: nano.now(),
+      created: nano.now()
     };
     const parentId = triggerId || currentId;
     // not tigger by itself, add parent
@@ -63,7 +63,7 @@ const hooks = asyncHooks.createHook({
     }
     debug(`destroy ${id}`);
     map.delete(id);
-  },
+  }
 });
 
 /**
@@ -104,8 +104,8 @@ exports.size = () => map.size;
  */
 exports.set = function setValue(key, value) {
   /* istanbul ignore if */
-  if (key === 'created' || key === 'paraent') {
-    throw new Error('can\'t set created and parent');
+  if (key === "created" || key === "paraent") {
+    throw new Error("can't set created and parent");
   }
   const id = getCurrentId();
   debug(`set ${key}:${value} to ${id}`);

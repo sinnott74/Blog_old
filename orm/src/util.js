@@ -1,12 +1,11 @@
-const isPlainObject = require('lodash.isplainobject');
+const isPlainObject = require("lodash.isplainobject");
 
 /**
  * Utility Functions
  */
 class Util {
-
   get kSEPERATOR() {
-    return '.';
+    return ".";
   }
 
   /**
@@ -88,13 +87,13 @@ class Util {
    */
   groupData(arr, seperator) {
     // convert each for into dot objects
-    const convertedDotObjects = arr.map((obj) => {
-      return this._splitIntoNestedObjects(obj, seperator)
-    })
+    const convertedDotObjects = arr.map(obj => {
+      return this._splitIntoNestedObjects(obj, seperator);
+    });
 
     // convert dot objects array into keyed objects
     let topList = {};
-    convertedDotObjects.forEach((obj) => {
+    convertedDotObjects.forEach(obj => {
       this._combineNestedObjectIntoGroup(topList, obj);
     });
 
@@ -104,22 +103,21 @@ class Util {
     return returnArray;
   }
 
-  _convertKeyObjectToArrays(keyedObject, array){
+  _convertKeyObjectToArrays(keyedObject, array) {
     // Loop though each ID key
     Object.keys(keyedObject).forEach(key => {
-
       // Get the object for that ID
       let object = keyedObject[key];
 
       // Loop through each attribute of that object
       Object.keys(object).forEach(attribute => {
         const value = object[attribute];
-        if(isPlainObject(value)){
+        if (isPlainObject(value)) {
           const childArray = [];
           this._convertKeyObjectToArrays(value, childArray);
-          object[attribute] = childArray
+          object[attribute] = childArray;
         }
-      })
+      });
       array.push(object);
     });
   }
@@ -128,15 +126,15 @@ class Util {
    * Recursiveley splits the object into the group
    */
   _combineNestedObjectIntoGroup(group, object) {
-    if(!group[object.id]) {
+    if (!group[object.id]) {
       group[object.id] = {};
     }
     let localGroup = group[object.id];
 
-    Object.keys(object).forEach((key) => {
+    Object.keys(object).forEach(key => {
       let value = object[key];
-      if(isPlainObject(value)){
-        if(!localGroup[key]) {
+      if (isPlainObject(value)) {
+        if (!localGroup[key]) {
           localGroup[key] = {};
         }
         localGroup = localGroup[key];
@@ -208,10 +206,10 @@ class Util {
    */
   defineImmutableProperty(object, property, value) {
     Object.defineProperty(object, property, {
-        writable: false,
-        enumerable: false,
-        configurable: false,
-        value: value
+      writable: false,
+      enumerable: false,
+      configurable: false,
+      value: value
     });
   }
 
@@ -223,10 +221,10 @@ class Util {
    */
   defineNonEnumerableProperty(object, property, value) {
     Object.defineProperty(object, property, {
-        writable: true,
-        enumerable: false,
-        configurable: true,
-        value: value
+      writable: true,
+      enumerable: false,
+      configurable: true,
+      value: value
     });
   }
 
@@ -245,7 +243,7 @@ class Util {
         this.set(name, value);
       },
       enumerable: true
-    })
+    });
   }
 
   /**
@@ -254,6 +252,12 @@ class Util {
    */
   capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  async asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
   }
 }
 

@@ -1,10 +1,9 @@
-const ApplicationException = require('./ApplicationException');
+const ApplicationException = require("./ApplicationException");
 
 class AuthenticationException extends ApplicationException {
-
   constructor(message) {
     super(message);
-    this. status = 401;
+    this.status = 401;
   }
 }
 
