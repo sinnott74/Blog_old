@@ -1,40 +1,36 @@
-var router = require('express').Router();
-var UserDAO = require('../DAO/UserDAO');
+const router = require("express").Router();
+const User = require("../Entity").User;
+const Credential = require("../Entity").Credential;
 
-
-router.get('/', async function(req, res, next) {
-  let users = await new UserDAO().list();
+router.get("/", async function(req, res) {
+  let users = await User.findAll();
   res.json(users);
-  next();
-})
+});
 
-router.get('/:id', async function(req, res, next) {
-  let id = req.params.user_id;
-  let user = await new UserDAO().get(user_id);
+router.get("/:id", async function(req, res) {
+  let id = req.params.id;
+  let user = await User.get(id);
   res.json(user);
-  next();
-})
+});
 
-router.post('/', async function(req, res, next) {
-  let user = { ...req.body }
-  let insertedUser = await new UserDAO().insert(user)
-  res.json(insertedUser);
-  next();
-})
+router.post("/", async function(req, res) {
+  const userData = { ...req.body };
+  const user = new User(userData);
+  await user.save();
+  res.json(user);
+});
 
-router.put('/:id', async function(req, res, next) {
+router.put("/:id", async function(req, res) {
+  const userData = { ...req.body };
+  const user = new User(userData);
+  await user.save();
+  res.json(user);
+});
+
+router.delete("/:id", async function(req, res) {
   let id = req.params.id;
-  let user = {id, ...req.body};
-  await new UserDAO().modify(user);
+  await User.delete(id);
   res.sendStatus(200);
-  next();
-})
-
-router.delete('/:id',async function(req, res, next) {
-  let id = req.params.id;
-  let user = await new UserDAO().delete(id);
-  res.sendStatus(200);
-  next();
-})
+});
 
 module.exports = router;

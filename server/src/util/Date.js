@@ -1,8 +1,7 @@
-var moment = require('moment');
+var moment = require("moment");
 let defaultFormat = "ddd, Do MMM YYYY"; // Fri, 12th Jan 2017
 
 class Date {
-
   constructor(input) {
     this.internalDate = moment(input);
   }

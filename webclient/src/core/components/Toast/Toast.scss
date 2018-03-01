@@ -1,0 +1,37 @@
+.toast {
+  background-color: var(--background-color-dark);
+  border-radius: 3px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+  color: var(--text-color-light);
+  line-height: 20px;
+  padding: 16px;
+  transition: transform var(--transition);
+  transform: translateY(100%);
+  will-change: transform;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  word-wrap: normal;
+  width: 100%;
+  z-index: 2;
+}
+
+.toast.toast__opened {
+  transform: translateY(0);
+}
+.toast .btn-close {
+  border: 0;
+  background-color: transparent;
+  color: var(--text-color-light);
+  opacity: 0.8;
+  transition: opacity 0.333s cubic-bezier(0, 0, 0.21, 1);
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+}
+.toast.btn-close:hover {
+  opacity: 1;
+}
+.toast.message {
+  width: calc(100% - 20px);
+}

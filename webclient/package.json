@@ -10,8 +10,10 @@
     "react-scripts": "react-scripts",
     "build-js": "react-scripts build",
     "start-js": "react-scripts start",
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/ --watch --recursive"
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/ --watch --recursive"
   },
   "proxy": {
     "/api/*": {
@@ -36,7 +38,7 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "react-scripts": "1.1.0",
+    "react-scripts": "1.1.1",
     "reselect": "^3.0.1"
   },
   "devDependencies": {

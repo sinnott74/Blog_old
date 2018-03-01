@@ -1,16 +1,14 @@
-var cfApp = require('cfenv').getAppEnv();
-var services = cfApp.getServices('postgresql') || {};
-var dbConfig = services['ElephantSQL'] || {};
+var cfApp = require("cfenv").getAppEnv();
+var services = cfApp.getServices("postgresql") || {};
+var dbConfig = services["ElephantSQL"] || {};
 var credentials = dbConfig.credentials || {};
-var uri = credentials.uri || '';
-
+var uri = credentials.uri || "";
 
 // Database connection object
 module.exports = {
-
   development: {
-    database: 'pwadb',
-    host: 'localhost',
+    database: "pwadb",
+    host: "localhost",
     port: 5432,
     max: 5
   },
