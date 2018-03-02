@@ -24,6 +24,9 @@
   opacity: 0;
   background: var(--background-color-dark);
   will-change: opacity;
+}
+
+.side-nav__scrim--animatable {
   transition: opacity var(--transition);
 }
 
