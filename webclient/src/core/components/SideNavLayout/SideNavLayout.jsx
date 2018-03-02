@@ -64,7 +64,7 @@ class SideNavLayout extends React.Component {
             className="side-nav__edgearea"
             onTouchStart={this._handleEdgeTouchStart}
             onTouchMove={this._handleSideNavTouchMove}
-            onTouchEnd={this._handleEdgeTouchEnd}
+            onTouchEnd={this._handleSideNavTouchEnd}
             ref={edge => {
               this.edge = edge;
             }}
@@ -77,7 +77,7 @@ class SideNavLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.TOUCH_SLOP = 12 * window.devicePixelRatio;
+    this.TOUCH_SLOP = 15 * window.devicePixelRatio;
 
     this._close = this._close.bind(this);
     this._open = this._open.bind(this);
@@ -87,7 +87,6 @@ class SideNavLayout extends React.Component {
     this._handleSideNavTouchMove = this._handleSideNavTouchMove.bind(this);
     this._handleSideNavTouchEnd = this._handleSideNavTouchEnd.bind(this);
     this._handleEdgeTouchStart = this._handleEdgeTouchStart.bind(this);
-    this._handleEdgeTouchEnd = this._handleEdgeTouchEnd.bind(this);
     this._handleScrimTap = this._handleScrimTap.bind(this);
   }
 
@@ -110,20 +109,21 @@ class SideNavLayout extends React.Component {
     this.translateX = 0;
     this.translateY = 0;
     this.direction = "";
+    this.do = this._close;
+    this.undo = this._open;
   }
 
   _handleEdgeTouchStart(e) {
     this._handleSideNavTouchStart(e);
     this.sideNavContent.style.transform = "translate3d(-95%, 0 , 0)";
     this.touchingEdge = true;
+    this.do = this._open;
+    this.undo = this._close;
   }
 
   _handleSideNavTouchMove(e) {
-    var newTouchX = e.touches[0].pageX;
-    var newTouchY = e.touches[0].pageY;
-
-    this.translateX = newTouchX - this.touchStartX;
-    this.translateY = newTouchY - this.touchStartY;
+    this.translateX = Math.abs(e.touches[0].pageX - this.touchStartX);
+    this.translateY = e.touches[0].pageY - this.touchStartY;
 
     if (!this.direction) {
       if (Math.abs(this.translateX) >= Math.abs(this.translateY)) {
@@ -146,11 +146,12 @@ class SideNavLayout extends React.Component {
     if (this.touching) {
       this.sideNavTransform = clamp(
         this.translateX,
-        -this.sideNavContentWidth,
-        0
+        0,
+        this.sideNavContentWidth
       );
+      // this.sideNavTransform = -this.sideNavTransform;
       this.sideNavContent.style.transform =
-        "translate3d(" + this.sideNavTransform + "px, 0, 0)";
+        "translate3d(" + -this.sideNavTransform + "px, 0, 0)";
 
       let opacityPercentage =
         0.85 + this.translateX / this.sideNavContentWidth * 0.85;
@@ -162,10 +163,6 @@ class SideNavLayout extends React.Component {
 
   _updateUIOnEdgeTouch() {
     if (this.touching) {
-      // this.sideNavTransform = Math.min(
-      //   this.sideNavContentWidth,
-      //   this.translateX
-      // );
       this.sideNavTransform = clamp(
         this.translateX,
         0,
@@ -188,45 +185,12 @@ class SideNavLayout extends React.Component {
     this.scrim.classList.add("side-nav__scrim--animatable");
     this.touching = false;
     this.direction = "";
-
-    if (this.sideNavTransform < -this.TOUCH_SLOP) {
-      this._close();
-      setTimeout(() => {
-        if (!this.isOpened && this.props.opened) {
-          this.props.closeSideNav();
-        }
-      }, 130);
-    } else {
-      this._open();
-      setTimeout(() => {
-        if (this.isOpened && !this.props.opened) {
-          this.props.openSideNav();
-        }
-      }, 130);
-    }
-  }
-
-  _handleEdgeTouchEnd(e) {
-    this.sideNavContent.classList.add("side_nav--animatable");
-    this.scrim.classList.add("side-nav__scrim--animatable");
-    this.direction = "";
-    this.touching = false;
     this.touchingEdge = false;
 
     if (this.sideNavTransform >= this.TOUCH_SLOP) {
-      this._open();
-      setTimeout(() => {
-        if (this.isOpened && !this.props.opened) {
-          this.props.openSideNav();
-        }
-      }, 130);
+      this.do();
     } else {
-      this._close();
-      setTimeout(() => {
-        if (!this.isOpened && this.props.opened) {
-          this.props.closeSideNav();
-        }
-      }, 130);
+      this.undo();
     }
   }
 
@@ -245,6 +209,12 @@ class SideNavLayout extends React.Component {
     this.scrim.style.opacity = "";
     document.body.classList.remove("noscroll");
     this.isOpened = false;
+
+    setTimeout(() => {
+      if (!this.isOpened && this.props.opened) {
+        this.props.closeSideNav();
+      }
+    }, 130);
   }
 
   _open() {
@@ -254,6 +224,12 @@ class SideNavLayout extends React.Component {
     this.scrim.style.opacity = "";
     document.body.classList.add("noscroll");
     this.isOpened = true;
+
+    setTimeout(() => {
+      if (this.isOpened && !this.props.opened) {
+        this.props.openSideNav();
+      }
+    }, 130);
   }
 }
 
