@@ -114,6 +114,11 @@ class SideNavLayout extends React.Component {
     this.direction = "";
   }
 
+  _handleEdgeTouchStart(e) {
+    this._handleSideNavTouchStart(e);
+    this.sideNavContent.style.transform = "translate3d(-95%, 0 , 0)";
+  }
+
   _handleSideNavTouchMove(e) {
     var newTouchX = e.touches[0].pageX;
     var newTouchY = e.touches[0].pageY;
@@ -172,25 +177,12 @@ class SideNavLayout extends React.Component {
     }
   }
 
-  _handleEdgeTouchStart(e) {
-    this.sideNavContent.classList.remove("side_nav--animatable");
-    this.sideNavContentWidth = this.sideNavContent.offsetWidth;
-    this.edgeTransform = 0;
-    this.direction = "";
-    this.translateX = 0;
-    this.translateY = 0;
-    this.touching = true;
-    this.edgeTouchStartX = e.touches[0].pageX;
-    this.edgeTouchStartY = e.touches[0].pageY;
-    this.sideNavContent.style.transform = "translate3d(-95%, 0 , 0)";
-  }
-
   _handleEdgeTouchMove(e) {
     let newEdgeTouchX = e.touches[0].pageX;
     let newEdgeTouchY = e.touches[0].pageY;
 
-    this.translateX = newEdgeTouchX - this.edgeTouchStartX;
-    this.translateY = newEdgeTouchY - this.edgeTouchStartY;
+    this.translateX = newEdgeTouchX - this.touchStartX;
+    this.translateY = newEdgeTouchY - this.touchStartY;
 
     if (!this.direction) {
       if (Math.abs(this.translateX) >= Math.abs(this.translateY)) {
@@ -208,10 +200,13 @@ class SideNavLayout extends React.Component {
 
   _updateUIOnEdgeTouch() {
     if (this.touching) {
-      this.edgeTransform = Math.min(this.sideNavContentWidth, this.translateX);
+      this.sideNavTransform = Math.min(
+        this.sideNavContentWidth,
+        this.translateX
+      );
       this.sideNavContent.style.transform =
         "translate3d(" +
-        (-this.sideNavContentWidth + this.edgeTransform) +
+        (-this.sideNavContentWidth + this.sideNavTransform) +
         "px, 0, 0)";
 
       let opacityPercentage = Math.abs(
@@ -228,7 +223,7 @@ class SideNavLayout extends React.Component {
     this.direction = "";
     this.touching = false;
 
-    if (this.edgeTransform >= this.TOUCH_SLOP) {
+    if (this.sideNavTransform >= this.TOUCH_SLOP) {
       this._open();
       setTimeout(() => {
         if (this.isOpened && !this.props.opened) {
