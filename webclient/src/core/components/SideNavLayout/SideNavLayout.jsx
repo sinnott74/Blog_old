@@ -77,8 +77,6 @@ class SideNavLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.touching = false;
-
     this.TOUCH_SLOP = 12 * window.devicePixelRatio;
 
     this._close = this._close.bind(this);
@@ -146,7 +144,11 @@ class SideNavLayout extends React.Component {
 
   _updateUI() {
     if (this.touching) {
-      this.sideNavTransform = Math.min(0, this.translateX);
+      this.sideNavTransform = clamp(
+        this.translateX,
+        -this.sideNavContentWidth,
+        0
+      );
       this.sideNavContent.style.transform =
         "translate3d(" + this.sideNavTransform + "px, 0, 0)";
 
@@ -160,9 +162,14 @@ class SideNavLayout extends React.Component {
 
   _updateUIOnEdgeTouch() {
     if (this.touching) {
-      this.sideNavTransform = Math.min(
-        this.sideNavContentWidth,
-        this.translateX
+      // this.sideNavTransform = Math.min(
+      //   this.sideNavContentWidth,
+      //   this.translateX
+      // );
+      this.sideNavTransform = clamp(
+        this.translateX,
+        0,
+        this.sideNavContentWidth
       );
       this.sideNavContent.style.transform =
         "translate3d(" +
