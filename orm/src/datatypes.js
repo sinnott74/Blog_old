@@ -62,7 +62,7 @@ class TextDataType extends AbstractDataType {
  */
 class TimeStampDataType extends AbstractDataType {
   static getSQLType(attributeOptions) {
-    return "TIMESTAMPZ";
+    return "TIMESTAMP WITH TIME ZONE";
   }
 }
 
