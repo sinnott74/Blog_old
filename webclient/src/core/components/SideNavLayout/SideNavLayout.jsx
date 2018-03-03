@@ -13,7 +13,7 @@ class SideNavLayout extends React.Component {
       <div className="side-nav-layout">
         <div className="side-nav-layout_main">{this.props.children}</div>
         <div
-          className="side-nav"
+          className="side-nav side_nav--animatable"
           ref={sidenav => {
             this.sidenav = sidenav;
           }}
@@ -26,7 +26,7 @@ class SideNavLayout extends React.Component {
             }}
           />
           <div
-            className="side-nav__content side_nav--animatable"
+            className="side-nav__content"
             onTouchStart={this._handleSideNavTouchStart}
             onTouchMove={this._handleSideNavTouchMove}
             onTouchEnd={this._handleSideNavTouchEnd}
@@ -99,8 +99,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchStart(e) {
-    this.sideNavContent.classList.remove("side_nav--animatable");
-    this.scrim.classList.remove("side-nav__scrim--animatable");
+    this.sidenav.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.touching = true;
     this.sideNavTransform = 0;
@@ -181,8 +180,7 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchEnd(e) {
-    this.sideNavContent.classList.add("side_nav--animatable");
-    this.scrim.classList.add("side-nav__scrim--animatable");
+    this.sidenav.classList.add("side_nav--animatable");
     this.touching = false;
     this.direction = "";
     this.touchingEdge = false;
@@ -203,7 +201,6 @@ class SideNavLayout extends React.Component {
   }
 
   _close() {
-    this.sideNavContent.classList.add("side_nav--animatable");
     this.sidenav.classList.remove("side_nav--opened");
     this.sideNavContent.style.transform = "";
     this.scrim.style.opacity = "";
@@ -218,7 +215,6 @@ class SideNavLayout extends React.Component {
   }
 
   _open() {
-    this.sideNavContent.classList.add("side_nav--animatable");
     this.sidenav.classList.add("side_nav--opened");
     this.sideNavContent.style.transform = "";
     this.scrim.style.opacity = "";

@@ -26,11 +26,11 @@
   will-change: opacity;
 }
 
-.side-nav__scrim--animatable {
+.side_nav--animatable .side-nav__scrim {
   transition: opacity var(--transition);
 }
 
-.side_nav--animatable {
+.side_nav--animatable .side-nav__content {
   transition: transform var(--transition);
 }
 
@@ -54,13 +54,6 @@
   margin-right: 2.22222%;
   float: left;
   max-width: var(--side-nav-max-width);
-}
-
-@media (min-width: 1025px) {
-  .side-nav__content {
-    transform: translate3d(0, 0, 0);
-    pointer-events: auto;
-  }
 }
 
 .side-nav__edgearea {
@@ -126,5 +119,10 @@
   .side-nav-layout_main {
     margin-left: var(--side-nav-max-width);
     width: calc(100vw - var(--side-nav-max-width));
+  }
+
+  .side-nav__content {
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
   }
 }
