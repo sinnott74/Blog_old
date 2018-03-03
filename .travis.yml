@@ -31,6 +31,7 @@ deploy:
     organization: ${BLUEMIX_USER}
     space: production
     api: https://api.ng.bluemix.net/
+    skip_cleanup: true
     on:
       branch: master
   - provider: cloudfoundry
@@ -43,6 +44,7 @@ deploy:
     organization: ${BLUEMIX_USER}
     space: staging
     api: https://api.ng.bluemix.net/
+    skip_cleanup: true
     on:
       branch: staging
 

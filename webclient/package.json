@@ -27,7 +27,6 @@
   "dependencies": {
     "history": "^4.7.2",
     "marked": "^0.3.12",
-    "node-sass-chokidar": "^0.0.3",
     "prop-types": "^15.6.0",
     "react-md": "^1.2.11",
     "react": "^16.2.0",
@@ -38,10 +37,11 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "react-scripts": "1.1.1",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "node-sass-chokidar": "^0.0.3",
+    "react-scripts": "1.1.1"
   }
 }
