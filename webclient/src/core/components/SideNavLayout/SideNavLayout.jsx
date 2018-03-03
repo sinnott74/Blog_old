@@ -132,6 +132,8 @@ class SideNavLayout extends React.Component {
 
     if (this.direction === "horizontal") {
       requestAnimationFrame(this._updateUI);
+    } else {
+      this.translateX = 0;
     }
   }
 
@@ -142,7 +144,7 @@ class SideNavLayout extends React.Component {
       let tranformX = this.translateX;
 
       if (this.touchingEdge) {
-        tranformX = this.sideNavContentWidth - this.translateX;
+        tranformX = this.sideNavContentWidth - tranformX;
       } else {
         opacityPercentage = this.MAXOPACITY - opacityPercentage;
       }
@@ -150,14 +152,6 @@ class SideNavLayout extends React.Component {
       this.sideNavContent.style.transform =
         "translate3d(" + -tranformX + "px, 0, 0)";
       this.scrim.style.opacity = opacityPercentage;
-    }
-  }
-
-  _getDirection(translateX, translateY) {
-    if (Math.abs(translateX) >= Math.abs(translateY)) {
-      return "horizontal";
-    } else {
-      return "vertical";
     }
   }
 
@@ -171,6 +165,14 @@ class SideNavLayout extends React.Component {
       this.do();
     } else {
       this.undo();
+    }
+  }
+
+  _getDirection(translateX, translateY) {
+    if (Math.abs(translateX) >= Math.abs(translateY)) {
+      return "horizontal";
+    } else {
+      return "vertical";
     }
   }
 
