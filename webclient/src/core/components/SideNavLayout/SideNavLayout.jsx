@@ -77,12 +77,12 @@ class SideNavLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.TOUCH_SLOP = 15 * window.devicePixelRatio;
+    this.THRESHOLD = 15 * window.devicePixelRatio;
+    this.MAXOPACITY = 0.85;
 
     this._close = this._close.bind(this);
     this._open = this._open.bind(this);
     this._updateUI = this._updateUI.bind(this);
-    this._updateUIOnEdgeTouch = this._updateUIOnEdgeTouch.bind(this);
     this._handleSideNavTouchStart = this._handleSideNavTouchStart.bind(this);
     this._handleSideNavTouchMove = this._handleSideNavTouchMove.bind(this);
     this._handleSideNavTouchEnd = this._handleSideNavTouchEnd.bind(this);
@@ -102,7 +102,6 @@ class SideNavLayout extends React.Component {
     this.sidenav.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.touching = true;
-    this.sideNavTransform = 0;
     this.touchStartX = e.touches[0].pageX;
     this.touchStartY = e.touches[0].pageY;
     this.translateX = 0;
@@ -121,7 +120,10 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchMove(e) {
-    this.translateX = Math.abs(e.touches[0].pageX - this.touchStartX);
+    const diffX = this.touchingEdge
+      ? e.touches[0].pageX - this.touchStartX
+      : this.touchStartX - e.touches[0].pageX;
+    this.translateX = clamp(diffX, 0, this.sideNavContentWidth);
     this.translateY = e.touches[0].pageY - this.touchStartY;
 
     if (!this.direction) {
@@ -133,49 +135,25 @@ class SideNavLayout extends React.Component {
     }
 
     if (this.direction === "horizontal") {
-      if (this.touchingEdge) {
-        requestAnimationFrame(this._updateUIOnEdgeTouch);
-      } else {
-        requestAnimationFrame(this._updateUI);
-      }
+      requestAnimationFrame(this._updateUI);
     }
   }
 
   _updateUI() {
     if (this.touching) {
-      this.sideNavTransform = clamp(
-        this.translateX,
-        0,
-        this.sideNavContentWidth
-      );
-      // this.sideNavTransform = -this.sideNavTransform;
-      this.sideNavContent.style.transform =
-        "translate3d(" + -this.sideNavTransform + "px, 0, 0)";
-
       let opacityPercentage =
-        0.85 + this.translateX / this.sideNavContentWidth * 0.85;
-      opacityPercentage = clamp(opacityPercentage, 0, 0.85);
-      this.scrim.style.opacity = opacityPercentage;
-      requestAnimationFrame(this._updateUI);
-    }
-  }
+        this.translateX / this.sideNavContentWidth * this.MAXOPACITY;
+      let tranformX = this.translateX;
 
-  _updateUIOnEdgeTouch() {
-    if (this.touching) {
-      this.sideNavTransform = clamp(
-        this.translateX,
-        0,
-        this.sideNavContentWidth
-      );
+      if (this.touchingEdge) {
+        tranformX = this.sideNavContentWidth - this.translateX;
+      } else {
+        opacityPercentage = this.MAXOPACITY - opacityPercentage;
+      }
+
       this.sideNavContent.style.transform =
-        "translate3d(" +
-        (-this.sideNavContentWidth + this.sideNavTransform) +
-        "px, 0, 0)";
-
-      let opacityPercentage = this.translateX / this.sideNavContentWidth * 0.85;
-      opacityPercentage = clamp(opacityPercentage, 0, 0.85);
+        "translate3d(" + -tranformX + "px, 0, 0)";
       this.scrim.style.opacity = opacityPercentage;
-      requestAnimationFrame(this._updateUIOnEdgeTouch);
     }
   }
 
@@ -185,7 +163,7 @@ class SideNavLayout extends React.Component {
     this.direction = "";
     this.touchingEdge = false;
 
-    if (this.sideNavTransform >= this.TOUCH_SLOP) {
+    if (this.translateX >= this.THRESHOLD) {
       this.do();
     } else {
       this.undo();
