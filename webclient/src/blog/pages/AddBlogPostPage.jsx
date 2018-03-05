@@ -1,5 +1,5 @@
 import React from "react";
-import AddBlogPost from "blog/components/AddBlogPost";
+import AddBlogPost from "blog/containers/AddBlogPost";
 import Card from "core/components/Card";
 
 // Functional Component

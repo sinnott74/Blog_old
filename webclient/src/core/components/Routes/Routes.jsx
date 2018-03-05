@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router";
 import Loadable from "react-loadable";
 import Spinner from "core/components/Spinner";
-import AuthernticatedRoute from "core/components/AuthenticatedRoute";
+import AuthenticatedRoute from "core/containers/AuthenticatedRoute";
 
 /**
  * Import all route pages
@@ -39,7 +39,7 @@ const dynamicRoutes = routesConfigs.map(routeConfig => {
     exact: true
   };
   const route = routeConfig.authenticated ? (
-    <AuthernticatedRoute {...routeProps} component={component} />
+    <AuthenticatedRoute {...routeProps} component={component} />
   ) : (
     <Route {...routeProps} component={component} />
   );

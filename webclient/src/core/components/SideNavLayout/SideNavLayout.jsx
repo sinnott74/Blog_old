@@ -4,10 +4,7 @@ import PersonalLinks from "core/components/PersonalLinks";
 import { version } from "../../../../package.json";
 import "./SideNavLayout.css";
 
-import { connect } from "react-redux";
-import { openSideNav, closeSideNav, isOpened } from "core/ducks/sidenav";
-
-class SideNavLayout extends React.Component {
+export default class SideNavLayout extends React.Component {
   render() {
     return (
       <div className="side-nav-layout">
@@ -213,15 +210,6 @@ class SideNavLayout extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  opened: isOpened(state)
-});
-
-const mapDispatchToProps = {
-  openSideNav,
-  closeSideNav
-};
-
 /**
  * Clamps a value to between the Min & Max range
  * @param {Number} value
@@ -231,5 +219,3 @@ const mapDispatchToProps = {
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideNavLayout);

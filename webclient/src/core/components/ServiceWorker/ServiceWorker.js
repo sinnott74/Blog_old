@@ -1,8 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import { showToast } from "core/ducks/toast";
+import PropTypes from "prop-types";
 
-class ServiceWorker extends React.Component {
+export default class ServiceWorker extends React.Component {
   constructor() {
     super();
     this._registerServiceWorker();
@@ -49,7 +48,7 @@ class ServiceWorker extends React.Component {
               var message = isUpdate
                 ? "App updated. Restart for the new version."
                 : "App ready for offline use.";
-              _self.props.handleToastMessage(message);
+              _self.props.handleMessage(message);
             }
           };
         };
@@ -61,8 +60,6 @@ class ServiceWorker extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  handleToastMessage: showToast
+ServiceWorker.PropTypes = {
+  handleMessage: PropTypes.func.isRequired
 };
-
-export default connect(null, mapDispatchToProps)(ServiceWorker);

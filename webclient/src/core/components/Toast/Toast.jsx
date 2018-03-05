@@ -2,10 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Toast.css";
 
-import { connect } from "react-redux";
-import { hideToast, isShowing, getMessage } from "core/ducks/toast";
-
-class Toast extends React.Component {
+export default class Toast extends React.Component {
   render() {
     return (
       <div
@@ -34,14 +31,3 @@ Toast.propTypes = {
   message: PropTypes.string.isRequired,
   handleCloseButtonClick: PropTypes.func.isRequired
 };
-
-const mapStateToProps = state => ({
-  showing: isShowing(state),
-  message: getMessage(state)
-});
-
-const mapDispatchToProps = {
-  handleCloseButtonClick: hideToast
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toast);

@@ -1,5 +1,5 @@
 import React from "react";
-import EditBlogPost from "blog/components/EditBlogPost";
+import EditBlogPost from "blog/containers/EditBlogPost";
 import Card from "core/components/Card";
 
 // Functional Component

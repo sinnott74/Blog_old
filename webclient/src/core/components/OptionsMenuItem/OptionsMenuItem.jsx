@@ -1,10 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./OptionsMenuItem.css";
-import { connect } from "react-redux";
-import { closeOptionsMenu } from "core/ducks/optionsMenu";
 import Link from "core/components/Link";
 
-// Functional Component
 const OptionsMenuItem = props => {
   return (
     <Link
@@ -17,9 +15,12 @@ const OptionsMenuItem = props => {
     </Link>
   );
 };
+export default OptionsMenuItem;
 
-const mapDispatchToProps = {
-  handleItemClick: closeOptionsMenu
+OptionsMenuItem.PropTypes = {
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 };
-
-export default connect(null, mapDispatchToProps)(OptionsMenuItem);

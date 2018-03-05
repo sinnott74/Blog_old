@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Card from "core/components/Card";
 import "./BlogPost.css";
-import { connect } from "react-redux";
-import { loadBlogPost } from "blog/ducks/blog";
 import Link from "core/components/Link";
 import Button from "react-md/lib/Buttons/Button";
 import ViewBlogPost from "blog/components/ViewBlogPost";
 
-class BlogPost extends React.Component {
+export default class BlogPost extends React.Component {
   componentDidMount() {
     this.props.fetchData();
   }
@@ -50,16 +48,14 @@ class BlogPost extends React.Component {
 }
 
 BlogPost.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  author: PropTypes.shape({
+    fullname: PropTypes.string.isRequired
+  }),
+  user_id: PropTypes.string.isRequired,
+  auth_id: PropTypes.string.isRequired,
+  fetchData: PropTypes.func.isRequired
 };
-
-const mapStateToProps = (state, ownProps) => ({
-  ...state.blog.byId[ownProps.id],
-  auth_id: state.auth.id
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchData: () => dispatch(loadBlogPost(ownProps.id))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

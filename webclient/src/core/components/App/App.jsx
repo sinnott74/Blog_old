@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import HeaderLayout from "core/components/HeaderLayout";
-import SideNavLayout from "core/components/SideNavLayout";
-import OptionsMenu from "core/components/OptionsMenu";
-import Toast from "core/components/Toast";
-import ServiceWorker from "core/components/ServiceWorker";
+import HeaderLayout from "core/containers/HeaderLayout";
+import SideNavLayout from "core/containers/SideNavLayout";
+import OptionsMenu from "core/containers/OptionsMenu";
+import Toast from "core/containers/Toast";
+import ServiceWorker from "core/containers/ServiceWorker";
 import Routes from "core/components/Routes";
-import ScreenMediaQuery from "core/components/ScreenMediaQuery";
+import ScreenMediaQuery from "core/containers/ScreenMediaQuery";
 import "core/components/Card";
 import "./App.css";
 
