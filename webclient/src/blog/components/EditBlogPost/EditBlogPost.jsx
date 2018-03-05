@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-import { editBlogPost, loadBlogPost } from 'blog/ducks/blog';
-import BlogEditor from 'blog/components/BlogEditor'
+import { editBlogPost, loadBlogPost } from "blog/ducks/blog";
+import BlogEditor from "blog/components/BlogEditor";
 
 class EditBlogPost extends BlogEditor {
-
   componentDidMount() {
     super.componentDidMount();
     this.props.loadBlogPost();
@@ -16,11 +15,11 @@ const mapStateToProps = (state, ownProps) => ({
     user_id: state.auth.id
   },
   isSubmitting: state.blog.isLoading
-})
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  handleSave: (blogpost) => dispatch(editBlogPost(blogpost)),
+  handleSave: blogpost => dispatch(editBlogPost(blogpost)),
   loadBlogPost: () => dispatch(loadBlogPost(ownProps.id))
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditBlogPost)
+export default connect(mapStateToProps, mapDispatchToProps)(EditBlogPost);

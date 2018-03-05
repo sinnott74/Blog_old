@@ -1,2 +1,2 @@
-import BlogListItem from './BlogListItem';
+import BlogListItem from "./BlogListItem";
 export default BlogListItem;

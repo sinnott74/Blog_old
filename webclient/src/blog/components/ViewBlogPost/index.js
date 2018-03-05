@@ -1,2 +1,2 @@
-import ViewBlogPost from './ViewBlogPost';
+import ViewBlogPost from "./ViewBlogPost";
 export default ViewBlogPost;
