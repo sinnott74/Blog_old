@@ -1,6 +1,5 @@
 .blogpost {
-  width: 98%;
-  margin: 1%;
+  width: calc(98% - 6px);
 }
 .blogpost__title {
   text-align: center;
