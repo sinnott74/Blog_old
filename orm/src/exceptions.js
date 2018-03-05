@@ -1,5 +1,4 @@
 class ApplicationException extends Error {
-
   constructor(message) {
     super(message);
     this.name = this.constructor.name;
@@ -8,7 +7,6 @@ class ApplicationException extends Error {
 }
 
 class MultipleRecordsFoundException extends ApplicationException {
-
   constructor(message) {
     super(message);
     this.status = 500;
@@ -16,15 +14,13 @@ class MultipleRecordsFoundException extends ApplicationException {
 }
 
 class RecordNotFoundException extends ApplicationException {
-
   constructor(message) {
     super(message);
-    this. status = 404;
+    this.status = 404;
   }
 }
 
 module.exports = {
   MultipleRecordsFoundException: MultipleRecordsFoundException,
   RecordNotFoundException: RecordNotFoundException
-}
-
+};

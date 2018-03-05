@@ -1,2 +1,2 @@
-import SideNavLink from './SideNavLink';
+import SideNavLink from "./SideNavLink";
 export default SideNavLink;

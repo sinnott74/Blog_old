@@ -1,2 +1,2 @@
-import Routes from './Routes';
+import Routes from "./Routes";
 export default Routes;

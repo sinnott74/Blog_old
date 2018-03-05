@@ -1,20 +1,19 @@
-import React from 'react';
-import Card from 'core/components/Card';
-import Link from 'core/components/Link';
+import React from "react";
+import Card from "core/components/Card";
+import Link from "core/components/Link";
 import { connect } from "react-redux";
-import { login } from 'core/ducks/auth';
-import { Redirect } from 'react-router';
-import SubmitButton from 'core/components/SubmitButton';
-import TextField from 'react-md/lib/TextFields/TextField';
+import { login } from "core/ducks/auth";
+import { Redirect } from "react-router";
+import SubmitButton from "core/components/SubmitButton";
+import TextField from "react-md/lib/TextFields/TextField";
 
 class LoginPage extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-        username: '',
-        password: ''
+      username: "",
+      password: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,13 +27,13 @@ class LoginPage extends React.Component {
     e.preventDefault();
     const { username, password } = this.state;
     if (username && password) {
-       this.props.handleLogin(username, password);
+      this.props.handleLogin(username, password);
     }
   }
 
   render() {
-    if(this.props.loggedIn){
-      return <Redirect to={this._getRedirectUrl()} />
+    if (this.props.loggedIn) {
+      return <Redirect to={this._getRedirectUrl()} />;
     }
 
     return (
@@ -43,29 +42,31 @@ class LoginPage extends React.Component {
 
         <form onSubmit={this.handleSubmit}>
           <TextField
-            type='email'
-            name='username'
-            label='Username'
+            type="email"
+            name="username"
+            label="Username"
             required
             value={this.state.username}
-            autoComplete='email'
+            autoComplete="email"
             onChange={(username, e) => {
-              this.setState({username});
+              this.setState({ username });
             }}
           />
           <TextField
-            type='password'
-            name='password'
-            label='Password'
+            type="password"
+            name="password"
+            label="Password"
             required
-            autoComplete='current-password'
+            autoComplete="current-password"
             value={this.state.password}
             onChange={(password, e) => {
-              this.setState({password});
+              this.setState({ password });
             }}
           />
           {/* <Button raised={true} primary type="submit">Login</Button> */}
-          <SubmitButton isSubmitting={this.props.isSubmitting}>Login</SubmitButton>
+          <SubmitButton isSubmitting={this.props.isSubmitting}>
+            Login
+          </SubmitButton>
           <Link to="/signup">Sign Up</Link>
         </form>
       </Card>
@@ -73,20 +74,19 @@ class LoginPage extends React.Component {
   }
 
   _getRedirectUrl() {
-    var { from } = this.props.location.state || {from: {pathname: '/'}}
+    var { from } = this.props.location.state || { from: { pathname: "/" } };
     let forwardUrl = from;
     return forwardUrl;
   }
 }
 
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn,
   isSubmitting: state.auth.isLoading
 });
 
 const mapDispatchToProps = {
   handleLogin: login
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

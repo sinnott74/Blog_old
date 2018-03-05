@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build:database && npm run start:server:prod",
     "start:dev": "npm run build:database && npm run start:server:dev",
-    "start:prod": "npm run build:database && npm run start:server:prod",
-    "start:server:dev": "nodemon index.js",
     "start:server:prod": "node index.js",
+    "start:server:dev": "nodemon index.js",
     "build:database": "node builddatabase.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },

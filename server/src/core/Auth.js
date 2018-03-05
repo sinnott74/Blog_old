@@ -1,12 +1,12 @@
-const passport = require('passport');
-const JWTStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const jwt = require('jsonwebtoken');
-const moment = require('moment');
+const passport = require("passport");
+const JWTStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const jwt = require("jsonwebtoken");
+const moment = require("moment");
 // const TransactionInfo = require('./TransactionInfo');
-const AuthenticationError = require('../exception/AuthenticationException');
-const User = require('../Entity').User;
-const Credential = require('../Entity').Credential;
+const AuthenticationError = require("../exception/AuthenticationException");
+const User = require("../Entity").User;
+const Credential = require("../Entity").Credential;
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
 
@@ -14,12 +14,11 @@ const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
  * Responsible for Appliction Authentication
  */
 class Auth {
-
   /**
    * Initializes application authenication
    */
   static initialize() {
-    passport.use('jwt', Auth._getStrategy());
+    passport.use("jwt", Auth._getStrategy());
     return passport.initialize();
   }
 
@@ -48,15 +47,15 @@ class Auth {
    * @param {*} password
    */
   static async login(username, password) {
-    try{
-      let authenticated = await Credential.authenticate(username, password)
+    try {
+      let authenticated = await Credential.authenticate(username, password);
 
-      if(authenticated){
+      if (authenticated) {
         return Auth._getToken(username);
       } else {
         throw new AuthenticationError();
       }
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
   }
@@ -65,22 +64,21 @@ class Auth {
    * Gets the Passport JWT strategy to use to authenticate
    */
   static _getStrategy() {
-
     const strategyConfig = {
-      secretOrKey : SECRET,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+      secretOrKey: SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("JWT"),
       passReqToCallback: true
-    }
+    };
 
     return new JWTStrategy(strategyConfig, (req, payload, done) => {
-      User.readByUsername(payload.username + 'a')
-      .then((user) => {
-        done(null, user);
-      })
-      .catch((err) => {
-        done(null, false, {message: "Authentication error"});
-      })
-    })
+      User.readByUsername(payload.username + "a")
+        .then(user => {
+          done(null, user);
+        })
+        .catch(err => {
+          done(null, false, { message: "Authentication error" });
+        });
+    });
   }
 
   /**
@@ -89,10 +87,14 @@ class Auth {
    * @param {*} cb Callback function
    */
   static _authenticate(cb) {
-    return passport.authenticate('jwt', {
-      session: false,
-      failWithError: true,
-    }, cb)
+    return passport.authenticate(
+      "jwt",
+      {
+        session: false,
+        failWithError: true
+      },
+      cb
+    );
   }
 
   /**
@@ -101,23 +103,33 @@ class Auth {
    * @returns {Promise} contains a token, time of expiration & the username
    */
   static async _getToken(username) {
-    let expires = moment().utc().add({days: 7}).unix();
+    let expires = moment()
+      .utc()
+      .add({ days: 7 })
+      .unix();
 
     let user = await User.readByUsername(username);
     return new Promise((resolve, reject) => {
-      try{
-        jwt.sign({
-          exp: expires,
-          username: username
-        }, SECRET, {}, (err, token) => {
-          if(err){ reject(err); }
-          resolve({
-            token: "JWT " + token,
-            expires: moment.unix(expires).format(),
-            ...user.toJSON()
-          });
-        });
-      } catch(err) {
+      try {
+        jwt.sign(
+          {
+            exp: expires,
+            username: username
+          },
+          SECRET,
+          {},
+          (err, token) => {
+            if (err) {
+              reject(err);
+            }
+            resolve({
+              token: "JWT " + token,
+              expires: moment.unix(expires).format(),
+              ...user.toJSON()
+            });
+          }
+        );
+      } catch (err) {
         reject(err);
       }
     });

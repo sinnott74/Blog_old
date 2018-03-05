@@ -1,2 +1,2 @@
-import PersonalLinks from './PersonalLinks';
+import PersonalLinks from "./PersonalLinks";
 export default PersonalLinks;

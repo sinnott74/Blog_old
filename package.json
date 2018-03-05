@@ -8,10 +8,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./server && npm run start:server:prod",
-    "postinstall": "cd ./webclient && npm run build && cd ../server && npm run build:database",
-    "start:prod": "cd ./webclient && npm run build && cd ../server && npm run start:prod",
-    "start:dev": "concurrently --kill-others \"cd ./webclient && npm run start\" \"cd ./server && npm run start:dev\"",
+    "start": "cd ./server && npm run start",
+    "pretest":
+      "concurrently \"cd ./webclient && npm run build\"  \"cd ./server && npm run build:database\"",
+    "start:prod":
+      "cd ./webclient && npm run build && cd ../server && npm run start:prod",
+    "start:dev":
+      "concurrently --kill-others \"cd ./webclient && npm run start\" \"cd ./server && npm run start:dev\"",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "author": "",

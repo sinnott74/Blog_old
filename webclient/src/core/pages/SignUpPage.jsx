@@ -1,23 +1,22 @@
-import React from 'react';
-import Card from 'core/components/Card';
+import React from "react";
+import Card from "core/components/Card";
 import { connect } from "react-redux";
-import { signUp } from 'core/ducks/auth';
-import { Redirect } from 'react-router';
-import SubmitButton from 'core/components/SubmitButton';
-import TextField from 'react-md/lib/TextFields/TextField';
-import { DatePicker } from 'react-md/lib/Pickers';
+import { signUp } from "core/ducks/auth";
+import { Redirect } from "react-router";
+import SubmitButton from "core/components/SubmitButton";
+import TextField from "react-md/lib/TextFields/TextField";
+import { DatePicker } from "react-md/lib/Pickers";
 
 class SignUpPage extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      username: '',
-      password: '',
-      firstname: '',
-      lastname: ''
-  };
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: ""
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,19 +29,19 @@ class SignUpPage extends React.Component {
     e.preventDefault();
     const { username, password, firstname, lastname, dob } = this.state;
     if (username && password && firstname && lastname && dob) {
-       this.props.handleSubmit({
-         username,
-         password,
-         firstname,
-         lastname,
-         dob
-       });
+      this.props.handleSubmit({
+        username,
+        password,
+        firstname,
+        lastname,
+        dob
+      });
     }
   }
 
   render() {
-    if(this.props.loggedIn){
-      return <Redirect to={this._getRedirectUrl()} />
+    if (this.props.loggedIn) {
+      return <Redirect to={this._getRedirectUrl()} />;
     }
 
     return (
@@ -50,88 +49,90 @@ class SignUpPage extends React.Component {
         <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           <TextField
-            id='username'
-            type='email'
-            name='username'
-            label='Username'
+            id="username"
+            type="email"
+            name="username"
+            label="Username"
             required
-            autoComplete='email'
+            autoComplete="email"
             value={this.state.username}
             onChange={(username, e) => {
-              this.setState({username});
+              this.setState({ username });
             }}
           />
           <TextField
-            type='password'
-            name='password'
-            id='password'
-            label='Password'
+            type="password"
+            name="password"
+            id="password"
+            label="Password"
             required
-            autoComplete='new-password'
+            autoComplete="new-password"
             value={this.state.password}
             onChange={(password, e) => {
-              this.setState({password});
+              this.setState({ password });
             }}
           />
           <TextField
-            type='text'
-            name='firstname'
-            id='firstname'
-            label='Firstname'
+            type="text"
+            name="firstname"
+            id="firstname"
+            label="Firstname"
             required
-            autoComplete='given-name'
+            autoComplete="given-name"
             value={this.state.firstname}
             onChange={(firstname, e) => {
-              this.setState({firstname});
+              this.setState({ firstname });
             }}
           />
           <TextField
-            type='text'
-            name='lastname'
-            id='lastname'
-            label='Lastname'
+            type="text"
+            name="lastname"
+            id="lastname"
+            label="Lastname"
             required
-            autoComplete='family-name'
+            autoComplete="family-name"
             value={this.state.lastname}
             onChange={(lastname, e) => {
-              this.setState({lastname});
+              this.setState({ lastname });
             }}
           />
           <DatePicker
             id="DateOfBirthPicker"
             label="Date of Birth"
             required
-            autoComplete='bday'
+            autoComplete="bday"
             showAllDays
             disableOuterDates
             autoOk
             maxDate={new Date()} // today
             value={this.state.dob}
             onChange={(dobString, dob, e) => {
-              this.setState({dob});
+              this.setState({ dob });
             }}
           />
 
-          <SubmitButton isSubmitting={this.props.isSubmitting}>Sign Up</SubmitButton>
+          <SubmitButton isSubmitting={this.props.isSubmitting}>
+            Sign Up
+          </SubmitButton>
         </form>
       </Card>
     );
   }
 
   _getRedirectUrl() {
-    var { from } = this.props.location.state || {from: {pathname: '/'}}
+    var { from } = this.props.location.state || { from: { pathname: "/" } };
     let forwardUrl = from;
     return forwardUrl;
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn,
   isSubmitting: state.auth.isLoading
 });
 
 const mapDispatchToProps = {
   handleSubmit: signUp
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

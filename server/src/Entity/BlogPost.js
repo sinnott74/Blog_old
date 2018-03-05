@@ -1,9 +1,11 @@
-const ORM = require('sinnott-orm');
+const ORM = require("sinnott-orm");
 const DataTypes = ORM.DataTypes;
-const User = require('./User');
-const MomentDate = require('../util/Date');
+const User = require("./User");
+const MomentDate = require("../util/Date");
 
-const BlogPost = ORM.define('blogpost', {
+const BlogPost = ORM.define(
+  "blogpost",
+  {
     title: {
       type: DataTypes.STRING,
       length: 255,
@@ -12,16 +14,17 @@ const BlogPost = ORM.define('blogpost', {
     text: {
       type: DataTypes.TEXT,
       notNull: true,
-      default: true,
+      default: true
     },
     created_on: {
       type: DataTypes.TIMESTAMP,
       notNull: true
     }
-  }, {
+  },
+  {
     customAttributes: {
       date: {
-        get: function(){
+        get: function() {
           return new MomentDate(this.created_on).toString();
         }
       }
@@ -29,20 +32,20 @@ const BlogPost = ORM.define('blogpost', {
   }
 );
 
-User.oneToMany(BlogPost, {as: 'author'});
+User.oneToMany(BlogPost, { as: "author" });
 
 BlogPost.getBlogPostDetails = async function(id) {
-  let blogPostAndAuthor = BlogPost.get(id, {includes: ['author']});
+  let blogPostAndAuthor = BlogPost.get(id, { includes: ["author"] });
   return blogPostAndAuthor;
-}
+};
 
 BlogPost.listBlogPostDetails = async function() {
-  const blogPostsAndAuthors = BlogPost.findAll({}, {includes: ['author']});
+  const blogPostsAndAuthors = BlogPost.findAll({}, { includes: ["author"] });
   return blogPostsAndAuthors;
-}
+};
 
-BlogPost.beforeCreate = function(blogPost) {
-  blogPost.created_on = new Date();
-}
+BlogPost.beforeCreate = function() {
+  this.created_on = new Date();
+};
 
 module.exports = BlogPost;

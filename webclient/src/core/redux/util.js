@@ -1,4 +1,3 @@
-
 /**
  * Converts an array object to a single object.
  *
@@ -11,14 +10,14 @@
  *
  */
 export const arrayToObject = (array, idName) => {
-  idName = idName || 'id';
+  idName = idName || "id";
   let object = array.reduce((obj, item) => {
     let id = item[idName];
     obj[id] = item;
     return obj;
   }, {});
   return object;
-}
+};
 
 /**
  * Converts an object to another object which contains an attribute, keyed by the original objects ID & has its value.
@@ -29,12 +28,12 @@ export const arrayToObject = (array, idName) => {
  * @param idName - name if the ID attribute - optional
  */
 export const objectToIDKeyedObject = (obj, idName) => {
-  idName = idName || 'id';
+  idName = idName || "id";
   let objectKeyedByID = {};
   let id = obj[idName];
   objectKeyedByID[id] = obj;
   return objectKeyedByID;
-}
+};
 
 /**
  * Adds the item into an array & sorts
@@ -42,11 +41,11 @@ export const objectToIDKeyedObject = (obj, idName) => {
  * @param {*} item
  * @returns a new sorted array
  */
-export const addToArrayAndSort = (array, item)  => {
+export const addToArrayAndSort = (array, item) => {
   let newArray = [...array];
-  if(!newArray.includes(item)){
+  if (!newArray.includes(item)) {
     newArray.push(item);
     newArray.sort();
   }
   return newArray;
-}
+};

@@ -1,13 +1,13 @@
 /*
  * Auth actions
  */
-import reducerRegistry from 'core/redux/ReducerRegistry';
-import { showToast } from 'core/ducks/toast';
+import reducerRegistry from "core/redux/ReducerRegistry";
+import { showToast } from "core/ducks/toast";
 
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_OUT = 'LOG_OUT';
-export const LOG_IN_LOADING = 'LOG_IN_LOADING';
-export const LOG_IN_FAILED = 'LOG_IN_FAILED';
+export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
+export const LOG_OUT = "LOG_OUT";
+export const LOG_IN_LOADING = "LOG_IN_LOADING";
+export const LOG_IN_FAILED = "LOG_IN_FAILED";
 
 /**
  * Reducer
@@ -21,9 +21,11 @@ let defaultState = {
   hasErrored: false
 };
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = JSON.parse(localStorage.getItem("user"));
 
-let initialState = user ? {...defaultState, ...user, loggedIn: true} : defaultState
+let initialState = user
+  ? { ...defaultState, ...user, loggedIn: true }
+  : defaultState;
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -31,33 +33,32 @@ export default function reducer(state = initialState, action) {
       return {
         ...defaultState,
         isLoading: true
-      }
+      };
     case LOG_IN_FAILED:
       return {
         ...defaultState,
         hasErrored: true
-      }
+      };
     case LOG_IN_SUCCESS:
-      localStorage.setItem('user', JSON.stringify(action.user));
+      localStorage.setItem("user", JSON.stringify(action.user));
       return {
         ...defaultState,
         isLoading: false,
         hasErrored: false,
         ...action.user,
         loggedIn: true
-
-      }
+      };
     case LOG_OUT:
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
       return {
         ...defaultState
-      }
+      };
     default:
       return state;
   }
 }
 
-reducerRegistry.register('auth', reducer);
+reducerRegistry.register("auth", reducer);
 
 /**
  * Action Creators
@@ -65,98 +66,96 @@ reducerRegistry.register('auth', reducer);
 function logUserOut() {
   return {
     type: LOG_OUT
-  }
+  };
 }
 
 function loginLoading(bool) {
   return {
     type: LOG_IN_LOADING,
     isLoading: bool
-  }
+  };
 }
 
 function loginFailed() {
   return {
     type: LOG_IN_FAILED
-  }
+  };
 }
 
-function loginSuccess(credentials){
+function loginSuccess(credentials) {
   return {
     type: LOG_IN_SUCCESS,
     user: credentials
-  }
+  };
 }
 
 export function login(username, password) {
   return function(dispatch) {
-
     dispatch(loginLoading(true));
-    fetch('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({username, password}),
+    fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
       headers: new Headers({
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       })
     })
-    .then((response) => {
-      if(!response.ok) {
-        throw Error(response.statusText);
-      }
-      dispatch(loginLoading(false));
-      return response;
-    })
-    .then((response) => response.json())
-    .then((credentials) => dispatch(loginSuccess(credentials)))
-    .then(() => dispatch(showToast('Log In Successful')))
-    .catch((err) => {
-      console.log(err);
-      dispatch(loginFailed())
-      dispatch(showToast('Log In Failed'))
-    })
-  }
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(loginLoading(false));
+        return response;
+      })
+      .then(response => response.json())
+      .then(credentials => dispatch(loginSuccess(credentials)))
+      .then(() => dispatch(showToast("Log In Successful")))
+      .catch(err => {
+        console.log(err);
+        dispatch(loginFailed());
+        dispatch(showToast("Log In Failed"));
+      });
+  };
 }
 
-export function signUp(user){
+export function signUp(user) {
   return function(dispatch) {
-
     dispatch(loginLoading(true));
-    fetch('/api/auth/signup', {
-      method: 'POST',
+    fetch("/api/auth/signup", {
+      method: "POST",
       body: JSON.stringify(user),
       headers: new Headers({
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       })
     })
-    .then((response) => {
-      if(!response.ok) {
-        throw Error(response.statusText);
-      }
-      dispatch(loginLoading(false));
-      return response;
-    })
-    .then((response) => response.json())
-    .then((credentials) => dispatch(loginSuccess(credentials)))
-    .then(() => dispatch(showToast('Sign Up Successful')))
-    .catch((err) => {
-      console.log(err);
-      dispatch(loginFailed())
-      dispatch(showToast('Sign Up Failed'))
-    })
-  }
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(loginLoading(false));
+        return response;
+      })
+      .then(response => response.json())
+      .then(credentials => dispatch(loginSuccess(credentials)))
+      .then(() => dispatch(showToast("Sign Up Successful")))
+      .catch(err => {
+        console.log(err);
+        dispatch(loginFailed());
+        dispatch(showToast("Sign Up Failed"));
+      });
+  };
 }
 
 export function logout() {
   return function(dispatch) {
     dispatch(logUserOut());
-    dispatch(showToast('Log Out Successful'));
-  }
+    dispatch(showToast("Log Out Successful"));
+  };
 }
 
 /**
  * Selectors
  */
 
- export function isLoggedIn(state) {
-   return state.auth.loggedIn
- }
+export function isLoggedIn(state) {
+  return state.auth.loggedIn;
+}
