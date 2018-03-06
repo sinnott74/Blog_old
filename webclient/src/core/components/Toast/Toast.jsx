@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-md/lib/Buttons/Button";
 import "./Toast.css";
 
 export default class Toast extends React.Component {
@@ -11,16 +12,15 @@ export default class Toast extends React.Component {
           this.component = component;
         }}
       >
-        <button
-          className="btn-close js-toast-view__btn-close"
+        <div>{this.props.message}</div>
+        <Button
+          className="toast-button"
+          icon
           onClick={this.props.handleCloseButtonClick}
           aria-label="Close Toast"
         >
-          &#10006;
-        </button>
-        <div className="message js-toast-view__message">
-          {this.props.message}
-        </div>
+          clear
+        </Button>
       </div>
     );
   }
