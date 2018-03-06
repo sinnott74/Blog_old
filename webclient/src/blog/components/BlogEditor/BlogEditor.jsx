@@ -61,7 +61,7 @@ export default class BlogEditor extends React.Component {
                 helpOnFocus
                 required
                 value={this.state.title}
-                autoComplete=""
+                autoComplete="off"
                 maxLength={255}
                 onChange={(title, e) => {
                   this.setState({
@@ -77,6 +77,7 @@ export default class BlogEditor extends React.Component {
                 label="Add a Tag"
                 helpText="Press Enter to add a Tag"
                 helpOnFocus
+                autoComplete="off"
                 maxRows={1}
                 maxLength={255}
                 onKeyPress={this._handleTagKeyPress}
@@ -92,6 +93,7 @@ export default class BlogEditor extends React.Component {
                 helpOnFocus
                 required
                 rows={1}
+                autoComplete="off"
                 value={this.state.text}
                 onChange={this.addTag}
               />
