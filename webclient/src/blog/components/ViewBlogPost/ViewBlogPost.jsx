@@ -43,7 +43,10 @@ export default class ViewBlogPost extends React.Component {
 
   getActions() {
     // logged in user = blog post owner
-    if (this.props.user_id && this.props.auth_id === this.props.user_id) {
+    if (
+      this.props.user_id &&
+      this.props.loggedInUserID === this.props.user_id
+    ) {
       return (
         <div className="blogpost_actions">
           <Link to={`/blog/${this.props.id}/edit`}>
@@ -71,7 +74,7 @@ ViewBlogPost.PropTypes = {
     fullname: PropTypes.string.isRequired
   }),
   user_id: PropTypes.string.isRequired,
-  auth_id: PropTypes.string.isRequired,
+  loggedInUserID: PropTypes.string.isRequired,
   fetchData: PropTypes.func.isRequired,
   showActions: PropTypes.bool
 };

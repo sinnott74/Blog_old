@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { editBlogPost, loadBlogPost } from "blog/ducks/blog";
+import { getLoggedInUserID } from "core/ducks/auth";
 import BlogEditor from "blog/components/BlogEditor";
 
 class EditBlogPost extends BlogEditor {
@@ -12,7 +13,7 @@ class EditBlogPost extends BlogEditor {
 const mapStateToProps = (state, ownProps) => ({
   blogpost: {
     ...state.blog.byId[ownProps.id],
-    user_id: state.auth.id
+    user_id: getLoggedInUserID(state)
   },
   isSubmitting: state.blog.isLoading
 });

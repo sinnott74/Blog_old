@@ -1,5 +1,6 @@
 import ViewBlogPost from "blog/components/ViewBlogPost";
 import { connect } from "react-redux";
+import { getLoggedInUserID } from "core/ducks/auth";
 import { loadBlogPost } from "blog/ducks/blog";
 
 class DataFetchingViewBlogPost extends ViewBlogPost {
@@ -11,7 +12,7 @@ class DataFetchingViewBlogPost extends ViewBlogPost {
 
 const mapStateToProps = (state, ownProps) => ({
   ...state.blog.byId[ownProps.id],
-  auth_id: state.auth.id
+  loggedInUserID: getLoggedInUserID(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
