@@ -1,14 +1,13 @@
 // Exporting before requiring Model as theres a circular relationship
 module.exports = ORM;
-const ModelClass = require('./model');
-const DataTypes = require('./datatypes');
-const ModelManager = require('./modelmanager');
-const Transaction = require('./transaction');
-const pg = require('pg');
-const Util = require('./util');
+const ModelClass = require("./model");
+const DataTypes = require("./datatypes");
+const ModelManager = require("./modelmanager");
+const Transaction = require("./transaction");
+const pg = require("pg");
+const Util = require("./util");
 
-function ORM() {
-}
+function ORM() {}
 
 /**
  * Define a new model, representing a table in the DB.
@@ -46,12 +45,11 @@ function ORM() {
  * sequelize.models.modelName // The model will now be available in models under the name given to define
  */
 ORM.define = function(modelName, attributes, options) {
-
   if (!modelName) {
-    throw new Error('Model name required');
+    throw new Error("Model name required");
   }
 
-  if(ModelManager.isDefined(modelName)){
+  if (ModelManager.isDefined(modelName)) {
     throw new Error(`Model ${modelName} has alread been defined`);
   }
 
@@ -62,14 +60,14 @@ ORM.define = function(modelName, attributes, options) {
     ...options,
     modelName: modelName,
     ORM: this
-  }
+  };
 
   let Model = class extends ModelClass {};
   Model.init(attributes, options);
 
   ModelManager.addModel(Model);
   return Model;
-}
+};
 
 /**
  * Checks if a model has previously be defined
@@ -78,7 +76,7 @@ ORM.define = function(modelName, attributes, options) {
  */
 ORM.isDefined = function(model) {
   return ModelManager.isDefined(model);
-}
+};
 
 /**
  * Gets a model which has previously be defined
@@ -87,7 +85,7 @@ ORM.isDefined = function(model) {
  */
 ORM.getModel = function(model) {
   return ModelManager.getModel(model);
-}
+};
 
 /**
  * Exposing datatypes on ORM
@@ -102,16 +100,16 @@ ORM.sync = async function(config) {
   const models = ModelManager.getModels();
   await Transaction.startTransaction(pool, async function() {
     try {
-      await Util.asyncForEach(models, async(model) => {
+      await Util.asyncForEach(models, async model => {
         await model.sync();
-      })
+      });
       await Transaction.transactionSuccess();
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       await Transaction.transactionFailure();
     }
   });
-}
+};
 
 /**
  * Express Middleware
@@ -120,11 +118,11 @@ ORM.init = function(config) {
   const pool = createDBPool(config);
   return async function(req, res, next) {
     await Transaction.startTransactionMiddle(pool, req, res, next);
-  }
-}
+  };
+};
 
-function createDBPool(dbConfig){
+function createDBPool(dbConfig) {
   const pool = new pg.Pool(dbConfig);
-  pool.on('error', Transaction.transactionFailure);
+  pool.on("error", Transaction.transactionFailure);
   return pool;
 }
