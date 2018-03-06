@@ -6,7 +6,8 @@ const Tag = ORM.define("tag", {
   name: {
     type: DataTypes.STRING,
     length: 255,
-    notNull: true
+    notNull: true,
+    unique: true
   }
 });
 
