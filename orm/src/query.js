@@ -87,7 +87,7 @@ class Query {
    * @param {object}                options        Query options
    * @param {Array<string>}         options.includes   Array of association names
    */
-  async select(model, where, options) {
+  async select(model, where = {}, options) {
     let queryBuilder = model.entity;
 
     // select
