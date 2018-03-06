@@ -20,6 +20,7 @@ export default class ViewBlogPost extends React.Component {
             this.props.date
           } by ${authorName}`}</div>
         )}
+        {this.props.tags && this.getTags()}
         <div
           className="blogpost__text"
           dangerouslySetInnerHTML={this.rawMarkup()}
@@ -62,6 +63,17 @@ export default class ViewBlogPost extends React.Component {
         </div>
       );
     }
+  }
+
+  getTags() {
+    let tags = "";
+    this.props.tags.forEach((tag, index) => {
+      if (index > 0) {
+        tags += ", ";
+      }
+      tags += tag.name;
+    });
+    return <div className="blogpost_tags">{tags}</div>;
   }
 }
 
