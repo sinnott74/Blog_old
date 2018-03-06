@@ -290,6 +290,7 @@ Util.defineNonEnumerableProperty(
   "_filterAttributesByDefinition",
   _filterAttributesByDefinition
 );
+Util.defineNonEnumerableProperty(Model.prototype, "overwrite", overwrite);
 Util.defineNonEnumerableProperty(Model.prototype, "toJSON", toJSON);
 Util.defineNonEnumerableProperty(Model.prototype, "toString", toString);
 
@@ -396,6 +397,22 @@ function _filterAttributesByDefinition(attributes) {
   });
 
   return filteredAttributes;
+}
+
+/**
+ * Overwrites this model with the values of the given model & aligns the isDirty flag.
+ * @param {Model} model
+ */
+function overwrite(model) {
+  for (const attributeKey in model) {
+    this[attributeKey] = model[attributeKey];
+
+    // Set dirty flag
+    if (this._dataAttributes[attributeKey]) {
+      this._dataAttributes[attributeKey].isDirty =
+        model._dataAttributes[attributeKey].isDirty;
+    }
+  }
 }
 
 /**
