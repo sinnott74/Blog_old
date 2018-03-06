@@ -51,6 +51,8 @@ export default class BlogEditor extends React.Component {
                 type="text"
                 name="title"
                 label="Title"
+                helpText="Please enter a BlogPost title"
+                helpOnFocus
                 required
                 value={this.state.title}
                 autoComplete=""
@@ -80,6 +82,8 @@ export default class BlogEditor extends React.Component {
                 type="text"
                 name="text"
                 label="Text"
+                helpText="Markdown is allowed :)"
+                helpOnFocus
                 required
                 rows={1}
                 value={this.state.text}
