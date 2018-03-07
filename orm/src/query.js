@@ -14,8 +14,9 @@ class Query {
    * @returns {Promise<Array<Object>>} Resulting rows from the query
    */
   async _executeSQLQuery(sqlQuery) {
-    console.log(sqlQuery);
+    const transactionID = Transaction.get("transactionID");
     const transaction = Transaction.get("transaction");
+    console.log(transactionID, sqlQuery);
     const result = await transaction.query(sqlQuery);
     return Util.groupData(result.rows);
   }
@@ -71,15 +72,6 @@ class Query {
   }
 
   /**
-   * Builds a select SQL query object
-   * @param {Model}           model    Model on which this query is being initially executed
-   * @param {Object}          attributes   Attributes used in the select query
-   * @param {Object}          options       Options used in this query creation
-   * @param {Object}          [options.includes] associations to include in the query
-   */
-  _buildSelectSQLQuery(model, attributes, options) {}
-
-  /**
    * Executes a Select Query.
    *
    * @param {Model}                 model           Initial model on which this query is executed.
@@ -87,36 +79,38 @@ class Query {
    * @param {object}                options        Query options
    * @param {Array<string>}         options.includes   Array of association names
    */
-  async select(model, where = {}, options) {
-    let queryBuilder = model.entity;
+  async select(modelClass, where = {}, options) {
+    let queryBuilder = modelClass.entity;
+    const modelClassName = modelClass.name;
 
     // select
-    queryBuilder = queryBuilder.select(model.entity.star());
+    queryBuilder = queryBuilder.select(modelClass.entity.star());
     options.includes.forEach(include => {
-      let association = model.associations[include];
-      let source = association.source;
+      const association = modelClass.associations[include];
+      const recipricalModelClass = association.getRecipricalModel(
+        modelClassName
+      );
       queryBuilder = queryBuilder.select(
-        source.entity.star({ prefix: `${include}.` })
+        recipricalModelClass.entity.star({ prefix: `${include}.` })
       );
     });
 
     // from
-    let fromClause = model.entity;
+    let fromClause = modelClass.entity;
     options.includes.forEach(include => {
-      let association = model.associations[include];
-      let source = association.source;
-      fromClause = fromClause.joinTo(source.entity);
+      const association = modelClass.associations[include];
+      fromClause = association.join(modelClass, fromClause);
     });
     queryBuilder = queryBuilder.from(fromClause);
 
     // where
-    let sources = options.includes.map(include => {
-      let association = model.associations[include];
-      return association.source;
+    let recipricalModels = options.includes.map(include => {
+      let association = modelClass.associations[include];
+      return association.getRecipricalModel(modelClassName);
     });
-    let models = [model, ...sources];
+    let modelClasses = [modelClass, ...recipricalModels];
     Object.keys(where).forEach(whereAttributeName => {
-      let attribute = this._getMatchingColumn(models, whereAttributeName);
+      let attribute = this._getMatchingColumn(modelClasses, whereAttributeName);
       let whereAttributeValue = where[whereAttributeName];
       queryBuilder.where(attribute.equals(whereAttributeValue));
     });
@@ -160,6 +154,29 @@ class Query {
     }
   }
 
+  async createAll(modelArray) {
+    if (modelArray && modelArray.length > 0) {
+      const modelDefinition = modelArray[0].constructor;
+      const attributesArray = [];
+
+      // Read data for each model
+      modelArray.forEach(model => {
+        const attributes = model._getDirtyData();
+        attributesArray.push(attributes);
+      });
+
+      const sqlQuery = modelDefinition.entity
+        .insert(attributesArray)
+        .returning(modelDefinition.entity.star())
+        .toQuery();
+      const groupedDataArray = await this._executeSQLQuery(sqlQuery);
+
+      groupedDataArray.forEach((groupedData, index) => {
+        modelArray[index].id = groupedDataArray.id;
+      });
+    }
+  }
+
   /**
    * Counts the number of rows.
    *
@@ -199,15 +216,14 @@ class Query {
   }
 
   /**
-   * Performs an SQL modification
+   * Performs an SQL delete where matches the where object
    * @param {Model} model
-   * @param {Number} id ID of the entity
-   * @param {Object} attributes
+   * @param {Object} where
    */
-  async delete(model, id) {
+  async delete(model, where) {
     let sqlQuery = model.entity
       .delete()
-      .where({ id: id })
+      .where(where)
       .toQuery();
     return this._executeSQLQuery(sqlQuery);
   }

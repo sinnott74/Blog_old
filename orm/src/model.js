@@ -207,6 +207,7 @@ Model.findAll = async function(attributes, options) {
   return rows.map(data => {
     let model = new _self(data);
     model._clean();
+    model._cleanAssociations();
     return model;
   });
 };
@@ -239,8 +240,17 @@ Model.count = async function(attributes, options) {
  * @param {Number} ID of the entity to delete
  * @returns {Promise<>}
  */
-Model.delete = async function(id) {
-  await Query.delete(this, id);
+Model.delete = async function(where) {
+  return Query.delete(this, where);
+};
+
+Model.deleteByID = async function(id) {
+  const where = { id: id };
+  return this.delete(this, where);
+};
+
+Model.insertAll = async function(modelInstanceArray) {
+  await Query.createAll(modelInstanceArray);
 };
 
 Model.sync = async function() {
@@ -282,6 +292,11 @@ Util.defineNonEnumerableProperty(Model.prototype, "_save", _save);
 Util.defineNonEnumerableProperty(Model.prototype, "_clean", _clean);
 Util.defineNonEnumerableProperty(
   Model.prototype,
+  "_cleanAssociations",
+  _cleanAssociations
+);
+Util.defineNonEnumerableProperty(
+  Model.prototype,
   "_getDirtyData",
   _getDirtyData
 );
@@ -300,10 +315,26 @@ Util.defineNonEnumerableProperty(Model.prototype, "toString", toString);
  */
 function _clean() {
   Object.keys(this._dataAttributes).forEach(dataAttributeKey => {
-    this._dataAttributes[dataAttributeKey].isDirty = false;
+    if (this._dataAttributes[dataAttributeKey]) {
+      this._dataAttributes[dataAttributeKey].isDirty = false;
+    }
   });
+}
+
+function _cleanAssociations() {
   Object.keys(this._associationAttributes).forEach(associationAttributeKey => {
-    this._associationAttributes[associationAttributeKey]._clean();
+    const associationValue = this._associationAttributes[
+      associationAttributeKey
+    ];
+    if (associationValue) {
+      if (Array.isArray(associationValue)) {
+        associationValue.forEach(associationValueItem => {
+          associationValueItem._clean();
+        });
+      } else {
+        associationValue._clean();
+      }
+    }
   });
 }
 
@@ -348,7 +379,6 @@ async function save() {
 
   // Save this model's data
   await this._save();
-  this._clean();
 
   await this.constructor.afterSave.call(this);
 }
@@ -363,6 +393,7 @@ async function _save() {
     await Query.create(this);
     await this.constructor.afterCreate.call(this);
   }
+  this._clean();
 }
 
 /**
@@ -421,9 +452,15 @@ function overwrite(model) {
 function toJSON() {
   let object = {};
   // loop through enumerable properties
-  for (key in this) {
+  for (const key in this) {
     const value = this[key];
-    if (value instanceof Object) {
+    if (Array.isArray(value)) {
+      object[key] = [];
+      value.forEach(item => {
+        const itemJSONed = item.toJSON();
+        object[key].push(itemJSONed);
+      });
+    } else if (value instanceof Object) {
       object[key] = value.toJSON();
     } else {
       object[key] = value;
