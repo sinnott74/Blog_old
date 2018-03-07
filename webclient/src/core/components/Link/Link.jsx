@@ -8,14 +8,19 @@ import { closeSideNav } from "core/ducks/sidenav";
 const Link = props => {
   return (
     <NavLink
-      {...props}
+      className={props.className}
+      exact={props.exact}
+      activeClassName={props.activeClassName}
+      onClick={props.handleClick}
       to={{
         pathname: props.to,
         state: {
           from: props.location.pathname
         }
       }}
-    />
+    >
+      {props.children}
+    </NavLink>
   );
 };
 
@@ -25,7 +30,7 @@ Link.propTypes = {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onClick: e => {
+    handleClick: e => {
       dispatch(closeSideNav());
       if (ownProps.onClick) {
         ownProps.onClick();
