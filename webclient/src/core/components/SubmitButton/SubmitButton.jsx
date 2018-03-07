@@ -28,8 +28,7 @@ export default class SubmitButton extends React.PureComponent {
           primary
           type="submit"
           disabled
-          iconEl={<CircularProgress />}
-          onClick={this.props.onClick}
+          iconEl={<CircularProgress id="loadingProgress" />}
         >
           {this.props.children}
         </Button>

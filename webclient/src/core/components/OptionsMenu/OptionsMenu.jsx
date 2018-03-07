@@ -26,18 +26,6 @@ export default class OptionsMenu extends React.Component {
           }}
         >
           {this._getLogOptionItem()}
-          <OptionsMenuItem onClick={this.props.handleItemClick}>
-            Option 1
-          </OptionsMenuItem>
-          <OptionsMenuItem onClick={this.props.handleItemClick}>
-            Option 2
-          </OptionsMenuItem>
-          <OptionsMenuItem onClick={this.props.handleItemClick}>
-            Option 3
-          </OptionsMenuItem>
-          <OptionsMenuItem onClick={this.props.handleItemClick}>
-            Option 4
-          </OptionsMenuItem>
         </aside>
       </div>
     );

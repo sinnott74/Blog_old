@@ -78,15 +78,14 @@ export default class ViewBlogPost extends React.Component {
 }
 
 ViewBlogPost.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   author: PropTypes.shape({
     fullname: PropTypes.string.isRequired
   }),
-  user_id: PropTypes.string.isRequired,
+  user_id: PropTypes.number.isRequired,
   loggedInUserID: PropTypes.string.isRequired,
-  fetchData: PropTypes.func.isRequired,
   showActions: PropTypes.bool
 };
