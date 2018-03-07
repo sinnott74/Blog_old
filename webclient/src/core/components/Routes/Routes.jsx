@@ -29,7 +29,7 @@ pages.forEach(pagesConfig => {
 /**
  * Creates a React-Router route for each configured route
  */
-const dynamicRoutes = routesConfigs.map(routeConfig => {
+const dynamicRoutes = routesConfigs.map((routeConfig, index) => {
   const component = Loadable({
     loader: routeConfig.loader,
     loading: Spinner
@@ -39,9 +39,9 @@ const dynamicRoutes = routesConfigs.map(routeConfig => {
     exact: true
   };
   const route = routeConfig.authenticated ? (
-    <AuthenticatedRoute {...routeProps} component={component} />
+    <AuthenticatedRoute key={index} {...routeProps} component={component} />
   ) : (
-    <Route {...routeProps} component={component} />
+    <Route key={index} {...routeProps} component={component} />
   );
   return route;
 });
