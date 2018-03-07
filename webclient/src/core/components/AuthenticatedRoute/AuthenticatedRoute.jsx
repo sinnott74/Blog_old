@@ -21,6 +21,6 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
 );
 export default AuthenticatedRoute;
 
-AuthenticatedRoute.PropTypes = {
+AuthenticatedRoute.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired
 };

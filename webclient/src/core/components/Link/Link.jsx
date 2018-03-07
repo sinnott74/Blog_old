@@ -19,7 +19,7 @@ const Link = props => {
   );
 };
 
-Link.PropTypes = {
+Link.propTypes = {
   to: PropTypes.string.isRequired
 };
 

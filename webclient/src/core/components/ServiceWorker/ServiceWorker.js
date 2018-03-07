@@ -60,6 +60,6 @@ export default class ServiceWorker extends React.Component {
   }
 }
 
-ServiceWorker.PropTypes = {
+ServiceWorker.propTypes = {
   handleMessage: PropTypes.func.isRequired
 };

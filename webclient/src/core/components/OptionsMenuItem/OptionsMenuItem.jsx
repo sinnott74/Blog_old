@@ -17,7 +17,7 @@ const OptionsMenuItem = props => {
 };
 export default OptionsMenuItem;
 
-OptionsMenuItem.PropTypes = {
+OptionsMenuItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

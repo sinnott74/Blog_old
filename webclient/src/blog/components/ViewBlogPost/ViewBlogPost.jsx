@@ -77,7 +77,7 @@ export default class ViewBlogPost extends React.Component {
   }
 }
 
-ViewBlogPost.PropTypes = {
+ViewBlogPost.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
