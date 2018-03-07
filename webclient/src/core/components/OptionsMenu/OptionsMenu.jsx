@@ -26,16 +26,16 @@ export default class OptionsMenu extends React.Component {
           }}
         >
           {this._getLogOptionItem()}
-          <OptionsMenuItem handleItemClick={this.props.handleItemClick}>
+          <OptionsMenuItem onClick={this.props.handleItemClick}>
             Option 1
           </OptionsMenuItem>
-          <OptionsMenuItem handleItemClick={this.props.handleItemClick}>
+          <OptionsMenuItem onClick={this.props.handleItemClick}>
             Option 2
           </OptionsMenuItem>
-          <OptionsMenuItem handleItemClick={this.props.handleItemClick}>
+          <OptionsMenuItem onClick={this.props.handleItemClick}>
             Option 3
           </OptionsMenuItem>
-          <OptionsMenuItem handleItemClick={this.props.handleItemClick}>
+          <OptionsMenuItem onClick={this.props.handleItemClick}>
             Option 4
           </OptionsMenuItem>
         </aside>
@@ -54,19 +54,13 @@ export default class OptionsMenu extends React.Component {
   _getLogOptionItem() {
     if (!this.props.loggedIn) {
       return (
-        <OptionsMenuItem
-          to="/login"
-          handleItemClick={this.props.handleItemClick}
-        >
+        <OptionsMenuItem to="/login" onClick={this.props.handleItemClick}>
           Login
         </OptionsMenuItem>
       );
     } else {
       return (
-        <OptionsMenuItem
-          to="/logout"
-          handleItemClick={this.props.handleItemClick}
-        >
+        <OptionsMenuItem to="/logout" onClick={this.props.handleItemClick}>
           Log Out
         </OptionsMenuItem>
       );

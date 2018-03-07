@@ -9,7 +9,7 @@ const OptionsMenuItem = props => {
       to={props.to}
       className="options-menu_item"
       tabIndex="0"
-      onClick={props.handleItemClick}
+      onClick={props.onClick}
     >
       {props.children}
     </Link>
