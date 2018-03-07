@@ -98,7 +98,12 @@ export default class BlogEditor extends React.Component {
                 rows={1}
                 autoComplete="off"
                 value={this.state.text}
-                onChange={this.addTag}
+                onChange={(text, e) => {
+                  this.setState({
+                    ...this.state,
+                    text
+                  });
+                }}
               />
               <SubmitButton
                 isSubmitting={this.props.isSubmitting}
