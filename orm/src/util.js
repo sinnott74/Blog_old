@@ -254,6 +254,14 @@ class Util {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  /**
+   * Adds an S to the end if the given string
+   * @param {*} string
+   */
+  puralize(string) {
+    return `${string}s`;
+  }
+
   async asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
