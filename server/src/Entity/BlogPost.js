@@ -35,12 +35,15 @@ const BlogPost = ORM.define(
 User.oneToMany(BlogPost, { as: "author" });
 
 BlogPost.getBlogPostDetails = async function(id) {
-  let blogPostAndAuthor = BlogPost.get(id, { includes: ["author"] });
+  let blogPostAndAuthor = BlogPost.get(id, { includes: ["author", "tags"] });
   return blogPostAndAuthor;
 };
 
 BlogPost.listBlogPostDetails = async function() {
-  const blogPostsAndAuthors = BlogPost.findAll({}, { includes: ["author"] });
+  const blogPostsAndAuthors = BlogPost.findAll(
+    {},
+    { includes: ["author", "tags"] }
+  );
   return blogPostsAndAuthors;
 };
 
