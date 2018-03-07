@@ -54,6 +54,7 @@ export default class BlogEditor extends React.Component {
           <Tab label="Editor">
             <Card className="blogeditor_card">
               <TextField
+                id="title"
                 type="text"
                 name="title"
                 label="Title"
@@ -72,6 +73,7 @@ export default class BlogEditor extends React.Component {
               />
               <div className="blogeditor_tagchips">{this.getTagChips()}</div>
               <TextField
+                id="tags"
                 type="text"
                 name="text"
                 label="Add a Tag"
@@ -86,6 +88,7 @@ export default class BlogEditor extends React.Component {
                 }}
               />
               <TextField
+                id="text"
                 type="text"
                 name="text"
                 label="Text"
