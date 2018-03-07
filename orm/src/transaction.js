@@ -57,7 +57,7 @@ class TransactionInfo {
   static async _rollback(client, transactionID) {
     await client.query("ROLLBACK");
     await client.release();
-    console.log(`${transactionID} - Transaction Successful - client released`);
+    console.log(`${transactionID} - Transaction Failed - client released`);
   }
 
   static async transactionSuccess() {
