@@ -86,6 +86,6 @@ ViewBlogPost.propTypes = {
     fullname: PropTypes.string.isRequired
   }),
   user_id: PropTypes.number.isRequired,
-  loggedInUserID: PropTypes.string.isRequired,
+  loggedInUserID: PropTypes.number.isRequired,
   showActions: PropTypes.bool
 };

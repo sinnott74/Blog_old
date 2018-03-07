@@ -26,14 +26,14 @@ BlogList.propTypes = {
   fetchData: PropTypes.func.isRequired,
   blogPosts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       author: PropTypes.shape({
         fullname: PropTypes.string.isRequired
       }),
-      user_id: PropTypes.string.isRequired
+      user_id: PropTypes.number.isRequired
     })
   ).isRequired
 };
