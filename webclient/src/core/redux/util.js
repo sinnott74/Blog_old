@@ -9,14 +9,12 @@
  * @param idName - name if the ID attribute - optional
  *
  */
-export const arrayToObject = (array, idName) => {
-  idName = idName || "id";
-  let object = array.reduce((obj, item) => {
-    let id = item[idName];
+export const arrayToObject = (array, idName = "id") => {
+  return array.reduce((obj, item) => {
+    const id = item[idName];
     obj[id] = item;
     return obj;
   }, {});
-  return object;
 };
 
 /**
