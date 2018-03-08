@@ -27,12 +27,11 @@ export const arrayToObject = (array, idName) => {
  * @param object - Object to convert into keyed object
  * @param idName - name if the ID attribute - optional
  */
-export const objectToIDKeyedObject = (obj, idName) => {
-  idName = idName || "id";
-  let objectKeyedByID = {};
-  let id = obj[idName];
-  objectKeyedByID[id] = obj;
-  return objectKeyedByID;
+export const objectToIDKeyedObject = (obj, idName = "id") => {
+  const id = obj[idName];
+  return {
+    [id]: obj
+  };
 };
 
 /**
