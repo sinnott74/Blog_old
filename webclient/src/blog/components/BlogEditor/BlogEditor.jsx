@@ -27,7 +27,7 @@ export default class BlogEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...nextProps.blogpost,
-      ...this.state.blogpost
+      ...this.state
     });
   }
 
