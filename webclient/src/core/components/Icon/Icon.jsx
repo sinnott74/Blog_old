@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // Functional Component
 const Icon = props => {
@@ -13,3 +14,9 @@ const Icon = props => {
 };
 
 export default Icon;
+
+Icon.propTypes = {
+  img: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  className: PropTypes.string
+};
