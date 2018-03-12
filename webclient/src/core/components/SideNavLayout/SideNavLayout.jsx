@@ -34,12 +34,7 @@ export default class SideNavLayout extends React.Component {
             <div className="side-nav__header">
               <h1 className="side-nav__title">App shell</h1>
             </div>
-            <div
-              className="side-nav__body"
-              ref={body => {
-                this.body = body;
-              }}
-            >
+            <div className="side-nav__body">
               <div className="side-nav__links">
                 <SideNavLink to="/" icon="home">
                   Home
