@@ -1,7 +1,5 @@
 import React from "react";
-import SideNavLink from "core/components/SideNavLink";
-import PersonalLinks from "core/components/PersonalLinks";
-import { version } from "../../../../package.json";
+import PropTypes from "prop-types";
 import "./SideNavLayout.css";
 
 export default class SideNavLayout extends React.Component {
@@ -31,26 +29,7 @@ export default class SideNavLayout extends React.Component {
               this.sideNavContent = sideNavContent;
             }}
           >
-            <div className="side-nav__header">
-              <h1 className="side-nav__title">App shell</h1>
-            </div>
-            <div className="side-nav__body">
-              <div className="side-nav__links">
-                <SideNavLink to="/" icon="home">
-                  Home
-                </SideNavLink>
-                <SideNavLink to="/blog" icon="create">
-                  Blog
-                </SideNavLink>
-                <SideNavLink to="/code" icon="code">
-                  Code
-                </SideNavLink>
-              </div>
-              <div className="side-nav__contentbottom">
-                <PersonalLinks />
-                <div className="side-nav__version">Version {version}</div>
-              </div>
-            </div>
+            {this.props.sideNavPanel}
           </div>
           <div
             className="side-nav__edgearea"
@@ -204,6 +183,13 @@ export default class SideNavLayout extends React.Component {
     }, 130);
   }
 }
+
+SideNavLayout.propTypes = {
+  opened: PropTypes.bool.isRequired,
+  openSideNav: PropTypes.func.isRequired,
+  closeSideNav: PropTypes.func.isRequired,
+  sideNavPanel: PropTypes.element.isRequired
+};
 
 /**
  * Clamps a value to between the Min & Max range
