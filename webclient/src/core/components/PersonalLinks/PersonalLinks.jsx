@@ -26,7 +26,7 @@ const PersonalLinks = props => {
         alt="Twitter"
       />
       <PersonalLink
-        url="https://ie.linkedin.com/in/daniel-sinnott-1587124b"
+        url="https://ie.linkedin.com/in/daniel-sinnott"
         icon={LinkedIn}
         alt="LinkedIn"
       />
