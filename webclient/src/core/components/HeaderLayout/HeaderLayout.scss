@@ -2,7 +2,7 @@
   height: var(--header-height);
   color: var(--text-color-light);
   background: var(--header-colour);
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   font-size: 20px;
@@ -68,5 +68,5 @@
 .header-layout_main {
   margin-top: var(--header-height);
   overflow-y: auto;
-  height: calc(100% - var(--header-height));
+  min-height: calc(100% - var(--header-height));
 }
