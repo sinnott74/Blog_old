@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 
 /**
@@ -19,9 +19,8 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+export default AuthenticatedRoute;
 
-const mapStateToProps = (state, ownProps) => ({
-  isLoggedIn: state.auth.loggedIn
-});
-
-export default connect(mapStateToProps, null)(AuthenticatedRoute);
+AuthenticatedRoute.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
+};

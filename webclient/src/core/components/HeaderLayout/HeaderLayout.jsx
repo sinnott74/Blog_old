@@ -2,14 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "core/components/Link";
 import "./HeaderLayout.css";
-
-import { connect } from "react-redux";
-import { openSideNav } from "core/ducks/sidenav";
-import { toggleOptionsMenu } from "core/ducks/optionsMenu";
-
 import Button from "react-md/lib/Buttons/Button";
 
-class HeaderLayout extends React.Component {
+export default class HeaderLayout extends React.Component {
   render() {
     return (
       <div className="header-layout">
@@ -45,10 +40,3 @@ HeaderLayout.propTypes = {
   handleMenuButtonClick: PropTypes.func.isRequired,
   handleOptionsButtonClick: PropTypes.func.isRequired
 };
-
-const mapDispatchToProps = {
-  handleMenuButtonClick: openSideNav,
-  handleOptionsButtonClick: toggleOptionsMenu
-};
-
-export default connect(null, mapDispatchToProps)(HeaderLayout);

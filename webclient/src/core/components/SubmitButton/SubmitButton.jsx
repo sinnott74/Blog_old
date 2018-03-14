@@ -12,7 +12,12 @@ export default class SubmitButton extends React.PureComponent {
   _getButton() {
     if (!this.props.isSubmitting) {
       return (
-        <Button raised={true} primary type="submit">
+        <Button
+          raised={true}
+          primary
+          type="submit"
+          onClick={this.props.onClick}
+        >
           {this.props.children}
         </Button>
       );
@@ -23,7 +28,7 @@ export default class SubmitButton extends React.PureComponent {
           primary
           type="submit"
           disabled
-          iconEl={<CircularProgress />}
+          iconEl={<CircularProgress id="loadingProgress" />}
         >
           {this.props.children}
         </Button>
@@ -33,5 +38,6 @@ export default class SubmitButton extends React.PureComponent {
 }
 
 SubmitButton.propTypes = {
-  isSubmitting: PropTypes.bool
+  isSubmitting: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 };

@@ -5,37 +5,38 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import { closeSideNav } from "core/ducks/sidenav";
 
-NavLink.PropTypes = {
-  to: PropTypes.string.isRequired
-};
-
-// const mapDispatchToProps = {
-//   onClick: closeSideNav
-// }
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: e => {
-      dispatch(closeSideNav());
-      if (ownProps.onClick) {
-        ownProps.onClick();
-      }
-    }
-  };
-};
-
 const Link = props => {
   return (
     <NavLink
-      {...props}
+      className={props.className}
+      exact={props.exact}
+      activeClassName={props.activeClassName}
+      onClick={props.handleClick}
       to={{
         pathname: props.to,
         state: {
           from: props.location.pathname
         }
       }}
-    />
+    >
+      {props.children}
+    </NavLink>
   );
+};
+
+Link.propTypes = {
+  to: PropTypes.string.isRequired
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleClick: e => {
+      dispatch(closeSideNav());
+      if (ownProps.onClick) {
+        ownProps.onClick();
+      }
+    }
+  };
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Link));

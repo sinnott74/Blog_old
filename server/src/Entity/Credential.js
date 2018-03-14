@@ -46,7 +46,7 @@ Credential._deactivePreviousCredential = async function(credential) {
   );
   if (previousCredential) {
     previousCredential.active = false;
-    previousCredential.save();
+    await previousCredential.save();
   }
 };
 

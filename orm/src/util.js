@@ -181,17 +181,19 @@ class Util {
       if (key.indexOf(seperator) !== -1) {
         // this._parseDotNotation(obj, key, obj[key]);
         let value = obj[key];
-        let currentObj = obj;
-        let keys = key.split(seperator);
-        let keysLength = Math.max(1, keys.length - 1);
-        let localKey, i;
+        if (value) {
+          let currentObj = obj;
+          let keys = key.split(seperator);
+          let keysLength = Math.max(1, keys.length - 1);
+          let localKey, i;
 
-        for (i = 0; i < keysLength; ++i) {
-          localKey = keys[i];
-          currentObj[localKey] = currentObj[localKey] || {};
-          currentObj = currentObj[localKey];
+          for (i = 0; i < keysLength; ++i) {
+            localKey = keys[i];
+            currentObj[localKey] = currentObj[localKey] || {};
+            currentObj = currentObj[localKey];
+          }
+          currentObj[keys[i]] = value;
         }
-        currentObj[keys[i]] = value;
         delete obj[key];
       }
     }
@@ -252,6 +254,14 @@ class Util {
    */
   capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  /**
+   * Adds an S to the end if the given string
+   * @param {*} string
+   */
+  puralize(string) {
+    return `${string}s`;
   }
 
   async asyncForEach(array, callback) {

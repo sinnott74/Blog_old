@@ -9,7 +9,8 @@ export class ReducerRegistry {
   }
 
   register(name, reducer) {
-    this._reducers = { ...this._reducers, [name]: reducer };
+    this._reducers[name] = reducer;
+
     if (this._emitChange) {
       this._emitChange(this.getReducers());
     }
@@ -20,5 +21,4 @@ export class ReducerRegistry {
   }
 }
 
-const reducerRegistry = new ReducerRegistry();
-export default reducerRegistry;
+export default new ReducerRegistry();

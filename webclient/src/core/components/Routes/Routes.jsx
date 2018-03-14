@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router";
 import Loadable from "react-loadable";
 import Spinner from "core/components/Spinner";
-import AuthernticatedRoute from "core/components/AuthenticatedRoute";
+import AuthenticatedRoute from "core/containers/AuthenticatedRoute";
 
 /**
  * Import all route pages
@@ -29,7 +29,7 @@ pages.forEach(pagesConfig => {
 /**
  * Creates a React-Router route for each configured route
  */
-const dynamicRoutes = routesConfigs.map(routeConfig => {
+const dynamicRoutes = routesConfigs.map((routeConfig, index) => {
   const component = Loadable({
     loader: routeConfig.loader,
     loading: Spinner
@@ -39,9 +39,9 @@ const dynamicRoutes = routesConfigs.map(routeConfig => {
     exact: true
   };
   const route = routeConfig.authenticated ? (
-    <AuthernticatedRoute {...routeProps} component={component} />
+    <AuthenticatedRoute key={index} {...routeProps} component={component} />
   ) : (
-    <Route {...routeProps} component={component} />
+    <Route key={index} {...routeProps} component={component} />
   );
   return route;
 });

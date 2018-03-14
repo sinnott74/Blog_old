@@ -3,13 +3,8 @@ import PropTypes from "prop-types";
 import BlogListItem from "blog/components/BlogListItem";
 import Spinner from "core/components/Spinner";
 import "./BlogList.css";
-import { connect } from "react-redux";
-import {
-  loadBlogPosts,
-  getBlogPostsSortedByCreatedByDate
-} from "blog/ducks/blog";
 
-class BlogList extends React.Component {
+export default class BlogList extends React.Component {
   componentDidMount() {
     this.props.fetchData();
   }
@@ -29,15 +24,16 @@ class BlogList extends React.Component {
 
 BlogList.propTypes = {
   fetchData: PropTypes.func.isRequired,
-  blogPostIDs: PropTypes.arrayOf(PropTypes.number).isRequired
+  blogPosts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      author: PropTypes.shape({
+        fullname: PropTypes.string.isRequired
+      }),
+      user_id: PropTypes.number.isRequired
+    })
+  ).isRequired
 };
-
-const mapDispatchToProps = dispatch => ({
-  fetchData: () => dispatch(loadBlogPosts())
-});
-
-const mapStateToProps = state => ({
-  blogPosts: getBlogPostsSortedByCreatedByDate(state)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BlogList);

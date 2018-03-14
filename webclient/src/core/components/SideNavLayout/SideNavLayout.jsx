@@ -1,19 +1,14 @@
 import React from "react";
-import SideNavLink from "core/components/SideNavLink";
-import PersonalLinks from "core/components/PersonalLinks";
-import { version } from "../../../../package.json";
+import PropTypes from "prop-types";
 import "./SideNavLayout.css";
 
-import { connect } from "react-redux";
-import { openSideNav, closeSideNav, isOpened } from "core/ducks/sidenav";
-
-class SideNavLayout extends React.Component {
+export default class SideNavLayout extends React.Component {
   render() {
     return (
       <div className="side-nav-layout">
         <div className="side-nav-layout_main">{this.props.children}</div>
         <div
-          className="side-nav"
+          className="side-nav side_nav--animatable"
           ref={sidenav => {
             this.sidenav = sidenav;
           }}
@@ -26,7 +21,7 @@ class SideNavLayout extends React.Component {
             }}
           />
           <div
-            className="side-nav__content side_nav--animatable"
+            className="side-nav__content"
             onTouchStart={this._handleSideNavTouchStart}
             onTouchMove={this._handleSideNavTouchMove}
             onTouchEnd={this._handleSideNavTouchEnd}
@@ -34,37 +29,13 @@ class SideNavLayout extends React.Component {
               this.sideNavContent = sideNavContent;
             }}
           >
-            <div className="side-nav__header">
-              <h1 className="side-nav__title">App shell</h1>
-            </div>
-            <div
-              className="side-nav__body"
-              ref={body => {
-                this.body = body;
-              }}
-            >
-              <div className="side-nav__links">
-                <SideNavLink to="/" icon="home">
-                  Home
-                </SideNavLink>
-                <SideNavLink to="/blog" icon="create">
-                  Blog
-                </SideNavLink>
-                <SideNavLink to="/code" icon="code">
-                  Code
-                </SideNavLink>
-              </div>
-              <div className="side-nav__contentbottom">
-                <PersonalLinks />
-                <div className="side-nav__version">Version {version}</div>
-              </div>
-            </div>
+            {this.props.sideNavPanel}
           </div>
           <div
             className="side-nav__edgearea"
             onTouchStart={this._handleEdgeTouchStart}
-            onTouchMove={this._handleEdgeTouchMove}
-            onTouchEnd={this._handleEdgeTouchEnd}
+            onTouchMove={this._handleSideNavTouchMove}
+            onTouchEnd={this._handleSideNavTouchEnd}
             ref={edge => {
               this.edge = edge;
             }}
@@ -77,20 +48,16 @@ class SideNavLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.touching = false;
-
-    this.TOUCH_SLOP = 12 * window.devicePixelRatio;
+    this.THRESHOLD = 15 * window.devicePixelRatio;
+    this.MAXOPACITY = 0.85;
 
     this._close = this._close.bind(this);
     this._open = this._open.bind(this);
     this._updateUI = this._updateUI.bind(this);
-    this._updateUIOnEdgeTouch = this._updateUIOnEdgeTouch.bind(this);
     this._handleSideNavTouchStart = this._handleSideNavTouchStart.bind(this);
     this._handleSideNavTouchMove = this._handleSideNavTouchMove.bind(this);
     this._handleSideNavTouchEnd = this._handleSideNavTouchEnd.bind(this);
     this._handleEdgeTouchStart = this._handleEdgeTouchStart.bind(this);
-    this._handleEdgeTouchMove = this._handleEdgeTouchMove.bind(this);
-    this._handleEdgeTouchEnd = this._handleEdgeTouchEnd.bind(this);
     this._handleScrimTap = this._handleScrimTap.bind(this);
   }
 
@@ -103,145 +70,80 @@ class SideNavLayout extends React.Component {
   }
 
   _handleSideNavTouchStart(e) {
-    this.sideNavContent.classList.remove("side_nav--animatable");
+    this.sidenav.classList.remove("side_nav--animatable");
     this.sideNavContentWidth = this.sideNavContent.offsetWidth;
     this.touching = true;
-    this.sideNavTransform = 0;
     this.touchStartX = e.touches[0].pageX;
     this.touchStartY = e.touches[0].pageY;
     this.translateX = 0;
     this.translateY = 0;
     this.direction = "";
+    this.do = this._close;
+    this.undo = this._open;
+  }
+
+  _handleEdgeTouchStart(e) {
+    this._handleSideNavTouchStart(e);
+    this.sideNavContent.style.transform = "translate3d(-95%, 0 , 0)";
+    this.touchingEdge = true;
+    this.do = this._open;
+    this.undo = this._close;
   }
 
   _handleSideNavTouchMove(e) {
-    var newTouchX = e.touches[0].pageX;
-    var newTouchY = e.touches[0].pageY;
-
-    this.translateX = newTouchX - this.touchStartX;
-    this.translateY = newTouchY - this.touchStartY;
+    const diffX = this.touchingEdge
+      ? e.touches[0].pageX - this.touchStartX
+      : this.touchStartX - e.touches[0].pageX;
+    this.translateX = clamp(diffX, 0, this.sideNavContentWidth);
+    this.translateY = e.touches[0].pageY - this.touchStartY;
 
     if (!this.direction) {
-      if (Math.abs(this.translateX) >= Math.abs(this.translateY)) {
-        this.direction = "horizontal";
-      } else {
-        this.direction = "vertical";
-      }
+      this.direction = this._getDirection(this.translateX, this.translateY);
     }
 
     if (this.direction === "horizontal") {
-      // e.preventDefault();
       requestAnimationFrame(this._updateUI);
+    } else {
+      this.translateX = 0;
     }
   }
 
   _updateUI() {
     if (this.touching) {
-      this.sideNavTransform = Math.min(0, this.translateX);
-      this.sideNavContent.style.transform =
-        "translate3d(" + this.sideNavTransform + "px, 0, 0)";
+      let opacityPercentage =
+        this.translateX / this.sideNavContentWidth * this.MAXOPACITY;
+      let tranformX = this.translateX;
 
-      let opacityPercentage = Math.abs(
-        0.85 + this.translateX / this.sideNavContentWidth * 0.85
-      );
-      opacityPercentage = Math.min(0.85, opacityPercentage);
+      if (this.touchingEdge) {
+        tranformX = this.sideNavContentWidth - tranformX;
+      } else {
+        opacityPercentage = this.MAXOPACITY - opacityPercentage;
+      }
+
+      this.sideNavContent.style.transform =
+        "translate3d(" + -tranformX + "px, 0, 0)";
       this.scrim.style.opacity = opacityPercentage;
-      requestAnimationFrame(this._updateUI);
     }
   }
 
   _handleSideNavTouchEnd(e) {
-    this.sideNavContent.classList.add("side_nav--animatable");
+    this.sidenav.classList.add("side_nav--animatable");
     this.touching = false;
     this.direction = "";
+    this.touchingEdge = false;
 
-    if (this.sideNavTransform < -this.TOUCH_SLOP) {
-      this._close();
-      setTimeout(() => {
-        if (!this.isOpened && this.props.opened) {
-          this.props.closeSideNav();
-        }
-      }, 130);
+    if (this.translateX >= this.THRESHOLD) {
+      this.do();
     } else {
-      this._open();
-      setTimeout(() => {
-        if (this.isOpened && !this.props.opened) {
-          this.props.openSideNav();
-        }
-      }, 130);
+      this.undo();
     }
   }
 
-  _handleEdgeTouchStart(e) {
-    this.sideNavContent.classList.remove("side_nav--animatable");
-    this.sideNavContentWidth = this.sideNavContent.offsetWidth;
-    this.edgeTransform = 0;
-    this.direction = "";
-    this.translateX = 0;
-    this.translateY = 0;
-    this.touching = true;
-    this.edgeTouchStartX = e.touches[0].pageX;
-    this.edgeTouchStartY = e.touches[0].pageY;
-    this.sideNavContent.style.transform = "translate3d(-95%, 0 , 0)";
-  }
-
-  _handleEdgeTouchMove(e) {
-    let newEdgeTouchX = e.touches[0].pageX;
-    let newEdgeTouchY = e.touches[0].pageY;
-
-    this.translateX = newEdgeTouchX - this.edgeTouchStartX;
-    this.translateY = newEdgeTouchY - this.edgeTouchStartY;
-
-    if (!this.direction) {
-      if (Math.abs(this.translateX) >= Math.abs(this.translateY)) {
-        this.direction = "horizontal";
-      } else {
-        this.direction = "vertical";
-      }
-    }
-
-    if (this.direction === "horizontal") {
-      //e.preventDefault();
-      requestAnimationFrame(this._updateUIOnEdgeTouch);
-    }
-  }
-
-  _updateUIOnEdgeTouch() {
-    if (this.touching) {
-      this.edgeTransform = Math.min(this.sideNavContentWidth, this.translateX);
-      this.sideNavContent.style.transform =
-        "translate3d(" +
-        (-this.sideNavContentWidth + this.edgeTransform) +
-        "px, 0, 0)";
-
-      let opacityPercentage = Math.abs(
-        this.translateX / this.sideNavContentWidth * 0.85
-      );
-      opacityPercentage = Math.min(0.85, opacityPercentage);
-      this.scrim.style.opacity = opacityPercentage;
-      requestAnimationFrame(this._updateUIOnEdgeTouch);
-    }
-  }
-
-  _handleEdgeTouchEnd(e) {
-    this.sideNavContent.classList.add("side_nav--animatable");
-    this.direction = "";
-    this.touching = false;
-
-    if (this.edgeTransform >= this.TOUCH_SLOP) {
-      this._open();
-      setTimeout(() => {
-        if (this.isOpened && !this.props.opened) {
-          this.props.openSideNav();
-        }
-      }, 130);
+  _getDirection(translateX, translateY) {
+    if (Math.abs(translateX) >= Math.abs(translateY)) {
+      return "horizontal";
     } else {
-      this._close();
-      setTimeout(() => {
-        if (!this.isOpened && this.props.opened) {
-          this.props.closeSideNav();
-        }
-      }, 130);
+      return "vertical";
     }
   }
 
@@ -254,31 +156,47 @@ class SideNavLayout extends React.Component {
   }
 
   _close() {
-    this.sideNavContent.classList.add("side_nav--animatable");
     this.sidenav.classList.remove("side_nav--opened");
     this.sideNavContent.style.transform = "";
     this.scrim.style.opacity = "";
     document.body.classList.remove("noscroll");
     this.isOpened = false;
+
+    setTimeout(() => {
+      if (!this.isOpened && this.props.opened) {
+        this.props.closeSideNav();
+      }
+    }, 130);
   }
 
   _open() {
-    this.sideNavContent.classList.add("side_nav--animatable");
     this.sidenav.classList.add("side_nav--opened");
     this.sideNavContent.style.transform = "";
     this.scrim.style.opacity = "";
     document.body.classList.add("noscroll");
     this.isOpened = true;
+
+    setTimeout(() => {
+      if (this.isOpened && !this.props.opened) {
+        this.props.openSideNav();
+      }
+    }, 130);
   }
 }
 
-const mapStateToProps = state => ({
-  opened: isOpened(state)
-});
-
-const mapDispatchToProps = {
-  openSideNav,
-  closeSideNav
+SideNavLayout.propTypes = {
+  opened: PropTypes.bool.isRequired,
+  openSideNav: PropTypes.func.isRequired,
+  closeSideNav: PropTypes.func.isRequired,
+  sideNavPanel: PropTypes.element.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideNavLayout);
+/**
+ * Clamps a value to between the Min & Max range
+ * @param {Number} value
+ * @param {Number} min
+ * @param {Number} max
+ */
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}

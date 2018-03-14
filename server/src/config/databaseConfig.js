@@ -1,20 +1,18 @@
 var cfApp = require("cfenv").getAppEnv();
-var services = cfApp.getServices("postgresql") || {};
-var dbConfig = services["ElephantSQL"] || {};
-var credentials = dbConfig.credentials || {};
-var uri = credentials.uri || "";
 
-// Database connection object
-module.exports = {
-  development: {
+if (process.env.NODE_ENV === "production") {
+  // Production
+  module.exports = {
+    connectionString: cfApp.getServices("postgresql")["ElephantSQL"].credentials
+      .uri,
+    max: 5
+  };
+} else {
+  // Development
+  module.exports = {
     database: "pwadb",
     host: "localhost",
     port: 5432,
     max: 5
-  },
-
-  production: {
-    connectionString: uri,
-    max: 5
-  }
-};
+  };
+}
