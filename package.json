@@ -3,10 +3,6 @@
   "private": true,
   "workspaces": ["server", "webclient", "orm"],
   "version": "0.0.1",
-  "engines": {
-    "node": "^9",
-    "yarn": "^1.5.1"
-  },
   "description": "",
   "main": "index.js",
   "scripts": {
