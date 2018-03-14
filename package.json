@@ -3,6 +3,9 @@
   "private": true,
   "workspaces": ["server", "webclient", "orm"],
   "version": "0.0.1",
+  "engines": {
+    "node": "^9"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
