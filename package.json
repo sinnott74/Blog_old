@@ -1,5 +1,7 @@
 {
   "name": "sinnott",
+  "private": true,
+  "workspaces": ["server", "webclient", "orm"],
   "version": "0.0.1",
   "engines": {
     "node": "^9",
@@ -8,25 +10,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./server && npm run start",
+    "start": "cd server && yarn start",
     "pretest":
-      "concurrently \"cd ./webclient && npm run build\"  \"cd ./server && npm run build:database\"",
+      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn build:database\"",
     "start:prod":
-      "cd ./webclient && npm run build && cd ../server && npm run start",
+      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn start\"",
     "start:dev":
-      "concurrently --kill-others \"cd ./webclient && npm run start\" \"cd ./server && npm run start:dev\"",
+      "concurrently --kill-others \"cd webclient && yarn start\" \"cd server && yarn start:dev\"",
     "test": "echo \"Error: no test specified\" && exit 0",
     "precommit": "pretty-quick staged"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "sinnott-server": "file:server",
-    "sinnott-webclient": "file:webclient"
-  },
   "devDependencies": {
     "concurrently": "^3.5.1",
     "eslint-plugin-prettier": "^2.6.0",
+    "husky": "^0.14.3",
     "nodemon": "^1.14.11",
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1"
