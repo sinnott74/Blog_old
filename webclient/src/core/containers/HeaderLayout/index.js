@@ -1,2 +1,2 @@
-import HeaderLayout from './HeaderLayout';
+import HeaderLayout from "./HeaderLayout";
 export default HeaderLayout;
