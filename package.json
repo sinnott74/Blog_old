@@ -15,7 +15,8 @@
       "cd ./webclient && npm run build && cd ../server && npm run start",
     "start:dev":
       "concurrently --kill-others \"cd ./webclient && npm run start\" \"cd ./server && npm run start:dev\"",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "precommit": "pretty-quick staged"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,9 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "nodemon": "^1.14.11"
+    "eslint-plugin-prettier": "^2.6.0",
+    "nodemon": "^1.14.11",
+    "prettier": "^1.11.1",
+    "pretty-quick": "^1.4.1"
   }
 }
