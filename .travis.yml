@@ -7,6 +7,7 @@ sudo: required
 # Cache npm inbetween builds to improve build time
 # Documentaion - https://docs.travis-ci.com/user/caching/
 cache:
+  yarn: true
   directories:
   - node_modules # NPM packages
 
