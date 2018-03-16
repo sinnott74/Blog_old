@@ -6,7 +6,6 @@ export default class SideNavLayout extends React.Component {
   render() {
     return (
       <div className="side-nav-layout">
-        <div className="side-nav-layout_main">{this.props.children}</div>
         <div
           className="side-nav side_nav--animatable"
           ref={sidenav => {
@@ -41,6 +40,7 @@ export default class SideNavLayout extends React.Component {
             }}
           />
         </div>
+        <div className="side-nav-layout_main">{this.props.children}</div>
       </div>
     );
   }
