@@ -4,7 +4,7 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
   color: var(--text-color-light);
   padding: 4px 4px 4px 12px;
-  transition: transform var(--transition);
+  transition: transform var(--transition), opacity var(--transition);
   transform: translateY(100%);
   will-change: transform;
   position: fixed;
@@ -15,9 +15,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  opacity: 0;
 }
 
 .toast.toast__opened {
+  opacity: 1;
   transform: translateY(0);
 }
 
