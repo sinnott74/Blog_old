@@ -33,7 +33,13 @@ BlogList.propTypes = {
       author: PropTypes.shape({
         fullname: PropTypes.string.isRequired
       }),
-      user_id: PropTypes.number.isRequired
+      user_id: PropTypes.number.isRequired,
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired
+        })
+      )
     })
   ).isRequired
 };
