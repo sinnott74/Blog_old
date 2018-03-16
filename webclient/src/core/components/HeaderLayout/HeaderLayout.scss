@@ -69,4 +69,5 @@
   margin-top: var(--header-height);
   overflow-y: auto;
   min-height: calc(100% - var(--header-height));
+  width: inherit;
 }

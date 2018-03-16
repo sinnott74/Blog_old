@@ -44,9 +44,9 @@ export default class BlogEditor extends React.Component {
   render() {
     return (
       <TabsContainer
+        className="blogeditor_container"
         panelClassName="md-grid blogeditor_tabpanel"
         colored
-        style={{ width: "100%", height: "100%" }}
         swipeableViewsStyle={{ height: "100%" }}
         slideStyle={{ height: "100%" }}
       >
