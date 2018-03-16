@@ -123,7 +123,14 @@ export default class BlogEditor extends React.Component {
 
   getTagChips = () => {
     return this.state.tags.map(tag => {
-      return <TagChip key={tag.name} tag={tag.name} onClick={this.removeTag} />;
+      return (
+        <TagChip
+          key={tag.name}
+          tag={tag.name}
+          onClick={this.removeTag}
+          removable
+        />
+      );
     });
   };
 

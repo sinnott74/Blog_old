@@ -4,7 +4,9 @@ import marked from "marked";
 import Link from "core/components/Link";
 import Button from "react-md/lib/Buttons/Button";
 import Card from "core/components/Card";
+import "blog/components/TagChip";
 import "./ViewBlogPost.css";
+import TagChip from "blog/components/TagChip";
 
 export default class ViewBlogPost extends React.Component {
   componentDidMount() {}
@@ -66,12 +68,8 @@ export default class ViewBlogPost extends React.Component {
   }
 
   getTags() {
-    let tags = "";
-    this.props.tags.forEach((tag, index) => {
-      if (index > 0) {
-        tags += ", ";
-      }
-      tags += tag.name;
+    const tags = this.props.tags.map(tag => {
+      return <TagChip tag={tag.name} />;
     });
     return <div className="blogpost_tags">{tags}</div>;
   }
