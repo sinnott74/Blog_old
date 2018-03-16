@@ -6,6 +6,7 @@ import { login } from "core/ducks/auth";
 import { Redirect } from "react-router";
 import SubmitButton from "core/components/SubmitButton";
 import TextField from "react-md/lib/TextFields/TextField";
+import FontIcon from "react-md/lib/FontIcons/FontIcon";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class LoginPage extends React.Component {
             name="username"
             label="Username"
             required
+            leftIcon={<FontIcon>email</FontIcon>}
             value={this.state.username}
             autoComplete="email"
             onChange={(username, e) => {
@@ -57,6 +59,7 @@ class LoginPage extends React.Component {
             name="password"
             label="Password"
             required
+            leftIcon={<FontIcon>lock</FontIcon>}
             autoComplete="current-password"
             value={this.state.password}
             onChange={(password, e) => {
