@@ -68,13 +68,13 @@ expressApp.use(
   })
 );
 
-expressApp.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../webclient/build/index.html"));
-});
-
 // Data API routes
 const routes = require("./src/routes");
 expressApp.use("/api", routes);
+
+expressApp.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "../webclient/build/index.html"));
+});
 
 /**
  * Start Express server.
