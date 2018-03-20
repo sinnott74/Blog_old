@@ -11,8 +11,6 @@ const forceHttpsMiddleware = require("./src/middleware/forceHttps");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const Auth = require("./src/core/Auth");
-const ORM = require("sinnott-orm");
-const databaseConfig = require("./src/config/databaseConfig");
 
 /**
  * Adds Sync support to express routers
@@ -73,8 +71,6 @@ expressApp.use(
 expressApp.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../webclient/build/index.html"));
 });
-
-expressApp.use(ORM.init(databaseConfig));
 
 // Data API routes
 const routes = require("./src/routes");
