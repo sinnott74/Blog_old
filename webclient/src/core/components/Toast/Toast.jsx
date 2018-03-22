@@ -7,6 +7,7 @@ export default class Toast extends React.Component {
   render() {
     return (
       <div
+        role="alert"
         className={"toast " + (this.props.showing ? "toast__opened" : "")}
         ref={component => {
           this.component = component;
