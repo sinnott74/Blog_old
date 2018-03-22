@@ -15,38 +15,35 @@ function isUndefined(value) {
  * @param {any} key The key
  * @returns {any}
  */
-function get(data, key) {
+function get(id, key) {
   /* istanbul ignore if */
+  const data = map.get(id);
   if (!data) {
     return null;
   }
   const value = data[key];
-  if (isUndefined(value) && data.parent) {
-    return get(data.parent, key);
+  if (isUndefined(value) && data.parentId) {
+    return get(data.parentId, key);
   }
   return value;
 }
 
 let currentId = 0;
 const hooks = asyncHooks.createHook({
-  init: function init(id, type, triggerId) {
-    // if (type === 'TickObject') {
-    //   return;
-    // }
-    // init, set the created time
-    const data = {
-      created: nano.now()
-    };
-    const parentId = triggerId || currentId;
+  init: function init(asyncId, type, triggerAsyncId) {
+    const parentId = triggerAsyncId || currentId;
     // not tigger by itself, add parent
-    if (parentId !== id) {
+    if (parentId !== asyncId) {
       const parent = map.get(parentId);
       if (parent) {
-        data.parent = parent;
+        const data = { parentId: parentId };
+        debug(`${asyncId}(${type}) init by ${triggerAsyncId}`);
+        map.set(asyncId, data);
+        debug(`map size ${map.size}`);
       }
     }
-    debug(`${id}(${type}) init by ${triggerId}`);
-    map.set(id, data);
+    // debug(`${asyncId}(${type}) init by ${triggerAsyncId}`);
+    // map.set(asyncId, data);
   },
   /**
    * Set the current id
@@ -63,6 +60,7 @@ const hooks = asyncHooks.createHook({
     }
     debug(`destroy ${id}`);
     map.delete(id);
+    debug(`map size ${map.size}`);
   }
 });
 
@@ -100,22 +98,20 @@ exports.size = () => map.size;
  * Set the key/value for this score
  * @param {String} key The key of value
  * @param {String} value The value
- * @returns {Boolean} if sucess, will return true, otherwise false
  */
 exports.set = function setValue(key, value) {
   /* istanbul ignore if */
-  if (key === "created" || key === "paraent") {
+  if (key === "created" || key === "parent") {
     throw new Error("can't set created and parent");
   }
   const id = getCurrentId();
   debug(`set ${key}:${value} to ${id}`);
-  const data = map.get(id);
-  /* istanbul ignore if */
+  let data = map.get(id);
   if (!data) {
-    return false;
+    data = {};
+    map.set(id, data);
   }
   data[key] = value;
-  return true;
 };
 
 /**
@@ -123,8 +119,8 @@ exports.set = function setValue(key, value) {
  * @param {String} key The key of value
  */
 exports.get = function getValue(key) {
-  const data = map.get(getCurrentId());
-  const value = get(data, key);
+  const id = getCurrentId();
+  const value = get(id, key);
   debug(`get ${key}:${value} from ${currentId}`);
   return value;
 };
