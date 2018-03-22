@@ -197,7 +197,7 @@ class Query {
       .where(attributes)
       .toQuery();
     let rows = await this._executeSQLQuery(sqlQuery);
-    return parseInt(rows[0][kCOUNT]);
+    return parseInt(rows[0][kCOUNT], 10);
   }
 
   /**
