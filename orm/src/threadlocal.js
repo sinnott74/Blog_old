@@ -1,5 +1,5 @@
 const asyncHooks = require("async_hooks");
-const nano = require("nano-seconds");
+// const nano = require("nano-seconds");
 
 const debug = require("debug")("async-local-storage");
 
@@ -15,23 +15,21 @@ function isUndefined(value) {
  * @param {any} key The key
  * @returns {any}
  */
-function get(id, key) {
-  /* istanbul ignore if */
+function recursiveGet(id, key) {
   const data = map.get(id);
   if (!data) {
     return null;
   }
   const value = data[key];
   if (isUndefined(value) && data.parentId) {
-    return get(data.parentId, key);
+    return recursiveGet(data.parentId, key);
   }
   return value;
 }
 
-let currentId = 0;
 const hooks = asyncHooks.createHook({
   init: function init(asyncId, type, triggerAsyncId) {
-    const parentId = triggerAsyncId || currentId;
+    const parentId = triggerAsyncId;
     // not tigger by itself, add parent
     if (parentId !== asyncId) {
       const parent = map.get(parentId);
@@ -42,15 +40,8 @@ const hooks = asyncHooks.createHook({
         debug(`map size ${map.size}`);
       }
     }
-    // debug(`${asyncId}(${type}) init by ${triggerAsyncId}`);
-    // map.set(asyncId, data);
   },
-  /**
-   * Set the current id
-   */
-  before: function before(id) {
-    currentId = id;
-  },
+
   /**
    * Remove the data
    */
@@ -63,21 +54,6 @@ const hooks = asyncHooks.createHook({
     debug(`map size ${map.size}`);
   }
 });
-
-/**
- * Get the current id
- */
-function getCurrentId() {
-  if (asyncHooks.executionAsyncId) {
-    return asyncHooks.executionAsyncId();
-  }
-  return asyncHooks.currentId() || currentId;
-}
-
-/**
- * Get the current id
- */
-exports.currentId = getCurrentId;
 
 /**
  * Enable the async hook
@@ -100,11 +76,10 @@ exports.size = () => map.size;
  * @param {String} value The value
  */
 exports.set = function setValue(key, value) {
-  /* istanbul ignore if */
-  if (key === "created" || key === "parent") {
-    throw new Error("can't set created and parent");
+  if (key === "parentId") {
+    throw new Error("can't set parentId");
   }
-  const id = getCurrentId();
+  const id = asyncHooks.executionAsyncId();
   debug(`set ${key}:${value} to ${id}`);
   let data = map.get(id);
   if (!data) {
@@ -119,9 +94,9 @@ exports.set = function setValue(key, value) {
  * @param {String} key The key of value
  */
 exports.get = function getValue(key) {
-  const id = getCurrentId();
-  const value = get(id, key);
-  debug(`get ${key}:${value} from ${currentId}`);
+  const id = asyncHooks.executionAsyncId();
+  const value = recursiveGet(id, key);
+  debug(`get ${key}:${value} from ${id}`);
   return value;
 };
 
@@ -129,22 +104,8 @@ exports.get = function getValue(key) {
  * Remove the data of the current id
  */
 exports.remove = function removeValue() {
-  const id = getCurrentId();
+  const id = asyncHooks.executionAsyncId();
   if (id) {
     map.delete(id);
   }
-};
-
-/**
- * Get the use the of id
- * @param {Number} id The tigger id, is optional, default is `als.currentId()`
- * @returns {Number} The use time(ns) of the current id
- */
-exports.use = function getUse(id) {
-  const data = map.get(id || getCurrentId());
-  /* istanbul ignore if */
-  if (!data) {
-    return -1;
-  }
-  return nano.difference(data.created);
 };
