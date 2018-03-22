@@ -1,0 +1,18 @@
+## Verify Memory Leak
+# Add the following code to server entry point
+
+const memwatch = require("memwatch-next");
+memwatch.on("leak", function(info) {
+  console.log(info);
+});
+
+## Chrome Memory Profile
+
+# Run server in inspect mode
+node --inspect index.js
+
+# Visit Chrom dev tools
+about:inspect
+
+## ab - Apache HTTP server benchmarking tool
+ab -n 5000 -c 100 localhost:8080/api/blogposts // 5000 request, 100 concurrent requests
