@@ -23,7 +23,7 @@ class TransactionInfo {
     let client = await database.connect();
     await client.query("BEGIN");
     let transactionID = uuidV4();
-    console.log(transactionID);
+    // console.log(transactionID);
     TransactionInfo.set("transactionID", transactionID); // Add transactionID for async logging
     TransactionInfo.set("transaction", client); // Add knex transaction object
     await cb();
