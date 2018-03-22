@@ -14,9 +14,15 @@ class Query {
    * @returns {Promise<Array<Object>>} Resulting rows from the query
    */
   async _executeSQLQuery(sqlQuery) {
-    const transactionID = Transaction.get("transactionID");
+    // const transactionID = Transaction.get("transactionID");
     const transaction = Transaction.get("transaction");
-    console.log(transactionID, sqlQuery);
+    // console.log(transactionID, sqlQuery);
+    // console.log(
+    //   transaction.processID,
+    //   "ProcessID",
+    //   transactionID,
+    //   "transactionID"
+    // );
     const result = await transaction.query(sqlQuery);
     return Util.groupData(result.rows);
   }

@@ -20,8 +20,8 @@ class TransactionInfo {
   }
 
   static async startTransaction(database, cb) {
-    const client = await database.connect();
-    let result = await client.query("BEGIN");
+    let client = await database.connect();
+    await client.query("BEGIN");
     let transactionID = uuidV4();
     console.log(transactionID);
     TransactionInfo.set("transactionID", transactionID); // Add transactionID for async logging
@@ -30,10 +30,10 @@ class TransactionInfo {
   }
 
   static async startTransactionMiddle(database, req, res, next) {
-    const client = await database.connect();
-    let result = await client.query("BEGIN");
+    let client = await database.connect();
+    await client.query("BEGIN");
     let transactionID = uuidV4();
-    console.log(transactionID);
+    // console.log(client.processID, "ProcessID", transactionID, "transactionID");
     TransactionInfo.set("transactionID", transactionID); // Add transactionID for async logging
     TransactionInfo.set("transaction", client); // Add knex transaction object
 
@@ -51,13 +51,25 @@ class TransactionInfo {
   static async _commit(client, transactionID) {
     await client.query("COMMIT");
     await client.release();
-    console.log(`${transactionID} - Transaction Successful - client released`);
+    // console.log(
+    //   client.processID,
+    //   "ProcessID",
+    //   transactionID,
+    //   "transactionID",
+    //   "Transaction Successful - client released"
+    // );
   }
 
   static async _rollback(client, transactionID) {
     await client.query("ROLLBACK");
     await client.release();
-    console.log(`${transactionID} - Transaction Failed - client released`);
+    // console.error(
+    //   client.processID,
+    //   "ProcessID",
+    //   transactionID,
+    //   "transactionID",
+    //   "Transaction Failed - client released"
+    // );
   }
 
   static async transactionSuccess() {
