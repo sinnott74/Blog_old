@@ -109,6 +109,7 @@ ORM.sync = async function(config) {
       await Transaction.transactionFailure();
     }
   });
+  await pool.end();
 };
 
 /**
