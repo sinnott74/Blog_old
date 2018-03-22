@@ -1,6 +1,4 @@
 const asyncHooks = require("async_hooks");
-// const nano = require("nano-seconds");
-
 const debug = require("debug")("async-local-storage");
 
 const map = new Map();
@@ -15,14 +13,13 @@ function isUndefined(value) {
  * @param {any} key The key
  * @returns {any}
  */
-function recursiveGet(id, key) {
-  const data = map.get(id);
+function recursiveGet(data, key) {
   if (!data) {
     return null;
   }
   const value = data[key];
-  if (isUndefined(value) && data.parentId) {
-    return recursiveGet(data.parentId, key);
+  if (isUndefined(value) && data.parent) {
+    return recursiveGet(data.parent, key);
   }
   return value;
 }
@@ -34,7 +31,7 @@ const hooks = asyncHooks.createHook({
     if (parentId !== asyncId) {
       const parent = map.get(parentId);
       if (parent) {
-        const data = { parentId: parentId };
+        const data = { parent: parent };
         debug(`${asyncId}(${type}) init by ${triggerAsyncId}`);
         map.set(asyncId, data);
         debug(`map size ${map.size}`);
@@ -54,6 +51,10 @@ const hooks = asyncHooks.createHook({
     debug(`map size ${map.size}`);
   }
 });
+
+function getCurrentId() {
+  return asyncHooks.executionAsyncId();
+}
 
 /**
  * Enable the async hook
@@ -79,7 +80,7 @@ exports.set = function setValue(key, value) {
   if (key === "parentId") {
     throw new Error("can't set parentId");
   }
-  const id = asyncHooks.executionAsyncId();
+  const id = getCurrentId();
   debug(`set ${key}:${value} to ${id}`);
   let data = map.get(id);
   if (!data) {
@@ -94,8 +95,9 @@ exports.set = function setValue(key, value) {
  * @param {String} key The key of value
  */
 exports.get = function getValue(key) {
-  const id = asyncHooks.executionAsyncId();
-  const value = recursiveGet(id, key);
+  const id = getCurrentId();
+  const data = map.get(id);
+  const value = recursiveGet(data, key);
   debug(`get ${key}:${value} from ${id}`);
   return value;
 };
@@ -104,7 +106,7 @@ exports.get = function getValue(key) {
  * Remove the data of the current id
  */
 exports.remove = function removeValue() {
-  const id = asyncHooks.executionAsyncId();
+  const id = getCurrentId();
   if (id) {
     map.delete(id);
   }
