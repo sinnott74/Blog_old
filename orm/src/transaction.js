@@ -1,22 +1,20 @@
-const als = require("./threadlocal");
+const threadlocal = require("./threadlocal");
 const uuidV4 = require("uuid/v4");
 const onFinished = require("on-finished");
-
-als.enable();
 
 class TransactionInfo {
   /**
    * Reads a transaction scoped object.
    */
   static get(key) {
-    return als.get(key);
+    return threadlocal.get(key);
   }
 
   /**
    * Sets a transaction scoped object.
    */
   static set(key, object) {
-    als.set(key, object);
+    threadlocal.set(key, object);
   }
 
   static async startTransaction(database, cb) {

@@ -3,9 +3,13 @@ const asyncHooks = require("async_hooks");
 const map = new Map();
 
 const hooks = asyncHooks.createHook({
+  /**
+   * Sets the parent's context as the current context
+   */
   init: function init(asyncId, type, triggerAsyncId) {
     const parentContext = map.get(triggerAsyncId);
     if (parentContext) {
+      // set parent context as current context
       map.set(asyncId, parentContext);
     }
   },
@@ -14,16 +18,12 @@ const hooks = asyncHooks.createHook({
    * Remove the data
    */
   destroy: function destroy(asyncId) {
-    if (!map.has(asyncId)) {
-      return;
+    if (map.has(asyncId)) {
+      map.delete(asyncId);
     }
-    map.delete(asyncId);
   }
 });
-
-function getCurrentId() {
-  return asyncHooks.executionAsyncId();
-}
+hooks.enable();
 
 /**
  * Enable the async hook
@@ -46,7 +46,7 @@ exports.size = () => map.size;
  * @param {String} value The value
  */
 exports.set = function setValue(key, value) {
-  const id = getCurrentId();
+  const id = asyncHooks.executionAsyncId();
   let data = map.get(id);
   if (!data) {
     data = {};
@@ -60,17 +60,7 @@ exports.set = function setValue(key, value) {
  * @param {String} key The key of value
  */
 exports.get = function getValue(key) {
-  const id = getCurrentId();
+  const id = asyncHooks.executionAsyncId();
   const data = map.get(id);
   return data[key];
-};
-
-/**
- * Remove the data of the current id
- */
-exports.remove = function removeValue() {
-  const id = getCurrentId();
-  if (id) {
-    map.delete(id);
-  }
 };
