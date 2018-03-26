@@ -264,6 +264,11 @@ class Util {
     return `${string}s`;
   }
 
+  /**
+   * Array.forEach does not work with async code which must be awaited.
+   * @param {Array} array
+   * @param {Function} async callback
+   */
   async asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
