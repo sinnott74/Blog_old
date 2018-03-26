@@ -90,3 +90,46 @@ test("Data is grouped correctly", () => {
 
   expect(util.groupData(given)).toEqual(expected);
 });
+
+test("Defines an immutable property", () => {
+  const object = {};
+  util.defineImmutableProperty(object, "property", "value");
+  const expected = {
+    value: "value",
+    writable: false,
+    enumerable: false,
+    configurable: false
+  };
+  expect(object.property).toBe("value");
+  expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
+});
+
+test("Define a non enumerable property", () => {
+  const object = {};
+  util.defineNonEnumerableProperty(object, "property", "value");
+  const expected = {
+    writable: true,
+    enumerable: false,
+    configurable: true,
+    value: "value",
+    get: undefined,
+    set: undefined
+  };
+  expect(object.property).toBe("value");
+  expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
+});
+
+test("Define a non enumerable property", () => {
+  const object = {};
+  util.defineNonEnumerableProperty(object, "property", "value");
+  const expected = {
+    writable: true,
+    enumerable: false,
+    configurable: true,
+    value: "value",
+    get: undefined,
+    set: undefined
+  };
+  expect(object.property).toBe("value");
+  expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
+});
