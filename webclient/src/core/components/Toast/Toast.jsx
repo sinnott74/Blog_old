@@ -9,13 +9,10 @@ export default class Toast extends React.Component {
       <div
         role="alert"
         className={"toast " + (this.props.showing ? "toast__opened" : "")}
-        ref={component => {
-          this.component = component;
-        }}
       >
-        <div>{this.props.message}</div>
+        <div className="toast__message">{this.props.message}</div>
         <Button
-          className="toast-button"
+          className="toast__button"
           icon
           onClick={this.props.handleCloseButtonClick}
           aria-label="Close Toast"
@@ -29,6 +26,6 @@ export default class Toast extends React.Component {
 
 Toast.propTypes = {
   showing: PropTypes.bool,
-  message: PropTypes.string.isRequired,
-  handleCloseButtonClick: PropTypes.func.isRequired
+  message: PropTypes.string,
+  handleCloseButtonClick: PropTypes.func
 };
