@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"yarn watch-css\" \"yarn start-js\"",
     "build": "yarn build-css && yarn build-js",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "echo \"No webclient tests specified\" && exit 0",
     "react-scripts": "react-scripts",
     "build-js": "react-scripts build",
     "start-js": "react-scripts start",

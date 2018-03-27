@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Running ORM tests\" && jest"
   },
   "author": "",
   "license": "ISC",
