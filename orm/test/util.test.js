@@ -11,6 +11,58 @@ test("Capitalises a string", () => {
   expect(util.capitalize("test")).toBe("Test");
 });
 
+test("Empty data is grouped correctly", () => {
+  const given = [];
+  const expected = [];
+  expect(util.groupData(given)).toEqual(expected);
+});
+
+test("Falsey data should show up in grouped data", () => {
+  const given = [
+    {
+      id: 1,
+      active: false,
+      "child.id": 1,
+      "child.active": false
+    }
+  ];
+  const expected = [
+    {
+      id: 1,
+      active: false,
+      child: [
+        {
+          id: 1,
+          active: false
+        }
+      ]
+    }
+  ];
+  expect(util.groupData(given)).toEqual(expected);
+});
+
+test("Undefined attributes should not show up in grouped data", () => {
+  const given = [
+    {
+      id: 1,
+      active: undefined,
+      "child.id": 1,
+      "child.active": undefined
+    }
+  ];
+  const expected = [
+    {
+      id: 1,
+      child: [
+        {
+          id: 1
+        }
+      ]
+    }
+  ];
+  expect(util.groupData(given)).toEqual(expected);
+});
+
 test("Data is grouped correctly", () => {
   const given = [
     {
@@ -132,4 +184,48 @@ test("Define a non enumerable property", () => {
   };
   expect(object.property).toBe("value");
   expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
+});
+
+test("asyncForEach call callback for each item in array", () => {
+  const array = [1, 2, 3];
+  const mockCallback = jest.fn(); // mock function
+
+  return util.asyncForEach(array, mockCallback).then(() => {
+    expect(mockCallback.mock.calls.length).toBe(array.length);
+  });
+});
+
+test("asyncForEach returns a promise", () => {
+  const array = [1, 2, 3];
+  const mockCallback = jest.fn(); // mock function
+
+  const promise = util.asyncForEach(array, mockCallback);
+  expect(promise).toBeInstanceOf(Promise);
+});
+
+test("defineGetterAndSetter sets an enumerable getter & setter on the objects prototype", () => {
+  const object = {};
+  object.prototype = Function;
+  object.prototype.get = jest.fn();
+  object.prototype.set = jest.fn();
+  const name = "test";
+  util.defineGetterAndSetter(object, name);
+
+  expect(
+    Object.getOwnPropertyDescriptor(object.prototype, name).configurable
+  ).toBe(false);
+  expect(
+    Object.getOwnPropertyDescriptor(object.prototype, name).enumerable
+  ).toBe(true);
+  expect(
+    Object.getOwnPropertyDescriptor(object.prototype, name).get
+  ).toBeInstanceOf(Function);
+  expect(
+    Object.getOwnPropertyDescriptor(object.prototype, name).set
+  ).toBeInstanceOf(Function);
+
+  object.prototype[name] = true;
+  object.prototype[name];
+  expect(object.prototype.get.mock.calls.length).toBe(1);
+  expect(object.prototype.set.mock.calls.length).toBe(1);
 });
