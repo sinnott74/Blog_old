@@ -265,9 +265,12 @@ class Util {
   }
 
   async asyncForEach(array, callback) {
+    const promises = [];
     for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
+      const promise = callback(array[index], index, array);
+      promises.push(promise);
     }
+    return Promise.all(promises);
   }
 }
 
