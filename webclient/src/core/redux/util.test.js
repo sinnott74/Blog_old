@@ -93,4 +93,13 @@ describe("Redux util", () => {
     expect(sortArrayWithAddedItem).toEqual(expectedArray);
     expect(array).toEqual(array);
   });
+
+  test("addToArrayAndSort won't add duplicates", () => {
+    const array = [1, 2];
+    const expectedArray = [1, 2];
+    const sortArrayWithAddedItem = addToArrayAndSort(array, 2);
+    expect(sortArrayWithAddedItem).not.toBe(array);
+    expect(sortArrayWithAddedItem).toEqual(expectedArray);
+    expect(array).toEqual(array);
+  });
 });
