@@ -2,10 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Spinner.css";
 
-const defaultSize = 48;
-
 const Spinner = props => {
-  let size = props.size || defaultSize;
+  const size = props.size || 48;
 
   return (
     <div className="loader">
