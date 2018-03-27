@@ -48,4 +48,14 @@ describe("Attribute", () => {
     attribute.value = value2;
     expect(attribute.isDirty).toBe(true);
   });
+
+  test("won't be dirtied when value set is the same", () => {
+    const name = "name";
+    const value = "value";
+    const attribute = new Attribute(name, value);
+    attribute.isDirty = false;
+    const sameValue = "value";
+    attribute.value = sameValue;
+    expect(attribute.isDirty).toBe(false);
+  });
 });
