@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default class ScreenMediaQuery extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     if (!window.matchMedia) return;
     this.mediaQueryList = window.matchMedia(this.props.mediaQuery);
     this._onMatch = this._onMatch.bind(this);
