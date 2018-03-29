@@ -177,7 +177,7 @@ class Util {
     for (let key in obj) {
       if (key.indexOf(seperator) !== -1) {
         const value = obj[key];
-        if (value !== undefined) {
+        if (value != null) {
           let currentObj = obj;
           const keys = key.split(seperator);
           const keysLength = Math.max(1, keys.length - 1);
