@@ -70,7 +70,7 @@ class LoginPage extends React.Component {
           <SubmitButton isSubmitting={this.props.isSubmitting}>
             Login
           </SubmitButton>
-          <Link to="/signup">Sign Up</Link>
+          {/* <Link to="/signup">Sign Up</Link> */}
         </form>
       </Card>
     );
