@@ -1,12 +1,13 @@
 language: node_js
 node_js:
-  - 'lts/*' #latest LTS Node.js release
+  - '9'
 
 sudo: required
 
 # Cache npm inbetween builds to improve build time
 # Documentaion - https://docs.travis-ci.com/user/caching/
 cache:
+  yarn: true
   directories:
   - node_modules # NPM packages
 
@@ -31,6 +32,7 @@ deploy:
     organization: ${BLUEMIX_USER}
     space: production
     api: https://api.ng.bluemix.net/
+    skip_cleanup: true
     on:
       branch: master
   - provider: cloudfoundry
@@ -43,6 +45,7 @@ deploy:
     organization: ${BLUEMIX_USER}
     space: staging
     api: https://api.ng.bluemix.net/
+    skip_cleanup: true
     on:
       branch: staging
 

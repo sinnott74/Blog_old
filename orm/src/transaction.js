@@ -1,39 +1,37 @@
-const als = require("./threadlocal");
+const threadlocal = require("./threadlocal");
 const uuidV4 = require("uuid/v4");
 const onFinished = require("on-finished");
-
-als.enable();
 
 class TransactionInfo {
   /**
    * Reads a transaction scoped object.
    */
   static get(key) {
-    return als.get(key);
+    return threadlocal.get(key);
   }
 
   /**
    * Sets a transaction scoped object.
    */
   static set(key, object) {
-    als.set(key, object);
+    threadlocal.set(key, object);
   }
 
   static async startTransaction(database, cb) {
-    const client = await database.connect();
-    let result = await client.query("BEGIN");
+    let client = await database.connect();
+    await client.query("BEGIN");
     let transactionID = uuidV4();
-    console.log(transactionID);
+    // console.log(transactionID);
     TransactionInfo.set("transactionID", transactionID); // Add transactionID for async logging
     TransactionInfo.set("transaction", client); // Add knex transaction object
     await cb();
   }
 
   static async startTransactionMiddle(database, req, res, next) {
-    const client = await database.connect();
-    let result = await client.query("BEGIN");
+    let client = await database.connect();
+    await client.query("BEGIN");
     let transactionID = uuidV4();
-    console.log(transactionID);
+    // console.log(client.processID, "ProcessID", transactionID, "transactionID");
     TransactionInfo.set("transactionID", transactionID); // Add transactionID for async logging
     TransactionInfo.set("transaction", client); // Add knex transaction object
 
@@ -51,13 +49,25 @@ class TransactionInfo {
   static async _commit(client, transactionID) {
     await client.query("COMMIT");
     await client.release();
-    console.log(`${transactionID} - Transaction Successful - client released`);
+    // console.log(
+    //   client.processID,
+    //   "ProcessID",
+    //   transactionID,
+    //   "transactionID",
+    //   "Transaction Successful - client released"
+    // );
   }
 
   static async _rollback(client, transactionID) {
     await client.query("ROLLBACK");
     await client.release();
-    console.log(`${transactionID} - Transaction Successful - client released`);
+    // console.error(
+    //   client.processID,
+    //   "ProcessID",
+    //   transactionID,
+    //   "transactionID",
+    //   "Transaction Failed - client released"
+    // );
   }
 
   static async transactionSuccess() {

@@ -6,9 +6,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 1;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
+  z-index: 2;
 }
 
 .side_nav--opened {
@@ -24,10 +22,14 @@
   opacity: 0;
   background: var(--background-color-dark);
   will-change: opacity;
+  transform: translateZ(0);
+}
+
+.side_nav--animatable .side-nav__scrim {
   transition: opacity var(--transition);
 }
 
-.side_nav--animatable {
+.side_nav--animatable .side-nav__content {
   transition: transform var(--transition);
 }
 
@@ -42,22 +44,17 @@
 
 .side-nav__content {
   background: var(--background-color-light);
-  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
   will-change: transform;
   transform: translate3d(-100%, 0, 0);
   overflow-y: hidden;
   width: 73.33333%;
   margin-right: 2.22222%;
-  float: left;
   max-width: var(--side-nav-max-width);
-}
-
-@media (min-width: 1025px) {
-  .side-nav__content {
-    transform: translate3d(0, 0, 0);
-    pointer-events: auto;
-  }
 }
 
 .side-nav__edgearea {
@@ -67,42 +64,6 @@
   bottom: 0;
   width: 16px;
   z-index: 10;
-}
-
-.side-nav__header {
-  background: var(--primary-color) url("./side-nav-bg.jpg");
-  background-size: cover;
-  width: 100%;
-  height: 171px;
-  position: relative;
-}
-
-.side-nav__title {
-  font-size: 16px;
-  line-height: 1;
-  color: var(--text-color-light);
-  position: absolute;
-  bottom: 8px;
-  left: 16px;
-  height: 16px;
-  font-weight: 500;
-}
-
-.side-nav__body {
-  padding-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  min-height: calc(100% - 171px);
-  max-height: calc(100% - 171px);
-  overflow-y: auto;
-}
-
-.side-nav__version {
-  float: right;
-  padding: 16px;
-  font-size: 14px;
-  opacity: 0.54;
 }
 
 .side-nav-layout {
@@ -123,5 +84,10 @@
   .side-nav-layout_main {
     margin-left: var(--side-nav-max-width);
     width: calc(100vw - var(--side-nav-max-width));
+  }
+
+  .side-nav__content {
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
   }
 }

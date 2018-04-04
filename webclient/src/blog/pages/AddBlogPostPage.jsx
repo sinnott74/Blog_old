@@ -1,16 +1,9 @@
 import React from "react";
-import AddBlogPost from "blog/components/AddBlogPost";
-import Card from "core/components/Card";
+import AddBlogPost from "blog/containers/AddBlogPost";
 
-// Functional Component
 const AddBlogPostPage = props => {
   document.title = "Add Blog Post";
-  return (
-    <Card>
-      <h1>Add Blog Post</h1>
-      <AddBlogPost />
-    </Card>
-  );
+  return <AddBlogPost />;
 };
 
 export default AddBlogPostPage;

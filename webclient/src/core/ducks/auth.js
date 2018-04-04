@@ -159,3 +159,11 @@ export function logout() {
 export function isLoggedIn(state) {
   return state.auth.loggedIn;
 }
+
+export function getLoggedInUserID(state) {
+  return state.auth.id;
+}
+
+export function getLoggedInUsername(state) {
+  return state.auth.username;
+}

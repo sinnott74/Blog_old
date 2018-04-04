@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import OptionsMenuItem from "core/components/OptionsMenuItem";
 import "./OptionsMenu.css";
 
-import { connect } from "react-redux";
-import { closeOptionsMenu, isOpened } from "core/ducks/optionsMenu";
-import { isLoggedIn } from "core/ducks/auth";
-
-class OptionsMenu extends React.Component {
+export default class OptionsMenu extends React.Component {
   render() {
     return (
       <div
@@ -30,10 +26,6 @@ class OptionsMenu extends React.Component {
           }}
         >
           {this._getLogOptionItem()}
-          <OptionsMenuItem>Option 1</OptionsMenuItem>
-          <OptionsMenuItem>Option 2</OptionsMenuItem>
-          <OptionsMenuItem>Option 3</OptionsMenuItem>
-          <OptionsMenuItem>Option 4</OptionsMenuItem>
         </aside>
       </div>
     );
@@ -49,9 +41,17 @@ class OptionsMenu extends React.Component {
 
   _getLogOptionItem() {
     if (!this.props.loggedIn) {
-      return <OptionsMenuItem to="/login">Login</OptionsMenuItem>;
+      return (
+        <OptionsMenuItem to="/login" onClick={this.props.handleItemClick}>
+          Login
+        </OptionsMenuItem>
+      );
     } else {
-      return <OptionsMenuItem to="/logout">Log Out</OptionsMenuItem>;
+      return (
+        <OptionsMenuItem to="/logout" onClick={this.props.handleItemClick}>
+          Log Out
+        </OptionsMenuItem>
+      );
     }
   }
 
@@ -72,18 +72,6 @@ class OptionsMenu extends React.Component {
 
 OptionsMenu.propTypes = {
   opened: PropTypes.bool.isRequired,
-  handleScrimClick: PropTypes.func.isRequired
+  handleScrimClick: PropTypes.func.isRequired,
+  handleItemClick: PropTypes.func.isRequired
 };
-
-const mapStateToProps = state => ({
-  opened: isOpened(state),
-  loggedIn: isLoggedIn(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  handleScrimClick: () => {
-    dispatch(closeOptionsMenu());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OptionsMenu);

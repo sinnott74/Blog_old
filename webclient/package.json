@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run watch-css\" \"npm run start-js\"",
-    "build": "npm run build-css && npm run build-js",
+    "start": "concurrently \"yarn watch-css\" \"yarn start-js\"",
+    "build": "yarn build-css && yarn build-js",
     "test": "echo \"Error: no test specified\" && exit 0",
     "react-scripts": "react-scripts",
     "build-js": "react-scripts build",
@@ -13,7 +13,7 @@
     "build-css":
       "node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/",
     "watch-css":
-      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/ --watch --recursive"
+      "yarn build-css && node-sass-chokidar --include-path ./src --include-path ../node_modules src/ -o src/ --watch --recursive"
   },
   "proxy": {
     "/api/*": {
@@ -27,7 +27,6 @@
   "dependencies": {
     "history": "^4.7.2",
     "marked": "^0.3.12",
-    "node-sass-chokidar": "^0.0.3",
     "prop-types": "^15.6.0",
     "react-md": "^1.2.11",
     "react": "^16.2.0",
@@ -38,10 +37,13 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "react-scripts": "1.1.1",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^15.5.7",
+    "concurrently": "^3.5.1",
+    "react-scripts": "1.1.1",
+    "node-sass-chokidar": "^0.0.3"
   }
 }

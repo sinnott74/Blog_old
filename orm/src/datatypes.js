@@ -43,7 +43,7 @@ class StringDataType extends AbstractDataType {
       throw new Error("String too long, use TextDataType instead");
     }
     return attributeOptions.length
-      ? `varchar${attributeOptions.length}`
+      ? `varchar(${attributeOptions.length})`
       : "varchar";
   }
 }
@@ -62,7 +62,7 @@ class TextDataType extends AbstractDataType {
  */
 class TimeStampDataType extends AbstractDataType {
   static getSQLType(attributeOptions) {
-    return "TIMESTAMPZ";
+    return "TIMESTAMP WITH TIME ZONE";
   }
 }
 

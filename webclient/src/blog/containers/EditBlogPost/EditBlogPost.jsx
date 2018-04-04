@@ -10,10 +10,7 @@ class EditBlogPost extends BlogEditor {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  blogpost: {
-    ...state.blog.byId[ownProps.id],
-    user_id: state.auth.id
-  },
+  blogpost: state.blog.byId[ownProps.id],
   isSubmitting: state.blog.isLoading
 });
 

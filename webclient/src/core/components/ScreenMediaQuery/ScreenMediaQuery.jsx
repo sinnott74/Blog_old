@@ -1,9 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
-import { largeScreen } from "core/ducks/screen";
-
-class ScreenMediaQuery extends React.Component {
+export default class ScreenMediaQuery extends React.Component {
   componentWillMount() {
     if (!window.matchMedia) return;
     this.mediaQueryList = window.matchMedia(this.props.mediaQuery);
@@ -27,8 +25,6 @@ class ScreenMediaQuery extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  onMatch: largeScreen
+ScreenMediaQuery.propTypes = {
+  onMatch: PropTypes.func.isRequired
 };
-
-export default connect(null, mapDispatchToProps)(ScreenMediaQuery);

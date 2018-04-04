@@ -1,18 +1,14 @@
-"use strict";
-
 /**
  * Module dependencies.
  */
-var path = require("path");
-var express = require("express");
-var helmet = require("helmet");
-var cfenv = require("cfenv"); // cloud foundry environment variables
-var forceHttpsMiddleware = require("./src/middleware/forceHttps");
-var compression = require("compression");
-var bodyParser = require("body-parser");
-var Auth = require("./src/core/Auth");
-const ORM = require("sinnott-orm");
-const databaseConfig = require("./src/config/databaseConfig");
+const path = require("path");
+const express = require("express");
+const helmet = require("helmet");
+const cfenv = require("cfenv"); // cloud foundry environment variables
+const forceHttpsMiddleware = require("./src/middleware/forceHttps");
+const compression = require("compression");
+const bodyParser = require("body-parser");
+const Auth = require("./src/core/Auth");
 
 /**
  * Adds Sync support to express routers
@@ -22,7 +18,7 @@ require("express-async-errors");
 /**
  * Create Express server.
  */
-var expressApp = express();
+const expressApp = express();
 
 /**
  * Force https when not localhost
@@ -70,24 +66,20 @@ expressApp.use(
   })
 );
 
-expressApp.get("/", function(req, res) {
+// Data API routes
+const routes = require("./src/routes");
+expressApp.use("/api", routes);
+
+expressApp.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "../webclient/build/index.html"));
 });
-
-const mode = process.env.NODE_ENV || "development";
-const dbConfig = databaseConfig[mode];
-expressApp.use(ORM.init(dbConfig));
-
-// Data API routes
-var routes = require("./src/routes");
-expressApp.use("/api", routes);
 
 /**
  * Start Express server.
  */
-let port = process.env.PORT || 8080;
-let server = expressApp.listen(port, () => {
-  let serverPort = server.address().port;
+const port = process.env.PORT || 8080;
+const server = expressApp.listen(port, () => {
+  const serverPort = server.address().port;
   console.log("Server running on port " + serverPort);
 });
 

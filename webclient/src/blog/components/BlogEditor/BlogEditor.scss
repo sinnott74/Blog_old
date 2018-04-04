@@ -1,3 +1,30 @@
+@import "react-md/src/scss/react-md";
+
 .blogeditor__form {
   max-width: 1000px;
+}
+
+.blogeditor_card {
+  width: 100%;
+}
+
+.blogeditor_container {
+  width: inherit;
+  height: 100%;
+}
+
+.blogeditor_tabpanel {
+  margin-top: $md-tab-height;
+}
+
+.blogeditor_tabs {
+  position: fixed;
+  width: inherit;
+  z-index: 1;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+}
+
+.blogeditor_tagchips {
+  display: flex;
+  flex-wrap: wrap;
 }

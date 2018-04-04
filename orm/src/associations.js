@@ -38,8 +38,6 @@ class AbstractAssociation {
     this.source = source;
     this.target = target;
     this.options = options;
-    this.name = this.getAssociationName(source, target, options);
-    this.target.associations[this.name] = this;
   }
 
   /**
@@ -73,6 +71,36 @@ class AbstractAssociation {
     Util.defineGetterAndSetter(modelReferencing, foreignKeyName);
     modelReferencing.refreshAttributes();
   }
+
+  /**
+   * Given the source name will return the target, given the target name will return the source.
+   * @param {Model} model
+   */
+  getRecipricalModel(modelName) {
+    if (modelName === this.source.name) {
+      return this.target;
+    } else if (modelName === this.target.name) {
+      return this.source;
+    } else {
+      return;
+    }
+  }
+
+  /**
+   * Single Join
+   * @param {*} modelClass
+   * @param {*} fromClause
+   */
+  join(modelClass, fromClause) {
+    const recipricalModelClass = this.getRecipricalModel(modelClass.name);
+    return fromClause
+      .leftJoin(recipricalModelClass.entity)
+      .on(
+        recipricalModelClass.entity.id.equals(
+          modelClass.entity[`${recipricalModelClass.name}_id`]
+        )
+      );
+  }
 }
 
 /**
@@ -82,6 +110,8 @@ class OneToOne extends AbstractAssociation {
   constructor(source, target, options = {}) {
     super(source, target, options);
     this.type = "OneToOne";
+    this.name = this.getAssociationName(source, target, options);
+    this.target.associations[this.name] = this;
     this.addModelReference(target, source);
     if (this.options.bidirectional) {
       this.addModelReference(source, target);
@@ -94,8 +124,9 @@ class OneToOne extends AbstractAssociation {
    * @param {Model} model Model to add the getter & setter to
    * @param {String} name Attribute name
    */
-  defineGetterAndSetter(model, name) {
-    Object.defineProperty(model.prototype, name, {
+  defineGetterAndSetter(modelClass, name) {
+    const recipricalModelClass = this.getRecipricalModel(modelClass.name);
+    Object.defineProperty(modelClass.prototype, name, {
       get: function() {
         return this._associationAttributes[name];
       },
@@ -105,16 +136,12 @@ class OneToOne extends AbstractAssociation {
           if (item instanceof Model) {
             this._associationAttributes[name] = value;
           } else {
-            this._associationAttributes[
-              name
-            ] = new this.constructor.associations[name].source(value);
+            this._associationAttributes[name] = new recipricalModelClass(value);
           }
         } else if (value instanceof Model) {
           this._associationAttributes[name] = value;
         } else {
-          this._associationAttributes[name] = new this.constructor.associations[
-            name
-          ].source(value);
+          this._associationAttributes[name] = new recipricalModelClass(value);
         }
       },
       enumerable: true
@@ -139,6 +166,8 @@ class OneToMany extends AbstractAssociation {
   constructor(source, target, options = {}) {
     super(source, target, options);
     this.type = "OneToMany";
+    this.name = this.getAssociationName(source, target, options);
+    this.target.associations[this.name] = this;
     this.addModelReference(target, source);
     this.defineGetterAndSetter(target, this.name);
   }
@@ -148,8 +177,9 @@ class OneToMany extends AbstractAssociation {
    * @param {Model} model Model to add the getter & setter to
    * @param {String} name Attribute name
    */
-  defineGetterAndSetter(model, name) {
-    Object.defineProperty(model.prototype, name, {
+  defineGetterAndSetter(modelClass, name) {
+    const recipricalModelClass = this.getRecipricalModel(modelClass.name);
+    Object.defineProperty(modelClass.prototype, name, {
       get: function() {
         return this._associationAttributes[name];
       },
@@ -159,16 +189,12 @@ class OneToMany extends AbstractAssociation {
           if (item instanceof Model) {
             this._associationAttributes[name] = value;
           } else {
-            this._associationAttributes[
-              name
-            ] = new this.constructor.associations[name].source(item);
+            this._associationAttributes[name] = new recipricalModelClass(item);
           }
         } else if (value instanceof Model) {
           this._associationAttributes[name] = value;
         } else {
-          this._associationAttributes[name] = new this.constructor.associations[
-            name
-          ].source(value);
+          this._associationAttributes[name] = new recipricalModelClass(value);
         }
       },
       enumerable: true
@@ -193,22 +219,105 @@ class ManyToMany extends AbstractAssociation {
   constructor(source, target, options = {}) {
     super(source, target, options);
     this.type = "ManyToMany";
+    this.source.associations[Util.puralize(this.target.name)] = this;
+    this.target.associations[Util.puralize(this.source.name)] = this;
     const throughName = options.through || source.name + target.name;
     this.through = this.constructor.getThroughModel(throughName);
     this.addModelReference(this.through, this.target);
     this.addModelReference(this.through, this.source);
+    this.defineGetterAndSetter(this.target, Util.puralize(this.source.name));
+    this.defineGetterAndSetter(this.source, Util.puralize(this.target.name));
   }
 
   /**
    * Name of the Model which the Many to Many association goes through
    * @param {String} through
    */
-  static getThroughModel(through) {
-    if (!ORM.isDefined(through)) {
-      ORM.define(through, {});
+  static getThroughModel(throughName) {
+    if (!ORM.isDefined(throughName)) {
+      ORM.define(throughName, {});
     }
-    return ORM.getModel(through);
+    return ORM.getModel(throughName);
   }
 
-  async save(model) {}
+  /**
+   * Adds a getter & setter onto the prototype of the given object.
+   * @param {Model} model Model to add the getter & setter to
+   * @param {String} name Attribute name
+   */
+  defineGetterAndSetter(modelClass, name) {
+    const recipricalModelClass = this.getRecipricalModel(modelClass.name);
+    Object.defineProperty(modelClass.prototype, name, {
+      get: function() {
+        return this._associationAttributes[name];
+      },
+      set: function(values) {
+        if (values) {
+          this._associationAttributes[name] = [];
+          values.forEach(value => {
+            if (value instanceof Model) {
+              this._associationAttributes[name] = value;
+            } else {
+              const model = new recipricalModelClass(value);
+              this._associationAttributes[name].push(model);
+            }
+          });
+        } else {
+          this._associationAttributes[name] = null;
+        }
+      },
+      enumerable: true
+    });
+  }
+
+  async save(model) {
+    // Save this instance to get an ID
+    await model._save();
+
+    const modelClassName = model.constructor.name;
+    const recipricalModelClassName = this.getRecipricalModel(modelClassName)
+      .name;
+
+    const referenceModels = model[Util.puralize(recipricalModelClassName)];
+
+    // Delete Join table for this model
+    await this.through.delete({ [`${modelClassName}_id`]: model.id });
+
+    const throughInstances = [];
+
+    await Util.asyncForEach(referenceModels, async referencedModel => {
+      await referencedModel.save();
+      const throughData = {
+        [`${modelClassName}_id`]: model.id,
+        [`${recipricalModelClassName}_id`]: referencedModel.id
+      };
+      const throughInstance = new this.through(throughData);
+      throughInstances.push(throughInstance);
+    });
+
+    await this.through.insertAll(throughInstances);
+  }
+
+  /**
+   * Many Join
+   * @param {*} modelClass
+   * @param {*} fromClause
+   */
+  join(modelClass, fromClause) {
+    const recipricalModelClass = this.getRecipricalModel(modelClass.name);
+    const throughModelClass = this.through;
+    return fromClause
+      .leftJoin(throughModelClass.entity)
+      .on(
+        throughModelClass.entity[`${modelClass.name}_id`].equals(
+          modelClass.entity.id
+        )
+      )
+      .leftJoin(recipricalModelClass.entity)
+      .on(
+        throughModelClass.entity[`${recipricalModelClass.name}_id`].equals(
+          recipricalModelClass.entity.id
+        )
+      );
+  }
 }

@@ -6,6 +6,7 @@ import { Redirect } from "react-router";
 import SubmitButton from "core/components/SubmitButton";
 import TextField from "react-md/lib/TextFields/TextField";
 import { DatePicker } from "react-md/lib/Pickers";
+import FontIcon from "react-md/lib/FontIcons/FontIcon";
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class SignUpPage extends React.Component {
             name="username"
             label="Username"
             required
+            leftIcon={<FontIcon>email</FontIcon>}
             autoComplete="email"
             value={this.state.username}
             onChange={(username, e) => {
@@ -66,6 +68,7 @@ class SignUpPage extends React.Component {
             id="password"
             label="Password"
             required
+            leftIcon={<FontIcon>lock</FontIcon>}
             autoComplete="new-password"
             value={this.state.password}
             onChange={(password, e) => {
@@ -79,6 +82,7 @@ class SignUpPage extends React.Component {
             label="Firstname"
             required
             autoComplete="given-name"
+            leftIcon={<FontIcon>face</FontIcon>}
             value={this.state.firstname}
             onChange={(firstname, e) => {
               this.setState({ firstname });
@@ -91,6 +95,7 @@ class SignUpPage extends React.Component {
             label="Lastname"
             required
             autoComplete="family-name"
+            leftIcon={<FontIcon>face</FontIcon>}
             value={this.state.lastname}
             onChange={(lastname, e) => {
               this.setState({ lastname });
