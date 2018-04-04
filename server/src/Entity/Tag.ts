@@ -1,6 +1,6 @@
-const ORM = require("sinnott-orm");
+import ORM from "sinnott-orm";
 const DataTypes = ORM.DataTypes;
-const BlogPost = require("./BlogPost");
+import BlogPost from "./BlogPost";
 
 const Tag = ORM.define("tag", {
   name: {
@@ -18,7 +18,7 @@ BlogPost.manyToMany(Tag, { through: "blogposttag" });
  * @param {String} tagName
  * @return {Promise<Tag>} may resolve to undefined
  */
-Tag.findByTagName = async function(tagName) {
+Tag.findByTagName = async function(tagName: string) {
   return Tag.findAtMostOne({ name: tagName });
 };
 
@@ -32,4 +32,4 @@ Tag.beforeSave = async function() {
   }
 };
 
-module.exports = Tag;
+export default Tag;

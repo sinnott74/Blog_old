@@ -40,8 +40,6 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "@types/react": "^16.0.40",
-    "@types/react-dom": "^15.5.7",
     "concurrently": "^3.5.1",
     "react-scripts": "1.1.1",
     "node-sass-chokidar": "^0.0.3"

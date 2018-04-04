@@ -1,12 +1,14 @@
-var moment = require("moment");
+import * as moment from "moment";
 let defaultFormat = "ddd, Do MMM YYYY"; // Fri, 12th Jan 2017
 
-class Date {
-  constructor(input) {
-    this.internalDate = moment(input);
+export default class WrappedDate {
+  internalDate: moment.Moment;
+
+  constructor(input: Date) {
+    this.internalDate = moment.default(input);
   }
 
-  format(dateFormat) {
+  format(dateFormat: string) {
     return this.internalDate.format(dateFormat);
   }
 
@@ -18,5 +20,3 @@ class Date {
     return this.internalDate.toISOString();
   }
 }
-
-module.exports = Date;

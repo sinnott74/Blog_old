@@ -1,18 +1,21 @@
-var cfApp = require("cfenv").getAppEnv();
-
+import cfenv from "cfenv";
+const cfApp = cfenv.getAppEnv();
+let config;
 if (process.env.NODE_ENV === "production") {
   // Production
-  module.exports = {
+  config = {
     connectionString: cfApp.getServices("postgresql")["ElephantSQL"].credentials
       .uri,
     max: 5
   };
 } else {
   // Development
-  module.exports = {
+  config = {
     database: "pwadb",
     host: "localhost",
     port: 5432,
     max: 5
   };
 }
+
+export default config;

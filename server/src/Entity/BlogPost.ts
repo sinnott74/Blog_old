@@ -1,7 +1,7 @@
-const ORM = require("sinnott-orm");
+import ORM from "sinnott-orm";
+import User from "./User";
+import MomentDate from "../util/Date";
 const DataTypes = ORM.DataTypes;
-const User = require("./User");
-const MomentDate = require("../util/Date");
 
 const BlogPost = ORM.define(
   "blogpost",
@@ -34,7 +34,7 @@ const BlogPost = ORM.define(
 
 User.oneToMany(BlogPost, { as: "author" });
 
-BlogPost.getBlogPostDetails = async function(id) {
+BlogPost.getBlogPostDetails = async function(id: number) {
   let blogPostAndAuthor = BlogPost.get(id, { includes: ["author", "tags"] });
   return blogPostAndAuthor;
 };
@@ -51,4 +51,4 @@ BlogPost.beforeCreate = function() {
   this.created_on = new Date();
 };
 
-module.exports = BlogPost;
+export default BlogPost;

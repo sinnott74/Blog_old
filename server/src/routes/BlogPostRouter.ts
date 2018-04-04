@@ -1,5 +1,6 @@
-var router = require("express").Router();
-const BlogPost = require("../Entity").BlogPost;
+import { Router } from "express";
+import { BlogPost } from "../Entity";
+const router = Router();
 
 router.get("/", async function(req, res) {
   const blogPosts = await BlogPost.listBlogPostDetails();
@@ -26,4 +27,4 @@ router.put("/:id", async function(req, res) {
   res.sendStatus(200);
 });
 
-module.exports = router;
+export default router;

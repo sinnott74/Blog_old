@@ -1,9 +1,11 @@
 class ApplicationException extends Error {
-  constructor(message) {
+  status: number;
+
+  constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
   }
 }
 
-module.exports = ApplicationException;
+export default ApplicationException;

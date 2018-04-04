@@ -1,4 +1,4 @@
-const ORM = require("sinnott-orm");
+import ORM from "sinnott-orm";
 const DataTypes = ORM.DataTypes;
 
 const User = ORM.define(
@@ -36,7 +36,7 @@ const User = ORM.define(
   }
 );
 
-User.isUsernameAvailable = async function(username) {
+User.isUsernameAvailable = async function(username: string) {
   let count = await User.count({ username });
   if (count > 0) {
     return false;
@@ -44,8 +44,8 @@ User.isUsernameAvailable = async function(username) {
   return true;
 };
 
-User.readByUsername = async function(username) {
+User.readByUsername = async function(username: string) {
   return User.findOne({ username: username });
 };
 
-module.exports = User;
+export default User;

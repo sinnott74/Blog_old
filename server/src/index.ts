@@ -1,14 +1,16 @@
 /**
  * Module dependencies.
  */
-const path = require("path");
-const express = require("express");
-const helmet = require("helmet");
-const cfenv = require("cfenv"); // cloud foundry environment variables
-const forceHttpsMiddleware = require("./src/middleware/forceHttps");
-const compression = require("compression");
-const bodyParser = require("body-parser");
-const Auth = require("./src/core/Auth");
+import path from "path";
+import express from "express";
+import helmet from "helmet";
+import cfenv from "cfenv"; // cloud foundry environment variables
+import forceHttpsMiddleware from "./middleware/forceHttps";
+import compression from "compression";
+import bodyParser from "body-parser";
+import Auth from "./core/Auth";
+import { Request, Response } from "express";
+import routes from "./routes";
 
 /**
  * Adds Sync support to express routers
@@ -60,18 +62,17 @@ expressApp.use(compression());
 // Define static assets path - i.e. styles, scripts etc.
 expressApp.use(
   "/",
-  express.static(path.join(__dirname, "../webclient/build"), {
-    maxage: "1y",
+  express.static(path.join(__dirname, "../../webclient/build"), {
+    maxAge: "1y",
     setHeaders: setCustomCacheControl
   })
 );
 
 // Data API routes
-const routes = require("./src/routes");
 expressApp.use("/api", routes);
 
-expressApp.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../webclient/build/index.html"));
+expressApp.get("/*", function(req: Request, res: Response) {
+  res.sendFile(path.join(__dirname, "../../webclient/build/index.html"));
 });
 
 /**
@@ -86,7 +87,7 @@ const server = expressApp.listen(port, () => {
 /**
  * Set custom Cache-Control header for Index.html
  */
-function setCustomCacheControl(res, path) {
+function setCustomCacheControl(res: Response, path: string) {
   if (path.endsWith("index.html") || path.endsWith("service-worker.js")) {
     res.setHeader("Cache-Control", "public, max-age=0");
   }

@@ -1,12 +1,12 @@
-const passport = require("passport");
-const JWTStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const jwt = require("jsonwebtoken");
-const moment = require("moment");
-// const TransactionInfo = require('./TransactionInfo');
-const AuthenticationError = require("../exception/AuthenticationException");
-const User = require("../Entity").User;
-const Credential = require("../Entity").Credential;
+import passport from "passport";
+import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
+import * as jwt from "jsonwebtoken";
+import * as moment from "moment";
+// const TransactionInfo from './TransactionInfo');
+import AuthenticationError from "../exception/AuthenticationException";
+import { User, Credential } from "../Entity";
+import { Request } from "express";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
 
@@ -46,7 +46,7 @@ class Auth {
    * @param {*} username
    * @param {*} password
    */
-  static async login(username, password) {
+  static async login(username: string, password: string) {
     try {
       let authenticated = await Credential.authenticate(username, password);
 
@@ -70,15 +70,18 @@ class Auth {
       passReqToCallback: true
     };
 
-    return new JWTStrategy(strategyConfig, (req, payload, done) => {
-      User.readByUsername(payload.username + "a")
-        .then(user => {
-          done(null, user);
-        })
-        .catch(err => {
-          done(null, false, { message: "Authentication error" });
-        });
-    });
+    return new JWTStrategy(
+      strategyConfig,
+      (req: Request, payload, done: Function) => {
+        User.readByUsername(payload.username)
+          .then(user => {
+            done(null, user);
+          })
+          .catch(err => {
+            done(null, false, { message: "Authentication error" });
+          });
+      }
+    );
   }
 
   /**
@@ -86,7 +89,7 @@ class Auth {
    *
    * @param {*} cb Callback function
    */
-  static _authenticate(cb) {
+  static _authenticate(cb: any) {
     return passport.authenticate(
       "jwt",
       {
@@ -102,8 +105,8 @@ class Auth {
    * @param {*} user
    * @returns {Promise} contains a token, time of expiration & the username
    */
-  static async _getToken(username) {
-    let expires = moment()
+  static async _getToken(username: string) {
+    let expires = moment
       .utc()
       .add({ days: 7 })
       .unix();
@@ -118,7 +121,7 @@ class Auth {
           },
           SECRET,
           {},
-          (err, token) => {
+          (err: JsonWebTokenError, token: string) => {
             if (err) {
               reject(err);
             }
@@ -136,4 +139,4 @@ class Auth {
   }
 }
 
-module.exports = Auth;
+export default Auth;

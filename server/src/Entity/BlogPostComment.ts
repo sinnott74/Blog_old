@@ -1,6 +1,6 @@
-const ORM = require("sinnott-orm");
+import ORM from "sinnott-orm";
 const DataTypes = ORM.DataTypes;
-const BlogPost = require("./BlogPost");
+import BlogPost from "./BlogPost";
 
 const BlogPostComment = ORM.define("blogpostcomment", {
   comment: {
@@ -11,4 +11,4 @@ const BlogPostComment = ORM.define("blogpostcomment", {
 
 BlogPost.oneToMany(BlogPostComment);
 
-module.exports = BlogPostComment;
+export default BlogPostComment;

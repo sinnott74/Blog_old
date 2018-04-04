@@ -1,6 +1,6 @@
-const router = require("express").Router();
-const User = require("../Entity").User;
-const Credential = require("../Entity").Credential;
+import { Router } from "express";
+const router = Router();
+import { User, Credential } from "../Entity";
 
 router.get("/", async function(req, res) {
   let users = await User.findAll();
@@ -33,4 +33,4 @@ router.delete("/:id", async function(req, res) {
   res.sendStatus(200);
 });
 
-module.exports = router;
+export default router;

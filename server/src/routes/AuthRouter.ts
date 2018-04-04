@@ -1,7 +1,7 @@
-var router = require("express").Router();
-var Auth = require("../core/Auth");
-const User = require("../Entity/User");
-const Credential = require("../Entity/Credential");
+import { Router } from "express";
+import Auth from "../core/Auth";
+import { User, Credential } from "../Entity";
+const router = Router();
 
 /**
  * Route to log a user in
@@ -30,4 +30,4 @@ router.post("/signup", async function(req, res) {
   res.json(token);
 });
 
-module.exports = router;
+export default router;
