@@ -22,24 +22,24 @@ class Auth {
     return passport.initialize();
   }
 
-  // /**
-  //  * Authorization Middleware.
-  //  * Sets the user onto the Transaction under 'user' upon successful authentication.
-  //  *
-  //  * @param {*} req
-  //  * @param {*} res
-  //  * @param {*} next
-  //  */
-  // static middleware(req, res, next) {
-  //   Auth._authenticate((err, user, info) => {
-  //     if(err || !user) {
-  //       console.log(err);
-  //       return next(new AuthenticationError());
-  //     }
-  //     TransactionInfo.set('user', user);
-  //     next();
-  //   })(req, res, next);
-  // }
+  /**
+   * Authorization Middleware.
+   * Sets the user onto the Transaction under 'user' upon successful authentication.
+   *
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  static middleware(req, res, next) {
+    Auth._authenticate((err, user, info) => {
+      if (err || !user) {
+        console.log(err);
+        return next(new AuthenticationError());
+      }
+      // TransactionInfo.set("user", user);
+      next();
+    })(req, res, next);
+  }
 
   /**
    *
@@ -71,12 +71,12 @@ class Auth {
     };
 
     return new JWTStrategy(strategyConfig, (req, payload, done) => {
-      User.readByUsername(payload.username + "a")
+      User.readByUsername(payload.username)
         .then(user => {
           done(null, user);
         })
         .catch(err => {
-          done(null, false, { message: "Authentication error" });
+          done(err, false, { message: "Authentication error" });
         });
     });
   }
