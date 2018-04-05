@@ -174,17 +174,13 @@ class Util {
   _splitIntoNestedObjects(obj, seperator) {
     seperator = seperator || this.kSEPERATOR;
 
-    obj = {
-      ...obj
-    };
-    for (var key in obj) {
+    for (let key in obj) {
       if (key.indexOf(seperator) !== -1) {
-        // this._parseDotNotation(obj, key, obj[key]);
-        let value = obj[key];
-        if (value) {
+        const value = obj[key];
+        if (value != null) {
           let currentObj = obj;
-          let keys = key.split(seperator);
-          let keysLength = Math.max(1, keys.length - 1);
+          const keys = key.split(seperator);
+          const keysLength = Math.max(1, keys.length - 1);
           let localKey, i;
 
           for (i = 0; i < keysLength; ++i) {
@@ -239,6 +235,7 @@ class Util {
     // Add getter & setter for foreign reference
     Object.defineProperty(model.prototype, name, {
       get: function() {
+        console.log("this", this);
         return this.get(name);
       },
       set: function(value) {
@@ -264,6 +261,11 @@ class Util {
     return `${string}s`;
   }
 
+  /**
+   * Array.forEach does not work with async code which must be awaited.
+   * @param {Array} array
+   * @param {Function} async callback
+   */
   async asyncForEach(array, callback) {
     const promises = [];
     for (let index = 0; index < array.length; index++) {
