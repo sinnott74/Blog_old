@@ -1,5 +1,6 @@
-const router = require("express").Router();
-const User = require("../Entity").User;
+import { Router } from "express";
+const router = Router();
+import { User } from "../Entity";
 
 router.get("/", async function(req, res) {
   let users = await User.findAll();
@@ -32,4 +33,4 @@ router.get("/:id", async function(req, res) {
 //   res.sendStatus(200);
 // });
 
-module.exports = router;
+export default router;

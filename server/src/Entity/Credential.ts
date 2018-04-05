@@ -1,7 +1,7 @@
-const ORM = require("sinnott-orm");
+import ORM from "sinnott-orm";
+import User from "./User";
+import * as bcrypt from "bcryptjs";
 const DataTypes = ORM.DataTypes;
-const User = require("./User");
-const bcrypt = require("bcryptjs");
 
 const Credential = ORM.define("credential", {
   password: {
@@ -58,7 +58,7 @@ Credential._deactivePreviousCredential = async function(credential) {
  *   if the username/password combination are authentic,
  *   false otherwise
  */
-Credential.authenticate = async function(username, password) {
+Credential.authenticate = async function(username: string, password: string) {
   let userCredential = await Credential.readActiveUserCredentialByUsername(
     username
   );
@@ -70,7 +70,7 @@ Credential.authenticate = async function(username, password) {
  * @param {*} user_id
  * @returns {Promise<Credential>} A credential or undefined
  */
-Credential.readActiveUserCredentialByUserID = async function(user_id) {
+Credential.readActiveUserCredentialByUserID = async function(user_id: number) {
   return Credential.findAtMostOne({ user_id, active: true });
 };
 
@@ -79,11 +79,13 @@ Credential.readActiveUserCredentialByUserID = async function(user_id) {
  * @param {String} username   User's username
  * @returns {Promise<Credential>}
  */
-Credential.readActiveUserCredentialByUsername = async function(username) {
+Credential.readActiveUserCredentialByUsername = async function(
+  username: string
+) {
   return Credential.findOne(
     { active: true, username: username },
     { includes: ["user"] }
   );
 };
 
-module.exports = Credential;
+export default Credential;

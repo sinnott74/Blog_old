@@ -1,6 +1,8 @@
-var router = require("express").Router();
-const BlogPost = require("../Entity").BlogPost;
-const Auth = require("../core/Auth");
+
+import { Router } from "express";
+import { BlogPost } from "../Entity";
+import Auth from "../core/Auth";
+const router = Router();
 
 router.get("/", async function(req, res) {
   const blogPosts = await BlogPost.listBlogPostDetails();
@@ -27,4 +29,4 @@ router.put("/:id", Auth.middleware, async function(req, res) {
   res.sendStatus(200);
 });
 
-module.exports = router;
+export default router;

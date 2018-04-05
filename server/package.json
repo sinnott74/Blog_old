@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "yarn build:database && yarn start:server:prod",
-    "start:dev": "yarn build:database && yarn start:server:dev",
-    "start:server:prod": "node index.js",
-    "start:server:dev": "nodemon index.js --watch . --watch ../orm",
-    "build:database": "node builddatabase.js",
-    "test": "echo \"No server tests specified\" && exit 0"
+    "start":
+      "yarn build:server && yarn build:database && yarn start:server:prod",
+    "start:dev":
+      "yarn build:database && build:server:watch && yarn start:server:dev",
+    "start:server:prod": "node dist/index.js",
+    "start:server:dev": "nodemon dist/index --watch . --watch ../orm",
+    "build:database": "node dist/builddatabase.js",
+    "build:server": "tsc",
+    "build:server:watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
-
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -29,6 +32,21 @@
     "passport-jwt": "^3.0.1"
   },
   "devDependencies": {
-    "nodemon": "^1.14.11"
+    "@types/bcryptjs": "^2.4.1",
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "^0.0.36",
+    "@types/express": "^4.11.1",
+    "@types/helmet": "^0.0.37",
+    "@types/jsonwebtoken": "^7.2.6",
+    "@types/node": "^9.4.6",
+    "@types/nodemailer": "^4.3.4",
+    "@types/passport": "^0.4.3",
+    "@types/passport-jwt": "^3.0.1",
+    "jest": "^22.4.3",
+    "nodemon": "^1.14.11",
+    "ts-jest": "^22.4.2",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
   }
 }
