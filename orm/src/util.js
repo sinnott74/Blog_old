@@ -235,7 +235,6 @@ class Util {
     // Add getter & setter for foreign reference
     Object.defineProperty(model.prototype, name, {
       get: function() {
-        console.log("this", this);
         return this.get(name);
       },
       set: function(value) {
