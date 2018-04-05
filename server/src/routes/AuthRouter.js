@@ -14,20 +14,20 @@ router.post("/login", async function(req, res) {
   res.json(token);
 });
 
-router.post("/signup", async function(req, res) {
-  let userCredentials = { ...req.body };
-  const user = new User(userCredentials);
-  await user.save();
-  const credential = new Credential({
-    user_id: user.id,
-    password: userCredentials.password
-  });
-  await credential.save();
-  let token = await Auth.login(
-    userCredentials.username,
-    userCredentials.password
-  );
-  res.json(token);
-});
+// router.post("/signup", async function(req, res) {
+//   let userCredentials = { ...req.body };
+//   const user = new User(userCredentials);
+//   await user.save();
+//   const credential = new Credential({
+//     user_id: user.id,
+//     password: userCredentials.password
+//   });
+//   await credential.save();
+//   let token = await Auth.login(
+//     userCredentials.username,
+//     userCredentials.password
+//   );
+//   res.json(token);
+// });
 
 module.exports = router;

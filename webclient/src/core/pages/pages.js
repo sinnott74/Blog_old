@@ -17,12 +17,12 @@ export default [
       import(/* webpackChunkName: "LogoutPage" */ "core/pages/LogoutPage"),
     exact: true
   },
-  {
-    path: "/signup",
-    loader: () =>
-      import(/* webpackChunkName: "SignUpPage" */ "core/pages/SignUpPage"),
-    exact: true
-  },
+  // {
+  //   path: "/signup",
+  //   loader: () =>
+  //     import(/* webpackChunkName: "SignUpPage" */ "core/pages/SignUpPage"),
+  //   exact: true
+  // },
   {
     loader: () =>
       import(/* webpackChunkName: "Error404Page" */ "core/pages/Error404Page"),

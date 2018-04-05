@@ -109,10 +109,13 @@ function storeBlogPost(blogPost) {
 }
 
 export function deleteBlogPost(id) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch(`/api/blogposts/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: new Headers({
+        Authorization: getState().auth.token
+      })
     })
       .then(response => {
         if (!response.ok) {
@@ -131,13 +134,14 @@ export function deleteBlogPost(id) {
 }
 
 export function addBlogPost(blogpost) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch("/api/blogposts/", {
       method: "POST",
       body: JSON.stringify(blogpost),
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getState().auth.token
       })
     })
       .then(response => {
@@ -163,13 +167,14 @@ export function addBlogPost(blogpost) {
 }
 
 export function editBlogPost(blogpost) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch(`/api/blogposts/${blogpost.id}`, {
       method: "PUT",
       body: JSON.stringify(blogpost),
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getState().auth.token
       })
     })
       .then(response => {

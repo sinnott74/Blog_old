@@ -1,5 +1,6 @@
 var router = require("express").Router();
 const BlogPost = require("../Entity").BlogPost;
+const Auth = require("../core/Auth");
 
 router.get("/", async function(req, res) {
   const blogPosts = await BlogPost.listBlogPostDetails();
@@ -12,14 +13,14 @@ router.get("/:id", async function(req, res) {
   res.json(blogPost);
 });
 
-router.post("/", async function(req, res) {
+router.post("/", Auth.middleware, async function(req, res) {
   const blogpostData = { ...req.body };
   const blogPost = new BlogPost(blogpostData);
   await blogPost.save();
   res.json(blogPost);
 });
 
-router.put("/:id", async function(req, res) {
+router.put("/:id", Auth.middleware, async function(req, res) {
   const blogpostData = { ...req.body };
   const blogPost = new BlogPost(blogpostData);
   await blogPost.save();
