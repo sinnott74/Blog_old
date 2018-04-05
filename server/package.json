@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":
+    "start": "yarn build:database && yarn start:server:prod",
+    "start:prod":
       "yarn build:server && yarn build:database && yarn start:server:prod",
     "start:dev":
       "yarn build:database && build:server:watch && yarn start:server:dev",
