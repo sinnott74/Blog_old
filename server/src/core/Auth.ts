@@ -70,7 +70,6 @@ class Auth {
       passReqToCallback: true
     };
 
-
     return new JWTStrategy(
       strategyConfig,
       (req: Request, payload, done: Function) => {

@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import { BlogPost } from "../Entity";
 import Auth from "../core/Auth";
