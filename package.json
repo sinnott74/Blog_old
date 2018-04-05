@@ -12,7 +12,7 @@
   "scripts": {
     "start": "cd server && yarn start",
     "pretest":
-      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn build:database\"",
+      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn:build:server && yarn build:database\"",
     "start:prod":
       "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn start\"",
     "start:dev":
