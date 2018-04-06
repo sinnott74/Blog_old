@@ -6,6 +6,11 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": true,
+    "allowJs": true,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
