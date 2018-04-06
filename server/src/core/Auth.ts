@@ -5,8 +5,8 @@ import * as moment from "moment";
 // const TransactionInfo from './TransactionInfo');
 import AuthenticationError from "../exception/AuthenticationException";
 import { User, Credential } from "../Entity";
-import { Request } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
 
@@ -30,8 +30,8 @@ class Auth {
    * @param {*} res
    * @param {*} next
    */
-  static middleware(req, res, next) {
-    Auth._authenticate((err, user, info) => {
+  static middleware(req: Request, res: Response, next: NextFunction) {
+    Auth._authenticate((err: Error, user, info) => {
       if (err || !user) {
         console.log(err);
         return next(new AuthenticationError());
@@ -87,7 +87,7 @@ class Auth {
   /**
    * Wraps Passports authenticate function
    *
-   * @param {*} cb Callback function
+   * @param {Function} cb Callback function
    */
   static _authenticate(cb: any) {
     return passport.authenticate(
