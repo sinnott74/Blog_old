@@ -7,10 +7,11 @@
     "start": "yarn build:database && yarn start:server:prod",
     "start:prod":
       "yarn build:server && yarn build:database && yarn start:server:prod",
-    "start:dev":
-      "yarn build:database && build:server:watch && yarn start:server:dev",
+    "start:dev": "yarn build:database && yarn start:server:dev",
     "start:server:prod": "node dist/index.js",
-    "start:server:dev": "nodemon dist/index --watch . --watch ../orm",
+    "start:server:dev":
+      "concurrently --kill-others \"yarn build:server:watch\" \"yarn start:server:watch\"",
+    "start:server:watch": "nodemon dist/index.js --watch . --watch ../orm",
     "build:database": "node dist/builddatabase.js",
     "build:server": "tsc",
     "build:server:watch": "tsc -w",
@@ -48,6 +49,7 @@
     "ts-jest": "^22.4.2",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "concurrently": "^3.5.1"
   }
 }
