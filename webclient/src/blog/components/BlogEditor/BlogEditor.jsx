@@ -24,11 +24,11 @@ export default class BlogEditor extends React.Component {
 
   componentDidMount() {}
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
+  getDerivedStateFromProps(nextProps, prevState) {
+    return {
       ...nextProps.blogpost,
       ...this.state
-    });
+    };
   }
 
   handleSubmit(e) {
