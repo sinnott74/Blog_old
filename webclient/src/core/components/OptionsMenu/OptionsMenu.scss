@@ -1,6 +1,6 @@
 .options-menu {
   position: fixed;
-  display: none;
+  visibility: hidden;
   background-color: white;
   top: var(--header-height);
   right: 0;
@@ -14,11 +14,11 @@
 }
 
 .options-menu__opened {
-  display: block;
+  visibility: visible;
 }
 
 .options-menu .options-scrim {
-  display: none;
+  visibility: hidden;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -27,7 +27,7 @@
 }
 
 .options-menu__opened .options-scrim {
-  display: block;
+  visibility: visible;
 }
 
 .options-view {
