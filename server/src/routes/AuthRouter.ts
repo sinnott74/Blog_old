@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Auth from "../core/Auth";
-import { User, Credential } from "../Entity";
+// import { User, Credential } from "../Entity";
 const router = Router();
 
 /**

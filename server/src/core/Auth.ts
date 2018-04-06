@@ -121,7 +121,7 @@ class Auth {
           },
           SECRET,
           {},
-          (err: JsonWebTokenError, token: string) => {
+          (err: Error, token: string) => {
             if (err) {
               reject(err);
             }
