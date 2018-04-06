@@ -264,8 +264,9 @@ class Util {
    * Array.forEach does not work with async code which must be awaited.
    * @param {Array} array
    * @param {Function} async callback
+   * @returns {Promise}
    */
-  async asyncForEach(array, callback) {
+  asyncForEach(array, callback) {
     const promises = [];
     for (let index = 0; index < array.length; index++) {
       const promise = callback(array[index], index, array);
