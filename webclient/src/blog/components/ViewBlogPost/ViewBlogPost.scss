@@ -1,3 +1,5 @@
+@import "core/style/variable";
+
 .blogpost {
   width: calc(98% - 6px);
 }
@@ -37,13 +39,13 @@
   line-height: 25px;
 }
 .blogpost__text hr {
-  background-color: var(--primary-color);
+  background-color: $primary-color;
   border: 0px;
   margin: 50px auto;
   width: 50%;
   height: 5px;
   border-radius: 5px;
   max-width: 430px;
-  color: var(--primary-color);
+  color: $primary-color;
   clear: both;
 }

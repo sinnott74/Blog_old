@@ -1,4 +1,5 @@
 @import "react-md/src/scss/react-md";
+@import "core/style/variable";
 
 $md-primary-color: $md-indigo-500;
 $md-secondary-color: $md-red-500;
@@ -68,7 +69,7 @@ blockquote {
   padding: 0 1em;
   color: #6a737d;
   margin: 1vw;
-  border-left: 0.25em solid var(--primary-color);
+  border-left: 0.25em solid $primary-color;
 }
 
 pre {
@@ -77,7 +78,7 @@ pre {
   overflow-y: hidden;
   background: #f0f0f0;
   outline: 1px solid #eeeeee;
-  border-left: 5px solid var(--primary-color);
+  border-left: 5px solid $primary-color;
 }
 code {
   background: #f0f0f0;
