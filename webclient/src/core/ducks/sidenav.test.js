@@ -10,25 +10,25 @@ import sidenavReducer, {
 
 describe("SideNav Ducks - ", () => {
   describe("Reducer", () => {
-    test("should return its inital state", () => {
+    it("should return its inital state", () => {
       const initialState = sidenavReducer(undefined, {});
       const expectInitialState = { opened: false };
       expect(initialState).toEqual(expectInitialState);
     });
 
-    test("should handle being opened", () => {
+    it("should handle being opened", () => {
       const state = sidenavReducer(undefined, openSideNav());
       const expectedState = { opened: true };
       expect(state).toEqual(expectedState);
     });
 
-    test("should handle being closed", () => {
+    it("should handle being closed", () => {
       const state = sidenavReducer(undefined, closeSideNav());
       const expectedState = { opened: false };
       expect(state).toEqual(expectedState);
     });
 
-    test("should handle being toggled", () => {
+    it("should handle being toggled", () => {
       const state = sidenavReducer(undefined, toggleSideNav());
       const expectedState = { opened: true };
       expect(state).toEqual(expectedState);
@@ -40,13 +40,13 @@ describe("SideNav Ducks - ", () => {
   });
 
   describe("Selectors", () => {
-    test("isOpened should return true when state is opened", () => {
+    it("isOpened should return true when state is opened", () => {
       const sidenavState = sidenavReducer(undefined, openSideNav());
       const state = { sidenav: sidenavState };
       expect(isOpened(state)).toBe(true);
     });
 
-    test("isOpened should return false when state is closed", () => {
+    it("isOpened should return false when state is closed", () => {
       const sidenavState = sidenavReducer(undefined, closeSideNav());
       const state = { sidenav: sidenavState };
       expect(isOpened(state)).toBe(false);

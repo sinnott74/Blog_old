@@ -5,7 +5,7 @@ import {
 } from "./util";
 
 describe("Redux util", () => {
-  test("can convert an array to a keyed object", () => {
+  it("can convert an array to a keyed object", () => {
     const array = [
       {
         id: 1,
@@ -30,7 +30,7 @@ describe("Redux util", () => {
     expect(arrayToObject(array)).toEqual(expectedObject);
   });
 
-  test("can convert an array to a keyed object using a different ID attribute name", () => {
+  it("can convert an array to a keyed object using a different ID attribute name", () => {
     const array = [
       {
         x: 1,
@@ -55,7 +55,7 @@ describe("Redux util", () => {
     expect(arrayToObject(array, "x")).toEqual(expectedObject);
   });
 
-  test("can convert an object into a keyed object", () => {
+  it("can convert an object into a keyed object", () => {
     const object = {
       id: 1,
       value: "one"
@@ -70,7 +70,7 @@ describe("Redux util", () => {
     expect(objectToIDKeyedObject(object)).toEqual(expectedObject);
   });
 
-  test("can convert an object into a keyed object using a different attribute name", () => {
+  it("can convert an object into a keyed object using a different attribute name", () => {
     const object = {
       x: 1,
       value: "one"
@@ -85,7 +85,7 @@ describe("Redux util", () => {
     expect(objectToIDKeyedObject(object, "x")).toEqual(expectedObject);
   });
 
-  test("can add an object to a new array & sort the array", () => {
+  it("can add an object to a new array & sort the array", () => {
     const array = [4, 3, 2, 1];
     const expectedArray = [1, 2, 3, 4, 5];
     const sortArrayWithAddedItem = addToArrayAndSort(array, 5);
@@ -94,7 +94,7 @@ describe("Redux util", () => {
     expect(array).toEqual(array);
   });
 
-  test("addToArrayAndSort won't add duplicates", () => {
+  it("addToArrayAndSort won't add duplicates", () => {
     const array = [1, 2];
     const expectedArray = [1, 2];
     const sortArrayWithAddedItem = addToArrayAndSort(array, 2);

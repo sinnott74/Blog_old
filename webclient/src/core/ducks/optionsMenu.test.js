@@ -10,25 +10,25 @@ import optionsMenuReducer, {
 
 describe("Options Menu Ducks - ", () => {
   describe("Reducer", () => {
-    test("should return its inital state", () => {
+    it("should return its inital state", () => {
       const initialState = optionsMenuReducer(undefined, {});
       const expectInitialState = { opened: false };
       expect(initialState).toEqual(expectInitialState);
     });
 
-    test("should handle being opened", () => {
+    it("should handle being opened", () => {
       const state = optionsMenuReducer(undefined, openOptionsMenu());
       const expectedState = { opened: true };
       expect(state).toEqual(expectedState);
     });
 
-    test("should handle being closed", () => {
+    it("should handle being closed", () => {
       const state = optionsMenuReducer(undefined, closeOptionsMenu());
       const expectedState = { opened: false };
       expect(state).toEqual(expectedState);
     });
 
-    test("should handle being toggled", () => {
+    it("should handle being toggled", () => {
       const state = optionsMenuReducer(undefined, toggleOptionsMenu());
       const expectedState = { opened: true };
       expect(state).toEqual(expectedState);
@@ -40,13 +40,13 @@ describe("Options Menu Ducks - ", () => {
   });
 
   describe("Selectors", () => {
-    test("isOpened should return true when state is opened", () => {
+    it("isOpened should return true when state is opened", () => {
       const optionsMenuState = optionsMenuReducer(undefined, openOptionsMenu());
       const state = { optionsMenu: optionsMenuState };
       expect(isOpened(state)).toBe(true);
     });
 
-    test("isOpened should return false when state is closed", () => {
+    it("isOpened should return false when state is closed", () => {
       const optionsMenuState = optionsMenuReducer(
         undefined,
         closeOptionsMenu()

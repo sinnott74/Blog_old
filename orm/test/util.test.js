@@ -3,21 +3,21 @@
  */
 const util = require("../src/util");
 
-test("pluralises string", () => {
+it("pluralises string", () => {
   expect(util.puralize("test")).toBe("tests");
 });
 
-test("Capitalises a string", () => {
+it("Capitalises a string", () => {
   expect(util.capitalize("test")).toBe("Test");
 });
 
-test("Empty data is grouped correctly", () => {
+it("Empty data is grouped correctly", () => {
   const given = [];
   const expected = [];
   expect(util.groupData(given)).toEqual(expected);
 });
 
-test("Falsey data should show up in grouped data", () => {
+it("Falsey data should show up in grouped data", () => {
   const given = [
     {
       id: 1,
@@ -41,7 +41,7 @@ test("Falsey data should show up in grouped data", () => {
   expect(util.groupData(given)).toEqual(expected);
 });
 
-test("Undefined attributes should not show up in grouped data", () => {
+it("Undefined attributes should not show up in grouped data", () => {
   const given = [
     {
       id: 1,
@@ -63,7 +63,7 @@ test("Undefined attributes should not show up in grouped data", () => {
   expect(util.groupData(given)).toEqual(expected);
 });
 
-test("Data is grouped correctly", () => {
+it("Data is grouped correctly", () => {
   const given = [
     {
       id: 1,
@@ -143,7 +143,7 @@ test("Data is grouped correctly", () => {
   expect(util.groupData(given)).toEqual(expected);
 });
 
-test("Defines an immutable property", () => {
+it("Defines an immutable property", () => {
   const object = {};
   util.defineImmutableProperty(object, "property", "value");
   const expected = {
@@ -156,7 +156,7 @@ test("Defines an immutable property", () => {
   expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
 });
 
-test("Define a non enumerable property", () => {
+it("Define a non enumerable property", () => {
   const object = {};
   util.defineNonEnumerableProperty(object, "property", "value");
   const expected = {
@@ -171,7 +171,7 @@ test("Define a non enumerable property", () => {
   expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
 });
 
-test("Define a non enumerable property", () => {
+it("Define a non enumerable property", () => {
   const object = {};
   util.defineNonEnumerableProperty(object, "property", "value");
   const expected = {
@@ -186,7 +186,7 @@ test("Define a non enumerable property", () => {
   expect(Object.getOwnPropertyDescriptor(object, "property")).toEqual(expected);
 });
 
-test("asyncForEach call callback for each item in array", () => {
+it("asyncForEach call callback for each item in array", () => {
   const array = [1, 2, 3];
   const mockCallback = jest.fn(); // mock function
 
@@ -195,7 +195,7 @@ test("asyncForEach call callback for each item in array", () => {
   });
 });
 
-test("asyncForEach returns a promise", () => {
+it("asyncForEach returns a promise", () => {
   const array = [1, 2, 3];
   const mockCallback = jest.fn(); // mock function
 
@@ -203,7 +203,7 @@ test("asyncForEach returns a promise", () => {
   expect(promise).toBeInstanceOf(Promise);
 });
 
-test("defineGetterAndSetter sets an enumerable getter & setter on the objects prototype", () => {
+it("defineGetterAndSetter sets an enumerable getter & setter on the objects prototype", () => {
   const object = {};
   object.prototype = Function;
   object.prototype.get = jest.fn();

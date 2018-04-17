@@ -1,28 +1,28 @@
 const Attribute = require("../src/attribute");
 
 describe("Attribute", () => {
-  test("has a name", () => {
+  it("has a name", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
     expect(attribute.name).toBe(name);
   });
 
-  test("has a value", () => {
+  it("has a value", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
     expect(attribute.value).toBe(value);
   });
 
-  test("has is dirty when value set", () => {
+  it("has is dirty when value set", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
     expect(attribute.isDirty).toBe(true);
   });
 
-  test("can change value", () => {
+  it("can change value", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
@@ -31,7 +31,7 @@ describe("Attribute", () => {
     expect(attribute.value).toBe(value2);
   });
 
-  test("can be cleaned", () => {
+  it("can be cleaned", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
@@ -39,7 +39,7 @@ describe("Attribute", () => {
     expect(attribute.isDirty).toBe(false);
   });
 
-  test("can be dirtied when value changes", () => {
+  it("can be dirtied when value changes", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
@@ -49,7 +49,7 @@ describe("Attribute", () => {
     expect(attribute.isDirty).toBe(true);
   });
 
-  test("won't be dirtied when value set is the same", () => {
+  it("won't be dirtied when value set is the same", () => {
     const name = "name";
     const value = "value";
     const attribute = new Attribute(name, value);
