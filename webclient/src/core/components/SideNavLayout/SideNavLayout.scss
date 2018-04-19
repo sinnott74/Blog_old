@@ -1,7 +1,5 @@
 @import "core/style/variable";
 
-$side-nav-max-width: 400px;
-
 .side-nav {
   overflow-y: hidden;
   position: fixed;
@@ -77,16 +75,16 @@ $side-nav-max-width: 400px;
 }
 
 .side-nav-layout_main {
-  position: relative;
+  position: absolute;
   height: 100vh;
-  width: 100vw;
-  transition: margin-left $transition;
+  left: 0;
+  right: 0;
+  transition: left $transition;
 }
 
 @media (min-width: 1025px) {
   .side-nav-layout_main {
-    margin-left: $side-nav-max-width;
-    width: calc(100vw - #{$side-nav-max-width});
+    left: $side-nav-max-width;
   }
 
   .side-nav__content {
