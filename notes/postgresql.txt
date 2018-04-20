@@ -41,3 +41,6 @@ Query open database connections:
 
 Show all tables:
     SELECT * FROM pg_catalog.pg_tables;
+
+Show table definition:
+    SELECT * FROM information_schema.columns WHERE table_schema = 'SCHEMANAME' AND table_name = 'TABLENAME'
