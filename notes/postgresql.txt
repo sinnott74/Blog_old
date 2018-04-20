@@ -43,4 +43,7 @@ Show all tables:
     SELECT * FROM pg_catalog.pg_tables;
 
 Show table definition:
-    SELECT * FROM information_schema.columns WHERE table_schema = 'SCHEMANAME' AND table_name = 'TABLENAME'
+    SELECT * FROM information_schema.columns WHERE table_schema = 'SCHEMANAME' AND table_name = 'TABLENAME';
+
+Turn on expanded table formatting mode to display rows veritcally:
+    \x on
