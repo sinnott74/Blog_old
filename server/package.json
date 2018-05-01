@@ -7,7 +7,8 @@
     "start": "yarn build:database && yarn start:server:prod",
     "start:prod":
       "yarn build:server && yarn build:database && yarn start:server:prod",
-    "start:dev": "yarn build:database && yarn start:server:dev",
+    "start:dev":
+      "yarn build:server && yarn build:database && yarn start:server:dev",
     "start:server:prod": "node dist/index.js",
     "start:server:dev":
       "concurrently --kill-others \"yarn build:server:watch\" \"yarn start:server:watch\"",
@@ -29,7 +30,7 @@
     "helmet": "^3.9.0",
     "jsonwebtoken": "^8.1.1",
     "moment": "^2.20.1",
-    "sinnott-orm": "0.0.1",
+    "sinnott-orm-typed": "0.0.1",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1"
   },

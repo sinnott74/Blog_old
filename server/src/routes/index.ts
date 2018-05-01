@@ -4,11 +4,11 @@ import blogPostRouter from "./BlogPostRouter";
 import userRouter from "./UserRouter";
 import authRouter from "./AuthRouter";
 import tagRouter from "./TagRouter";
-import ORM from "sinnott-orm";
+import { init as ORMInit } from "sinnott-orm-typed";
 import databaseConfig from "../config/databaseConfig";
 import errorResponseMapperMiddleware from "../middleware/errorResponseMapper";
 
-router.use(ORM.init(databaseConfig));
+router.use(ORMInit(databaseConfig));
 router.use("/auth", authRouter);
 router.use("/blogposts", blogPostRouter);
 router.use("/users", userRouter);

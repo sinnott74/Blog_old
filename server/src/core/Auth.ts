@@ -2,10 +2,8 @@ import passport from "passport";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
 import * as moment from "moment";
-// const TransactionInfo from './TransactionInfo');
 import AuthenticationError from "../exception/AuthenticationException";
 import { User, Credential } from "../Entity";
-import { JsonWebTokenError } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
@@ -48,7 +46,7 @@ class Auth {
    */
   static async login(username: string, password: string) {
     try {
-      let authenticated = await Credential.authenticate(username, password);
+      const authenticated = await Credential.authenticate(username, password);
 
       if (authenticated) {
         return Auth._getToken(username);
@@ -106,12 +104,12 @@ class Auth {
    * @returns {Promise} contains a token, time of expiration & the username
    */
   static async _getToken(username: string) {
-    let expires = moment
+    const expires = moment
       .utc()
       .add({ days: 7 })
       .unix();
 
-    let user = await User.readByUsername(username);
+    const user = await User.readByUsername(username);
     return new Promise((resolve, reject) => {
       try {
         jwt.sign(

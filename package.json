@@ -1,7 +1,7 @@
 {
   "name": "sinnott",
   "private": true,
-  "workspaces": ["server", "webclient", "orm"],
+  "workspaces": ["server", "webclient", "orm-typed"],
   "version": "0.0.1",
   "engines": {
     "node": "^9",
@@ -12,13 +12,13 @@
   "scripts": {
     "start": "cd server && yarn start",
     "pretest":
-      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn build:server && yarn build:database\"",
+      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd orm-typed && yarn build && cd ../server && yarn build:server && yarn build:database\"",
     "start:prod":
-      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd server && yarn start\"",
+      "concurrently --kill-others-on-fail \"cd webclient && yarn build\"  \"cd orm-typed && yarn build && cd ../server && yarn build:server && yarn start\"",
     "start:dev":
-      "concurrently --kill-others \"cd webclient && yarn start\" \"cd server && yarn start:dev\"",
+      "concurrently --kill-others \"cd webclient && yarn start\" \"cd orm-typed && yarn build && cd ../server && yarn start:dev\"",
     "test":
-      "cd orm && yarn test && cd ../server && yarn test && cd ../webclient && yarn test",
+      "cd orm-typed && yarn test && cd ../server && yarn test && cd ../webclient && yarn test",
     "precommit": "pretty-quick staged"
   },
   "author": "",
