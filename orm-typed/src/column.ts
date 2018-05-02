@@ -88,7 +88,8 @@ export function defineDataAttributeGetterAndSetter(
         this.dataAttributes[key] = new Attribute(key, value);
       }
     },
-    enumerable: true
+    enumerable: true,
+    configurable: true
   });
 }
 

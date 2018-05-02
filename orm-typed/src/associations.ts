@@ -258,7 +258,8 @@ class ManyToOneAssociation extends AbstractAssociation {
           this.associationAttributes[name] = value;
         }
       },
-      enumerable: true
+      enumerable: true,
+      configurable: true
     });
   }
 
@@ -313,7 +314,8 @@ class OneToOneAssociation extends AbstractAssociation {
           this.associationAttributes[name] = value;
         }
       },
-      enumerable: true
+      enumerable: true,
+      configurable: true
     });
   }
 
@@ -407,7 +409,8 @@ class ManyToManyAssociation extends AbstractAssociation {
           this.associationAttributes[name] = associatedModels;
         }
       },
-      enumerable: true
+      enumerable: true,
+      configurable: true
     });
   }
 
