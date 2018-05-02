@@ -6,10 +6,9 @@
   "scripts": {
     "start": "concurrently \"yarn watch-css\" \"yarn start-js\"",
     "build": "yarn build-css && yarn build-js",
+    "pretest": "yarn build",
     "test":
       "echo \"Starting webclient tests\" && react-scripts test --env=jsdom --coverage",
-    "test:watch": "react-scripts test --env=jsdom",
-    "react-scripts": "react-scripts",
     "build-js": "react-scripts build",
     "start-js": "react-scripts start",
     "build-css":

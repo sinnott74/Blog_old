@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "echo \"Running ORM tests\" && yarn build && jest"
+    "pretest": "yarn build",
+    "test": "echo \"Running ORM tests\" && jest"
   },
   "author": "",
   "license": "ISC",

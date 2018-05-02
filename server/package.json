@@ -4,19 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "yarn build:database && yarn start:server:prod",
-    "start:prod":
-      "yarn build:server && yarn build:database && yarn start:server:prod",
+    "prestart": "yarn build",
+    "start": "node dist/index.js",
+    "prestart:dev": "yarn build",
     "start:dev":
-      "yarn build:server && yarn build:database && yarn start:server:dev",
-    "start:server:prod": "node dist/index.js",
-    "start:server:dev":
-      "concurrently --kill-others \"yarn build:server:watch\" \"yarn start:server:watch\"",
+      "concurrently --kill-others \"yarn compile:watch\" \"yarn start:server:watch\"",
     "start:server:watch": "nodemon dist/index.js --watch . --watch ../orm",
     "build:database": "node dist/builddatabase.js",
-    "build:server": "tsc",
-    "build:server:watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "compile": "tsc",
+    "compile:watch": "tsc -w",
+    "build": "yarn compile && yarn build:database",
+    "pretest": "yarn build",
+    "test": "echo \"Running Server tests\""
   },
   "author": "",
   "license": "ISC",
