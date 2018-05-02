@@ -16,7 +16,7 @@
     "start:dev":
       "concurrently --kill-others \"cd webclient && yarn start\" \"cd orm-typed && yarn build && cd ../server && yarn start:dev\"",
     "test":
-      "cd webclient && yarn test && cd ../orm-typed && yarn test && cd ../server && yarn test && ",
+      "cd webclient && yarn test && cd ../orm-typed && yarn test && cd ../server && yarn test",
     "precommit": "pretty-quick staged"
   },
   "author": "",
