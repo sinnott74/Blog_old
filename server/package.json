@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "yarn build",
+    "prestart": "yarn build:database",
     "start": "node dist/index.js",
+    "prestart:prod": "yarn build",
+    "start:prod": "node dist/index.js",
     "prestart:dev": "yarn build",
     "start:dev":
       "concurrently --kill-others \"yarn compile:watch\" \"yarn start:server:watch\"",
