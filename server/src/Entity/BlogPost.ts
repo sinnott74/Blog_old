@@ -66,7 +66,7 @@ import {
 } from "sinnott-orm-typed";
 import User from "./User";
 import MomentDate from "../util/Date";
-import { Tag } from ".";
+import Tag from "./Tag";
 
 @Entity()
 export default class BlogPost extends BaseModel {
