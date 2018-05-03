@@ -1,10 +1,10 @@
 class ApplicationException extends Error {
   status: number;
 
-  constructor(message: string) {
+  constructor(message: string, status?: number) {
     super(message);
     this.name = this.constructor.name;
-    this.status = 500;
+    this.status = status || 500;
     Error.captureStackTrace(this, this.constructor);
   }
 }
