@@ -1,20 +1,19 @@
 import { transaction } from "sinnott-orm-typed";
-import Tag from "../dist/Entity/Tag";
-import dbConfig from "../dist/config/databaseConfig";
+import Tag from "../../dist/Entity/Tag";
+import dbConfig from "../../dist/config/databaseConfig";
 
 describe("Tag", () => {
-  it("can be saved and read back", async done => {
+  it("can be saved and read back", async () => {
     await transaction(dbConfig, async () => {
       const name = "Test";
       const tag = new Tag({ name });
       await tag.save();
       const foundTag = await Tag.findByTagName(name);
       expect(foundTag).toEqual(tag);
-      done();
     });
   });
 
-  it("doesn't allow duplicate tagnames", async done => {
+  it("doesn't allow duplicate tagnames", async () => {
     await transaction(dbConfig, async () => {
       const name = "Test";
 
@@ -31,7 +30,6 @@ describe("Tag", () => {
 
       const testTags = await Tag.findAll({ name });
       expect(testTags.length).toEqual(1);
-      done();
     });
   });
 });
