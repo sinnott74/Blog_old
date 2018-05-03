@@ -90,7 +90,7 @@ export default class Transaction {
 
     onFinished(res, async (err, res) => {
       if (err || (res.statusCode && res.statusCode >= 400)) {
-        console.error(err);
+        if (err) console.error(err);
         await transaction.rollback();
       } else {
         await transaction.commit();
