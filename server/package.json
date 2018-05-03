@@ -4,14 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "yarn build:database && yarn start:server:prod",
-    "start:dev": "yarn build:database && yarn start:server:dev",
-    "start:server:prod": "node index.js",
-    "start:server:dev": "nodemon index.js --watch . --watch ../orm",
-    "build:database": "node builddatabase.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "prestart": "yarn build:database",
+    "start": "node dist/index.js",
+    "prestart:prod": "yarn build",
+    "start:prod": "node dist/index.js",
+    "prestart:dev": "yarn build",
+    "start:dev":
+      "concurrently --kill-others \"yarn compile:watch\" \"yarn start:server:watch\"",
+    "start:server:watch": "nodemon dist/index.js --watch . --watch ../orm",
+    "build:database": "node dist/builddatabase.js",
+    "compile": "tsc",
+    "compile:watch": "tsc -w",
+    "build": "yarn compile && yarn build:database",
+    "pretest": "yarn build",
+    "test": "echo \"Running Server tests\" && jest"
   },
-
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -24,11 +31,29 @@
     "helmet": "^3.9.0",
     "jsonwebtoken": "^8.1.1",
     "moment": "^2.20.1",
-    "sinnott-orm": "0.0.1",
+    "sinnott-orm-typed": "0.0.1",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1"
   },
   "devDependencies": {
-    "nodemon": "^1.14.11"
+    "@types/bcryptjs": "^2.4.1",
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "^0.0.36",
+    "@types/express": "^4.11.1",
+    "@types/helmet": "^0.0.37",
+    "@types/jsonwebtoken": "^7.2.6",
+    "@types/node": "^9.4.6",
+    "@types/nodemailer": "^4.3.4",
+    "@types/passport": "^0.4.3",
+    "@types/passport-jwt": "^3.0.1",
+    "@types/supertest": "^2.0.4",
+    "jest": "^22.4.3",
+    "nodemon": "^1.14.11",
+    "ts-jest": "^22.4.2",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "concurrently": "^3.5.1",
+    "supertest": "^3.0.0"
   }
 }

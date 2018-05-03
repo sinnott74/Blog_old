@@ -1,10 +1,11 @@
+@import "core/style/variable";
 .toast {
-  background-color: var(--background-color-dark);
+  background-color: $background-color-dark;
   border-radius: 3px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
-  color: var(--text-color-light);
+  color: $text-color-light;
   padding: 4px 4px 4px 12px;
-  transition: transform var(--transition), opacity var(--transition);
+  transition: transform$transition, opacity $transition;
   transform: translateY(100%);
   will-change: transform;
   position: fixed;
@@ -23,6 +24,6 @@
   transform: translateY(0);
 }
 
-.toast .toast-button {
-  color: var(--text-color-light);
+.toast .toast__button {
+  color: $text-color-light;
 }

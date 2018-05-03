@@ -5,25 +5,19 @@ import "./OptionsMenu.css";
 
 export default class OptionsMenu extends React.Component {
   render() {
+    this.setDocumentScroll();
     return (
       <div
-        className="options-menu"
-        ref={component => {
-          this.component = component;
-        }}
+        className={
+          "options-menu " + (this.props.opened ? "options-menu__opened" : null)
+        }
       >
-        <div
-          className="options-scrim js-options-scrim"
-          onClick={this.props.handleScrimClick}
-          ref={scrim => {
-            this.scrim = scrim;
-          }}
-        />
+        <div className="options-scrim" onClick={this.props.handleScrimClick} />
         <aside
-          className="options-view js-options-view"
-          ref={view => {
-            this.view = view;
-          }}
+          className={
+            "options-view " +
+            (this.props.opened ? "options-view__animate" : null)
+          }
         >
           {this._getLogOptionItem()}
         </aside>
@@ -31,11 +25,11 @@ export default class OptionsMenu extends React.Component {
     );
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.opened) {
-      this._open();
+  setDocumentScroll() {
+    if (this.props.opened) {
+      document.body.classList.add("noscroll");
     } else {
-      this._close();
+      document.body.classList.remove("noscroll");
     }
   }
 
@@ -54,24 +48,11 @@ export default class OptionsMenu extends React.Component {
       );
     }
   }
-
-  _close() {
-    document.body.classList.remove("noscroll");
-    this.component.classList.remove("options-menu__opened");
-    this.view.classList.remove("options-view__animate");
-  }
-
-  _open() {
-    document.body.classList.add("noscroll");
-    this.component.classList.add("options-menu__opened");
-    requestAnimationFrame(() => {
-      this.view.classList.add("options-view__animate");
-    });
-  }
 }
 
 OptionsMenu.propTypes = {
   opened: PropTypes.bool.isRequired,
   handleScrimClick: PropTypes.func.isRequired,
-  handleItemClick: PropTypes.func.isRequired
+  handleItemClick: PropTypes.func.isRequired,
+  logggIn: PropTypes.bool
 };

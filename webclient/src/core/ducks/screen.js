@@ -3,8 +3,8 @@ import reducerRegistry from "core/redux/ReducerRegistry";
 /*
  * Sidenav actions
  */
-export const SMALL_SCREEN = "SMALL_SCREEN";
-export const LARGE_SCREEN = "LARGE_SCREEN";
+const SMALL_SCREEN = "SMALL_SCREEN";
+const LARGE_SCREEN = "LARGE_SCREEN";
 
 /**
  * Reducer

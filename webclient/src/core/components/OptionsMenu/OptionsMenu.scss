@@ -1,12 +1,13 @@
+@import "core/style/variable";
 .options-menu {
   position: fixed;
-  display: none;
+  visibility: hidden;
   background-color: white;
-  top: var(--header-height);
+  top: $header-height;
   right: 0;
   max-width: 250px;
   width: 50vw;
-  max-height: calc(95% - var(--header-height));
+  max-height: calc(95% - $header-height);
   border-radius: 0 0 0.3em 0.3em;
   box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
@@ -14,11 +15,11 @@
 }
 
 .options-menu__opened {
-  display: block;
+  visibility: visible;
 }
 
 .options-menu .options-scrim {
-  display: none;
+  visibility: hidden;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -27,7 +28,7 @@
 }
 
 .options-menu__opened .options-scrim {
-  display: block;
+  visibility: visible;
 }
 
 .options-view {

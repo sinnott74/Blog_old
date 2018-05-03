@@ -24,11 +24,11 @@ export default class BlogEditor extends React.Component {
 
   componentDidMount() {}
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
+  getDerivedStateFromProps(nextProps, prevState) {
+    return {
       ...nextProps.blogpost,
       ...this.state
-    });
+    };
   }
 
   handleSubmit(e) {
@@ -47,7 +47,7 @@ export default class BlogEditor extends React.Component {
         className="blogeditor_container"
         panelClassName="md-grid blogeditor_tabpanel"
         colored
-        swipeableViewsStyle={{ height: "100%" }}
+        swipeableViewsStyle={{ height: "100%", width: "100%" }}
         slideStyle={{ height: "100%" }}
       >
         <Tabs tabId="edit" centered className="blogeditor_tabs">
