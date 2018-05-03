@@ -2,14 +2,8 @@
  * Abstract Super Class
  */
 class AbstractDataType {
-  constructor() {
-    if (this.constructor === AbstractDataType) {
-      throw new Error("This Class should not be instantiated, please extend");
-    }
-  }
-
   static getSQLType(attributeOptions) {
-    throw new Error("get postgresType must be implemented");
+    throw new Error("get getSQLType must be implemented");
   }
 }
 
@@ -67,6 +61,7 @@ class TimeStampDataType extends AbstractDataType {
 }
 
 module.exports = {
+  ABSTRACT: AbstractDataType,
   BOOLEAN: BooleanDataType,
   INT: IntDataType,
   STRING: StringDataType,

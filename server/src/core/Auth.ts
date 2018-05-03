@@ -2,11 +2,9 @@ import passport from "passport";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
 import * as moment from "moment";
-// const TransactionInfo from './TransactionInfo');
 import AuthenticationError from "../exception/AuthenticationException";
 import { User, Credential } from "../Entity";
-import { Request } from "express";
-import { JsonWebTokenError } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
 
@@ -22,24 +20,24 @@ class Auth {
     return passport.initialize();
   }
 
-  // /**
-  //  * Authorization Middleware.
-  //  * Sets the user onto the Transaction under 'user' upon successful authentication.
-  //  *
-  //  * @param {*} req
-  //  * @param {*} res
-  //  * @param {*} next
-  //  */
-  // static middleware(req, res, next) {
-  //   Auth._authenticate((err, user, info) => {
-  //     if(err || !user) {
-  //       console.log(err);
-  //       return next(new AuthenticationError());
-  //     }
-  //     TransactionInfo.set('user', user);
-  //     next();
-  //   })(req, res, next);
-  // }
+  /**
+   * Authorization Middleware.
+   * Sets the user onto the Transaction under 'user' upon successful authentication.
+   *
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  static middleware(req: Request, res: Response, next: NextFunction) {
+    Auth._authenticate((err: Error, user, info) => {
+      if (err || !user) {
+        console.log(err);
+        return next(new AuthenticationError());
+      }
+      // TransactionInfo.set("user", user);
+      next();
+    })(req, res, next);
+  }
 
   /**
    *
@@ -48,7 +46,7 @@ class Auth {
    */
   static async login(username: string, password: string) {
     try {
-      let authenticated = await Credential.authenticate(username, password);
+      const authenticated = await Credential.authenticate(username, password);
 
       if (authenticated) {
         return Auth._getToken(username);
@@ -78,7 +76,7 @@ class Auth {
             done(null, user);
           })
           .catch(err => {
-            done(null, false, { message: "Authentication error" });
+            done(err, false, { message: "Authentication error" });
           });
       }
     );
@@ -87,7 +85,7 @@ class Auth {
   /**
    * Wraps Passports authenticate function
    *
-   * @param {*} cb Callback function
+   * @param {Function} cb Callback function
    */
   static _authenticate(cb: any) {
     return passport.authenticate(
@@ -106,12 +104,12 @@ class Auth {
    * @returns {Promise} contains a token, time of expiration & the username
    */
   static async _getToken(username: string) {
-    let expires = moment
+    const expires = moment
       .utc()
       .add({ days: 7 })
       .unix();
 
-    let user = await User.readByUsername(username);
+    const user = await User.readByUsername(username);
     return new Promise((resolve, reject) => {
       try {
         jwt.sign(
@@ -121,7 +119,7 @@ class Auth {
           },
           SECRET,
           {},
-          (err: JsonWebTokenError, token: string) => {
+          (err: Error, token: string) => {
             if (err) {
               reject(err);
             }

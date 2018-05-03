@@ -5,7 +5,7 @@
 class Attribute {
   constructor(name, value) {
     this.name = name;
-    this.value = value;
+    this._value = value;
     this.isDirty = true;
   }
 
@@ -14,7 +14,7 @@ class Attribute {
   }
 
   set value(value) {
-    if (value !== this.value) {
+    if (value !== this._value) {
       this.isDirty = true;
       this._value = value;
     }

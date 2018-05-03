@@ -3,9 +3,9 @@ import reducerRegistry from "core/redux/ReducerRegistry";
 /*
  * Sidenav actions
  */
-export const OPEN_SIDENAV = "OPEN_SIDENAV";
-export const CLOSE_SIDENAV = "CLOSE_SIDENAV";
-export const TOGGLE_SIDENAV = "TOGGLE_SIDENAV";
+const OPEN_SIDENAV = "OPEN_SIDENAV";
+const CLOSE_SIDENAV = "CLOSE_SIDENAV";
+const TOGGLE_SIDENAV = "TOGGLE_SIDENAV";
 
 /**
  * Reducer

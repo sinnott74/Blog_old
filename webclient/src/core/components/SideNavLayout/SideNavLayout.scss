@@ -1,3 +1,5 @@
+@import "core/style/variable";
+
 .side-nav {
   overflow-y: hidden;
   position: fixed;
@@ -20,17 +22,17 @@
   left: 0;
   right: 0;
   opacity: 0;
-  background: var(--background-color-dark);
+  background: $background-color-dark;
   will-change: opacity;
   transform: translateZ(0);
 }
 
 .side_nav--animatable .side-nav__scrim {
-  transition: opacity var(--transition);
+  transition: opacity $transition;
 }
 
 .side_nav--animatable .side-nav__content {
-  transition: transform var(--transition);
+  transition: transform $transition;
 }
 
 .side_nav--opened .side-nav__scrim {
@@ -43,7 +45,7 @@
 }
 
 .side-nav__content {
-  background: var(--background-color-light);
+  background: $background-color-light;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -54,7 +56,7 @@
   overflow-y: hidden;
   width: 73.33333%;
   margin-right: 2.22222%;
-  max-width: var(--side-nav-max-width);
+  max-width: $side-nav-max-width;
 }
 
 .side-nav__edgearea {
@@ -70,20 +72,19 @@
   position: absolute;
   height: 100vh;
   width: 100vw;
-  --side-nav-max-width: 400px;
 }
 
 .side-nav-layout_main {
-  position: relative;
+  position: absolute;
   height: 100vh;
-  width: 100vw;
-  transition: margin-left var(--transition);
+  left: 0;
+  right: 0;
+  transition: left $transition;
 }
 
 @media (min-width: 1025px) {
   .side-nav-layout_main {
-    margin-left: var(--side-nav-max-width);
-    width: calc(100vw - var(--side-nav-max-width));
+    left: $side-nav-max-width;
   }
 
   .side-nav__content {

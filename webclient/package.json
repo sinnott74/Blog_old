@@ -6,8 +6,9 @@
   "scripts": {
     "start": "concurrently \"yarn watch-css\" \"yarn start-js\"",
     "build": "yarn build-css && yarn build-js",
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "react-scripts": "react-scripts",
+    "pretest": "yarn build",
+    "test":
+      "echo \"Starting webclient tests\" && react-scripts test --env=jsdom --coverage",
     "build-js": "react-scripts build",
     "start-js": "react-scripts start",
     "build-css":
@@ -41,7 +42,10 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "node-sass-chokidar": "^0.0.3",
     "react-scripts": "1.1.1",
-    "node-sass-chokidar": "^0.0.3"
+    "react-test-renderer": "^16.2.0"
   }
 }

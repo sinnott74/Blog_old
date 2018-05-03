@@ -1,3 +1,4 @@
+@import "core/style/variable";
 .sidenvapanel {
   display: flex;
   height: 100%;
@@ -22,11 +23,11 @@
 }
 
 .sidenavpanel__name {
-  color: var(--text-color-dark);
+  color: $text-color-dark;
   margin-bottom: 0px;
 }
 .sidenavpanel__email {
-  color: var(--text-color-dark);
+  color: $text-color-dark;
 }
 
 .sidenavpanel__body {

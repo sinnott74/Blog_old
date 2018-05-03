@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { BlogPost } from "../Entity";
+import Auth from "../core/Auth";
 const router = Router();
 
 router.get("/", async function(req, res) {
@@ -13,14 +14,14 @@ router.get("/:id", async function(req, res) {
   res.json(blogPost);
 });
 
-router.post("/", async function(req, res) {
+router.post("/", Auth.middleware, async function(req, res) {
   const blogpostData = { ...req.body };
   const blogPost = new BlogPost(blogpostData);
   await blogPost.save();
   res.json(blogPost);
 });
 
-router.put("/:id", async function(req, res) {
+router.put("/:id", Auth.middleware, async function(req, res) {
   const blogpostData = { ...req.body };
   const blogPost = new BlogPost(blogpostData);
   await blogPost.save();

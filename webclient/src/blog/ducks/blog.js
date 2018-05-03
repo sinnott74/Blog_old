@@ -11,12 +11,11 @@ import reducerRegistry from "core/redux/ReducerRegistry";
 /*
  * Blog actions
  */
-export const LIST_BLOG_POSTS = "LIST_BLOG_POSTS";
-export const EDIT_BLOG_ENTRY = "EDIT_BLOG_ENTRY";
-export const DELETE_BLOG_ENTRY = "DELETE_BLOG_ENTRY";
-export const LOADING_BLOG_POSTS = "LOAD_BLOG_POSTS";
-export const BLOG_POSTS_ERRORED = "BLOG_POSTS_ERRORED";
-export const STORE_BLOG_POST = "STORE_BLOG_POST";
+const LIST_BLOG_POSTS = "LIST_BLOG_POSTS";
+const DELETE_BLOG_ENTRY = "DELETE_BLOG_ENTRY";
+const LOADING_BLOG_POSTS = "LOAD_BLOG_POSTS";
+const BLOG_POSTS_ERRORED = "BLOG_POSTS_ERRORED";
+const STORE_BLOG_POST = "STORE_BLOG_POST";
 
 /**
  * Reducer
@@ -110,10 +109,13 @@ function storeBlogPost(blogPost) {
 }
 
 export function deleteBlogPost(id) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch(`/api/blogposts/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: new Headers({
+        Authorization: getState().auth.token
+      })
     })
       .then(response => {
         if (!response.ok) {
@@ -132,13 +134,14 @@ export function deleteBlogPost(id) {
 }
 
 export function addBlogPost(blogpost) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch("/api/blogposts/", {
       method: "POST",
       body: JSON.stringify(blogpost),
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getState().auth.token
       })
     })
       .then(response => {
@@ -164,13 +167,14 @@ export function addBlogPost(blogpost) {
 }
 
 export function editBlogPost(blogpost) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
     fetch(`/api/blogposts/${blogpost.id}`, {
       method: "PUT",
       body: JSON.stringify(blogpost),
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: getState().auth.token
       })
     })
       .then(response => {

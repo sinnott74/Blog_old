@@ -3,8 +3,9 @@
  */
 import Models from "./Entity";
 import databaseConfig from "./config/databaseConfig";
-import ORM from "sinnott-orm";
+import { sync } from "sinnott-orm-typed";
 
-ORM.sync(databaseConfig).then(() => {
+console.log(Models);
+sync(databaseConfig).then(() => {
   console.log("Database successfully built");
 });

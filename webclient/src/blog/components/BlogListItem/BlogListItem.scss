@@ -1,3 +1,4 @@
+@import "core/style/variable";
 .bloglistitem {
   display: flex;
   padding: 16px 15%;
@@ -18,10 +19,10 @@
 }
 .bloglistitem__title {
   text-align: center;
-  color: var(--text-color-darker);
+  color: $text-color-darker;
 }
 .bloglistitem__date {
-  color: var(--text-color-dark);
+  color: $text-color-dark;
 }
 
 .bloglistitem__tags {

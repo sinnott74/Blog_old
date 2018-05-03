@@ -8,6 +8,6 @@ export default function(
   next: NextFunction
 ) {
   console.log(err);
-  let status = err.status || 500;
-  res.status(status).send();
+  const status = err.status || 500;
+  res.status(status).send(err.message);
 }

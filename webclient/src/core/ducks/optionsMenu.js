@@ -3,9 +3,9 @@ import reducerRegistry from "core/redux/ReducerRegistry";
 /*
  * Sidenav actions
  */
-export const OPEN_OPTIONS_MENU = "OPEN_OPTIONS_MENU";
-export const CLOSE_OPTIONS_MENU = "CLOSE_OPTIONS_MENU";
-export const TOGGLE_OPTIONS_MENU = "TOGGLE_OPTIONS_MENU";
+const OPEN_OPTIONS_MENU = "OPEN_OPTIONS_MENU";
+const CLOSE_OPTIONS_MENU = "CLOSE_OPTIONS_MENU";
+const TOGGLE_OPTIONS_MENU = "TOGGLE_OPTIONS_MENU";
 
 let initialState = {
   opened: false
