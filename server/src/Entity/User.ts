@@ -1,55 +1,3 @@
-// import ORM from "sinnott-orm";
-// const DataTypes = ORM.DataTypes;
-
-// const User = ORM.define(
-//   "user",
-//   {
-//     username: {
-//       type: DataTypes.STRING,
-//       length: 30,
-//       notNull: true,
-//       unique: true
-//     },
-//     firstname: {
-//       type: DataTypes.STRING,
-//       length: 30,
-//       notNull: true
-//     },
-//     lastname: {
-//       type: DataTypes.STRING,
-//       length: 30,
-//       notNull: true
-//     },
-//     dob: {
-//       type: DataTypes.TIMESTAMP,
-//       notNull: true
-//     }
-//   },
-//   {
-//     customAttributes: {
-//       fullname: {
-//         get: function() {
-//           return `${this.firstname} ${this.lastname}`;
-//         }
-//       }
-//     }
-//   }
-// );
-
-// User.isUsernameAvailable = async function(username: string) {
-//   let count = await User.count({ username });
-//   if (count > 0) {
-//     return false;
-//   }
-//   return true;
-// };
-
-// User.readByUsername = async function(username: string) {
-//   return User.findOne({ username: username });
-// };
-
-// export default User;
-
 import {
   Entity,
   Column,
@@ -58,7 +6,7 @@ import {
   STRING,
   TIMESTAMP
 } from "sinnott-orm-typed";
-// const DataTypes = ORM.DataTypes;
+import InformationalException from "../exception/InformationalException";
 
 @Entity()
 export default class User extends BaseModel {
@@ -81,11 +29,26 @@ export default class User extends BaseModel {
   })
   fullname: string;
 
+  async beforeSave() {
+    const isUsernameAvailable = await User.isUsernameAvailable(this.username);
+    if (!isUsernameAvailable) {
+      throw new InformationalException("Duplicate username");
+    }
+  }
+
+  /**
+   * Checks if a username hasn't already been taken
+   * @param username
+   */
   static async isUsernameAvailable(username: string) {
     const count = await User.count({ username });
     return !(count > 0);
   }
 
+  /**
+   * Reads a User by their username
+   * @param username
+   */
   static async readByUsername(username: string) {
     return User.findOne<User>({ username: username });
   }
