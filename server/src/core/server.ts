@@ -10,12 +10,12 @@ import compression from "compression";
 import bodyParser from "body-parser";
 import Auth from "./Auth";
 import { Request, Response } from "express";
-import routes from "../routes";
 
 /**
- * Adds Sync support to express routers
+ * Adds Sync support to express routers & needs to be above import of routes
  */
 require("express-async-errors");
+import routes from "../routes";
 
 /**
  * Create Express server.
