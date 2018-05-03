@@ -52,24 +52,24 @@ describe("Transaction", () => {
     });
   });
 
-  it("should COMMIT on a successfully finishing callback", async done => {
+  it("should COMMIT on a successfully finishing callback", async () => {
     await Transaction.startTransaction(mockedPool, () => {});
 
     expect(mockedClient.query).toHaveBeenCalledTimes(2);
     expect(mockedClient.query.mock.calls[0][0]).toEqual("BEGIN"); // first arguement of the first call
     expect(mockedClient.query).lastCalledWith("COMMIT");
-    done();
   });
 
-  it("should ROLLBACK when an error is thrown from the callback", async done => {
-    await Transaction.startTransaction(mockedPool, () => {
-      throw new Error("Expected Test Error");
-    });
+  it("should ROLLBACK when an error is thrown from the callback", async () => {
+    await expect(
+      Transaction.startTransaction(mockedPool, () => {
+        throw new Error("Expected Test Error");
+      })
+    ).rejects.toThrow("Expected Test Error");
 
     expect(mockedClient.query).toHaveBeenCalledTimes(2);
     expect(mockedClient.query.mock.calls[0][0]).toEqual("BEGIN"); // first arguement of the first call
     expect(mockedClient.query).lastCalledWith("ROLLBACK");
-    done();
   });
 
   describe("ResponseManagedTransaction", () => {
@@ -135,4 +135,4 @@ describe("Transaction", () => {
   });
 });
 
-// ../node_modules/jest/bin/jest.js transaction.test.ts
+// yarn build && ../node_modules/jest/bin/jest.js transaction.test.ts
