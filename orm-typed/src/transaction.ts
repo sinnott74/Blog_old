@@ -63,8 +63,8 @@ export default class Transaction {
       await cb();
       await transaction.commit();
     } catch (err) {
-      console.error(err);
       await transaction.rollback();
+      throw new Error(err);
     }
   }
 
