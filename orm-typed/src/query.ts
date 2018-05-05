@@ -179,17 +179,20 @@ export class Query {
   }
 
   async insertAll(model: typeof BaseModel, attributes: object[]) {
-    const sqlEntity = metadata.getSQLEntity(model);
+    if (attributes.length) {
+      const sqlEntity = metadata.getSQLEntity(model);
 
-    const sqlQuery = sqlEntity
-      .insert(attributes)
-      .returning(sqlEntity["id"])
-      .toQuery();
-    const result = await this.executeSQLQuery(sqlQuery);
+      const sqlQuery = sqlEntity
+        .insert(attributes)
+        .returning(sqlEntity["id"])
+        .toQuery();
+      const result = await this.executeSQLQuery(sqlQuery);
 
-    return result.rows.map(row => {
-      return row.id;
-    });
+      return result.rows.map(row => {
+        return row.id;
+      });
+    }
+    return [];
   }
 
   /**
