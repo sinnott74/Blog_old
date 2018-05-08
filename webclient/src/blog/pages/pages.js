@@ -28,7 +28,7 @@ export default [
   {
     path: "/blog/:id/delete",
     loader: () =>
-      import(/* webpackChunkName: "DeleteBlogPostModal" */ "blog/pages/DeleteBlogPostPage"),
+      import(/* webpackChunkName: "DeleteBlogPostPage" */ "blog/pages/DeleteBlogPostPage"),
     exact: true,
     authenticated: true
   }
