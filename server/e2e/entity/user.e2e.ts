@@ -1,5 +1,5 @@
 import { transaction } from "sinnott-orm-typed";
-import User from "../../dist/Entity/User";
+import User from "../../dist/entity/User";
 import dbConfig from "../../dist/config/databaseConfig";
 import { v4 as uuidV4 } from "uuid";
 

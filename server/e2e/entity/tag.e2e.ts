@@ -1,5 +1,5 @@
 import { transaction } from "sinnott-orm-typed";
-import Tag from "../../dist/Entity/Tag";
+import Tag from "../../dist/entity/Tag";
 import dbConfig from "../../dist/config/databaseConfig";
 
 describe("Tag", () => {
