@@ -28,4 +28,10 @@ router.put("/:id", Auth.middleware, async function(req, res) {
   res.sendStatus(200);
 });
 
+router.delete("/:id", Auth.middleware, async function(req, res) {
+  const id = req.params.id;
+  await BlogPost.delete({ id });
+  res.sendStatus(200);
+});
+
 export default router;
