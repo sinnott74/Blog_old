@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 const router = Router();
-import { Tag } from "../Entity";
+import { Tag } from "../entity";
 
 router.get("/", async function(req: Request, res: Response) {
   const tags = await Tag.findAll();

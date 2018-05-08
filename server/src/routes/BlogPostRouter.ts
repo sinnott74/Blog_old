@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BlogPost } from "../Entity";
+import { BlogPost } from "../entity";
 import Auth from "../core/Auth";
 const router = Router();
 

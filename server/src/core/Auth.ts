@@ -3,7 +3,7 @@ import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
 import * as moment from "moment";
 import AuthenticationError from "../exception/AuthenticationException";
-import { User, Credential } from "../Entity";
+import { User, Credential } from "../entity";
 import { Request, Response, NextFunction } from "express";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";

@@ -1,7 +1,7 @@
 /**
  * Start Express server.
  */
-import Models from "./Entity";
+import Models from "./entity";
 import databaseConfig from "./config/databaseConfig";
 import { sync } from "sinnott-orm-typed";
 

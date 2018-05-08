@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { User } from "../Entity";
+import { User } from "../entity";
 
 router.get("/", async function(req, res) {
   let users = await User.findAll();
