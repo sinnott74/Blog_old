@@ -24,5 +24,12 @@ export default [
     loader: () =>
       import(/* webpackChunkName: "ViewBlogPostPage" */ "blog/pages/ViewBlogPostPage"),
     exact: true
+  },
+  {
+    path: "/blog/:id/delete",
+    loader: () =>
+      import(/* webpackChunkName: "DeleteBlogPostModal" */ "blog/pages/DeleteBlogPostPage"),
+    exact: true,
+    authenticated: true
   }
 ];

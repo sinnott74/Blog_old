@@ -52,7 +52,7 @@ export default class ViewBlogPost extends React.Component {
     ) {
       return (
         <div className="blogpost_actions">
-          <Link to={`/blog/${this.props.id}/edit`}>
+          <Link to={`/blog/${this.props.id}/delete`}>
             <Button raised={true} secondary>
               Delete
             </Button>
