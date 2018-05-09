@@ -440,6 +440,26 @@ describe("BaseModel", () => {
         expect(mockedClient.query).toHaveBeenCalledTimes(1);
         expect(mockedClient.query).lastCalledWith(expectQuery);
       });
+
+      it("it get the actuals columns names as the class attribute name", () => {
+        mockedClient.query.mockReturnValue({
+          rows: [{ id, name }]
+        });
+
+        const expectedEntity = new Test({ id, name });
+
+        const expectQuery = {
+          text:
+            'SELECT "public"."NAMED_TEST"."id", "public"."NAMED_TEST"."NAMED_COLUMN" AS "name" FROM "public"."NAMED_TEST" WHERE ("public"."NAMED_TEST"."id" = $1)',
+          values: [1]
+        };
+
+        const returnedValue = NamedTest.get<Test>(id);
+
+        expect(returnedValue).resolves.toEqual(expectedEntity);
+        expect(mockedClient.query).toHaveBeenCalledTimes(1);
+        expect(mockedClient.query).lastCalledWith(expectQuery);
+      });
     });
 
     describe("insertAll", () => {
