@@ -8,6 +8,7 @@ export interface Metadata {
 }
 export interface ORMColumnDefinition extends ColumnDefinition<string, object> {
   name: string;
+  property: string;
 }
 export interface ORMEntityDefinition extends TableDefinition<string, any> {
   associations: ORMEntityAssociations;
@@ -42,7 +43,7 @@ export class MetadataManager {
    */
   addColumn(entity: typeof BaseModel, columnMetadata: ORMColumnDefinition) {
     const entityMetadata = this.getEntity(entity);
-    entityMetadata.columns[columnMetadata.name.toLowerCase()] = columnMetadata;
+    entityMetadata.columns[columnMetadata.name] = columnMetadata;
   }
 
   /**
@@ -130,7 +131,7 @@ export class MetadataManager {
       const entityMetadata = _self.getEntityMetadata(model);
       const metadata = Object.assign({}, entityMetadata);
       const sqlTable = define(metadata);
-      this.table[metadata.name.toLowerCase()] = sqlTable;
+      this.table[model.name.toLowerCase()] = sqlTable;
     });
   }
 }

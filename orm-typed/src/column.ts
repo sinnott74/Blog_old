@@ -11,6 +11,7 @@ export interface ColumnOptions {
   length?: number;
   autoIncrement?: boolean;
   unique?: boolean;
+  name?: string;
 }
 /**
  * Decorator to define a model column
@@ -47,15 +48,16 @@ export function PrimaryColumn(options: ColumnOptions = {}) {
  */
 export function defineColumn(
   entity: typeof BaseModel,
-  column: string,
+  propertyName: string,
   options: ColumnOptions = {}
 ) {
-  const dataType = getDataType(entity, column, options);
+  const dataType = getDataType(entity, propertyName, options);
 
-  defineDataAttributeGetterAndSetter(entity.prototype, column);
+  defineDataAttributeGetterAndSetter(entity.prototype, propertyName);
 
   metadata.addColumn(entity, {
-    name: column,
+    name: options.name || propertyName.toLowerCase(),
+    property: propertyName,
     dataType: dataType,
     primaryKey: options.primaryKey,
     unique: options.unique,

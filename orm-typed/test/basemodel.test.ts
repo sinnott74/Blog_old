@@ -16,6 +16,12 @@ class Test extends BaseModel {
   @Column() name: string;
 }
 
+@Entity({ name: "NAMED_TEST" })
+class NamedTest extends BaseModel {
+  @Column({ name: "NAMED_COLUMN" })
+  name: string;
+}
+
 metadata.build();
 
 // Mock pg.Client
@@ -141,14 +147,27 @@ describe("BaseModel", () => {
     });
 
     describe("sync", () => {
-      it("can be called on an Entity to create the table", () => {
+      it("can be called on an Entity to create the table", async () => {
         const expectQuery = {
           text:
             'CREATE TABLE IF NOT EXISTS "public"."test" ("id" SERIAL PRIMARY KEY, "name" VARCHAR)',
           values: []
         };
 
-        const returnedValue = Test.sync();
+        const returnedValue = await Test.sync();
+
+        expect(mockedClient.query).toHaveBeenCalledTimes(1);
+        expect(mockedClient.query).lastCalledWith(expectQuery);
+      });
+
+      it("creates a tables with the names specifiec", async () => {
+        const expectQuery = {
+          text:
+            'CREATE TABLE IF NOT EXISTS "public"."NAMED_TEST" ("id" SERIAL PRIMARY KEY, "NAMED_COLUMN" VARCHAR)',
+          values: []
+        };
+
+        const returnedValue = await NamedTest.sync();
 
         expect(mockedClient.query).toHaveBeenCalledTimes(1);
         expect(mockedClient.query).lastCalledWith(expectQuery);

@@ -61,6 +61,15 @@ describe("Entity", () => {
     const tableMetadata = metadata.getSQLEntity(Test);
     expect(tableMetadata).toBeTruthy();
   });
+
+  it("table name can be specified", () => {
+    @Entity({ name: "TEST" })
+    class Test extends BaseModel {}
+    metadata.build();
+
+    const tableMetadata = metadata.getEntityMetadata(Test);
+    expect(tableMetadata.name).toEqual("TEST");
+  });
 });
 
 // ../node_modules/jest/bin/jest.js entity.test.ts

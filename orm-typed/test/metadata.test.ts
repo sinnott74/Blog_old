@@ -7,7 +7,8 @@ describe("Metadata", () => {
 
     const columnMetadata = {
       name: "test",
-      dataType: "INT"
+      dataType: "INT",
+      property: "test"
     };
 
     metadata.addColumn(ExampleClass, columnMetadata);
@@ -22,16 +23,18 @@ describe("Metadata", () => {
     // Create Grandparent & add column
     class GrandParent extends BaseModel {}
     const grandparentColumnMetadata = {
-      name: "grandParentColumn",
-      dataType: "INT"
+      name: "grandparentcolumn",
+      dataType: "INT",
+      property: "grandParentColumn"
     };
     metadata.addColumn(GrandParent, grandparentColumnMetadata);
 
     // Create Parent & add column
     class Parent extends GrandParent {}
     const parentColumnMetadata = {
-      name: "parentColumn",
-      dataType: "INT"
+      name: "parentcolumn",
+      dataType: "INT",
+      property: "parentColumn"
     };
     metadata.addColumn(Parent, parentColumnMetadata);
 

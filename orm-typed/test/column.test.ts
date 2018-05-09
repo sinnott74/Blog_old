@@ -47,6 +47,16 @@ describe("Column", () => {
       const columnMetadata = modelMetadata.columns["testcolumn"];
       expect(columnMetadata).toBeTruthy();
     });
+
+    it("can have a table attribute name that different to the class property name", () => {
+      class MetadataTest extends BaseModel {
+        @Column({ name: "TEST_COLUMN" })
+        testColumn: string;
+      }
+      const modelMetadata = metadata.getEntityMetadata(MetadataTest);
+      const columnMetadata = modelMetadata.columns["TEST_COLUMN"];
+      expect(columnMetadata).toBeTruthy();
+    });
   });
 
   describe("DerivedColumn", () => {
