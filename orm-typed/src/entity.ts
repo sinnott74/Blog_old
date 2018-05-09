@@ -4,6 +4,7 @@ import metadata from "./metadata";
 
 export interface EntityOptions {
   name?: string;
+  schema?: string;
 }
 
 /**
@@ -34,6 +35,11 @@ export function defineEntity(
   if (options.name) {
     updateTableName(entity, options.name);
   }
+
+  if (options.schema) {
+    updateSchemaName(entity, options.schema);
+  }
+
   // Manage the model
   ModelManager.addModel(entity);
 
@@ -50,6 +56,16 @@ export function defineEntity(
 function updateTableName(entity: typeof BaseModel, tableName: string) {
   const entityMetadata = metadata.getEntityMetadata(entity);
   entityMetadata.name = tableName;
+}
+
+/**
+ * Updates the name of the schema for an entity
+ * @param entity
+ * @param schemaName
+ */
+function updateSchemaName(entity: typeof BaseModel, schemaName: string) {
+  const entityMetadata = metadata.getEntityMetadata(entity);
+  entityMetadata.schema = schemaName;
 }
 
 // /**
