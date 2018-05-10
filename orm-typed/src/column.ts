@@ -35,7 +35,8 @@ export function PrimaryColumn(options: ColumnOptions = {}) {
     options = Object.assign({}, options, {
       type: INT,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      notNull: true
     });
 
     defineColumn(<typeof BaseModel>object.constructor, propertyName, options);
@@ -59,9 +60,9 @@ export function defineColumn(
     name: options.name || propertyName.toLowerCase(),
     property: propertyName,
     dataType: dataType,
-    primaryKey: options.primaryKey,
-    unique: options.unique,
-    notNull: options.notNull
+    primaryKey: options.primaryKey || false,
+    unique: options.unique || false,
+    notNull: options.notNull || false
   });
 }
 
