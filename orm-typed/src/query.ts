@@ -1,5 +1,5 @@
 import Transaction from "./transaction";
-import { QueryConfig } from "pg";
+import { QueryConfig, QueryResult } from "pg";
 import BaseModel, { FindOptions } from "./basemodel";
 import metadata, { StarOverloadedSQLTable } from "./metadata";
 import { Column } from "sql";
@@ -16,10 +16,10 @@ export class Query {
    * @param {String}                  [query.text] The paramaterised SQL query to execute
    * @param {Array<String>}           [query.values] Values to be submitted with a paramatarised query
    */
-  private async executeSQLQuery(sqlQuery: QueryConfig) {
+  async executeSQLQuery(sqlQuery: QueryConfig): Promise<QueryResult> {
     const transaction = Transaction.get();
-    console.log(sqlQuery.text, sqlQuery.values);
-    return await transaction.client.query(sqlQuery);
+    // console.log(sqlQuery.text, sqlQuery.values);
+    return transaction.client.query(sqlQuery);
   }
 
   /**
