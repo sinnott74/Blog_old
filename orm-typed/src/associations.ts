@@ -161,7 +161,6 @@ abstract class AbstractAssociation implements Association {
     this.sourcePrototype = options.sourcePrototype;
     this.Source = <typeof BaseModel>options.sourcePrototype.constructor;
     this.TargetFn = options.TargetFn;
-    this.targetIDName = `${this.name}_id`;
     this.eager = options.eager;
     this.onDelete = options.onDelete || "cascade";
   }
@@ -169,10 +168,9 @@ abstract class AbstractAssociation implements Association {
   addMetadataColumnReference(
     Source: typeof BaseModel,
     Target: typeof BaseModel,
-    name: string
+    columnName: string
   ) {
     const onDelete = this.onDelete;
-    const columnName = `${name.toLowerCase()}_id`;
 
     metadata.addColumn(Source, {
       name: columnName,
@@ -189,6 +187,7 @@ abstract class AbstractAssociation implements Association {
 
   build() {
     this.Target = this.TargetFn();
+    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
     this.defineForeignKey();
     this.defineGettersAndSetters();
   }
@@ -207,15 +206,13 @@ class ManyToOneAssociation extends AbstractAssociation {
     const targetSQLEntity = metadata.getSQLEntity(this.Target);
     return from
       .leftJoin(targetSQLEntity)
-      .on(
-        targetSQLEntity.id.equals(from[`${this.Target.name.toLowerCase()}_id`])
-      );
+      .on(targetSQLEntity.id.equals(from[this.targetIDName]));
   }
 
   async save(source: BaseModel) {
     const target = <BaseModel>source[this.name];
     await target.save();
-    source[`${this.Target.name.toLowerCase()}_id`] = target.id;
+    source[this.targetIDName] = target.id;
   }
 
   defineGettersAndSetters() {
@@ -242,11 +239,12 @@ class ManyToOneAssociation extends AbstractAssociation {
   }
 
   defineForeignKey() {
-    this.addMetadataColumnReference(this.Source, this.Target, this.Target.name);
-    defineDataAttributeGetterAndSetter(
-      this.sourcePrototype,
-      `${this.Target.name.toLowerCase()}_id`
+    this.addMetadataColumnReference(
+      this.Source,
+      this.Target,
+      this.targetIDName
     );
+    defineDataAttributeGetterAndSetter(this.sourcePrototype, this.targetIDName);
   }
 }
 
@@ -263,15 +261,13 @@ class OneToOneAssociation extends AbstractAssociation {
     const targetSQLEntity = metadata.getSQLEntity(this.Target);
     return from
       .leftJoin(targetSQLEntity)
-      .on(
-        targetSQLEntity.id.equals(from[`${this.Target.name.toLowerCase()}_id`])
-      );
+      .on(targetSQLEntity.id.equals(from[this.targetIDName]));
   }
 
   async save(source: BaseModel) {
     const target = <BaseModel>source[this.name];
     await target.save();
-    source[`${this.Target.name.toLowerCase()}_id`] = target.id;
+    source[this.targetIDName] = target.id;
   }
 
   defineGettersAndSetters() {
@@ -298,11 +294,12 @@ class OneToOneAssociation extends AbstractAssociation {
   }
 
   defineForeignKey() {
-    this.addMetadataColumnReference(this.Source, this.Target, this.Target.name);
-    defineDataAttributeGetterAndSetter(
-      this.sourcePrototype,
-      `${this.Target.name.toLowerCase()}_id`
+    this.addMetadataColumnReference(
+      this.Source,
+      this.Target,
+      this.targetIDName
     );
+    defineDataAttributeGetterAndSetter(this.sourcePrototype, this.targetIDName);
   }
 }
 
@@ -311,11 +308,13 @@ class OneToOneAssociation extends AbstractAssociation {
  */
 class ManyToManyAssociation extends AbstractAssociation {
   Through: typeof BaseModel;
+  sourceIDName: string;
 
   constructor(options: AssociationInput) {
     super(options);
     this.type = "ManyToMany";
     this.throughName = options.throughName;
+    this.sourceIDName = `${this.Source.name.toLowerCase()}_id`;
   }
 
   join(from: StarOverloadedSQLTable) {
@@ -324,17 +323,9 @@ class ManyToManyAssociation extends AbstractAssociation {
     const throughSQLEntity = metadata.getSQLEntity(this.Through);
     return from
       .leftJoin(throughSQLEntity)
-      .on(
-        throughSQLEntity[`${this.Source.name.toLowerCase()}_id`].equals(
-          sourceSQLEntity[`id`]
-        )
-      )
+      .on(throughSQLEntity[this.sourceIDName].equals(sourceSQLEntity.id))
       .leftJoin(targetSQLEntity)
-      .on(
-        throughSQLEntity[`${this.Target.name.toLowerCase()}_id`].equals(
-          targetSQLEntity.id
-        )
-      );
+      .on(throughSQLEntity[this.targetIDName].equals(targetSQLEntity.id));
   }
 
   async save(source: BaseModel) {
@@ -345,7 +336,7 @@ class ManyToManyAssociation extends AbstractAssociation {
 
     // delete all through rows for the source
     await this.Through.delete({
-      [`${this.Source.name.toLowerCase()}_id`]: source.id
+      [this.sourceIDName]: source.id
     });
     const throughs: BaseModel[] = [];
 
@@ -356,8 +347,8 @@ class ManyToManyAssociation extends AbstractAssociation {
 
       // create a through for each source/target
       const throughData = {
-        [`${this.Source.name.toLowerCase()}_id`]: source.id,
-        [`${this.Target.name.toLowerCase()}_id`]: target.id
+        [this.sourceIDName]: source.id,
+        [this.targetIDName]: target.id
       };
       const through = new this.Through(throughData);
       throughs.push(through);
@@ -399,10 +390,10 @@ class ManyToManyAssociation extends AbstractAssociation {
       value: throughName,
       writable: false
     });
-    defineColumn(Through, `${this.Source.name.toLowerCase()}_id`, {
+    defineColumn(Through, this.sourceIDName, {
       type: INT
     });
-    defineColumn(Through, `${this.Target.name.toLowerCase()}_id`, {
+    defineColumn(Through, this.targetIDName, {
       type: INT
     });
     ModelManager.addModel(Through);
@@ -413,17 +404,18 @@ class ManyToManyAssociation extends AbstractAssociation {
     this.addMetadataColumnReference(
       this.Through,
       this.Target,
-      this.Target.name
+      this.targetIDName
     );
     this.addMetadataColumnReference(
       this.Through,
       this.Source,
-      this.Source.name
+      this.sourceIDName
     );
   }
 
   build() {
     this.Target = this.TargetFn();
+    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
     this.Through = this.defineThroughModel();
     super.build();
   }
