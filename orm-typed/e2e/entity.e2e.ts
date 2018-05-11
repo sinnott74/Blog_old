@@ -3,11 +3,14 @@ import {
   Entity,
   Column,
   DerivedColumn,
-  metadata
+  init,
+  end,
+  transaction
 } from "../dist/orm";
+import config from "./config";
 
 @Entity()
-class Person extends BaseModel {
+class Programmer extends BaseModel {
   @Column() firstname: string;
 
   @Column() lastname: string;
@@ -21,89 +24,129 @@ class Person extends BaseModel {
 }
 
 beforeAll(async () => {
-  metadata.build();
+  await init(config);
 });
 
+afterAll(end);
+
 beforeEach(async () => {
-  await Person.drop();
-  await Person.sync();
+  await transaction(async () => {
+    await Programmer.drop();
+    await Programmer.sync();
+  });
 });
 
 describe("Basic Entity interaction", () => {
-  it("saves a person and reads it back", async () => {
-    const person = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    await person.save();
+  it("saves a programmer and reads it back", async () => {
+    await transaction(async () => {
+      const programmer = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      await programmer.save();
 
-    const gottenPerson = await Person.get<Person>(person.id);
-    expect(gottenPerson).toEqual(person);
+      const gottenProgrammer = await Programmer.get<Programmer>(programmer.id);
+      expect(gottenProgrammer).toEqual(programmer);
 
-    const searchedPerson = await Person.findOne<Person>({
-      firstname: "Joe",
-      lastname: "Bloggs"
+      const searchedProgrammer = await Programmer.findOne<Programmer>({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      expect(searchedProgrammer).toEqual(programmer);
     });
-    expect(searchedPerson).toEqual(person);
   });
 
-  it("saves a person, reads it back & modifies it", async () => {
-    const person = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    await person.save();
+  it("saves a programmer, reads it back & modifies it", async () => {
+    await transaction(async () => {
+      const programmer = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      await programmer.save();
 
-    const gottenPerson = await Person.get<Person>(person.id);
-    expect(gottenPerson).toEqual(person);
+      const gottenProgrammer = await Programmer.get<Programmer>(programmer.id);
+      expect(gottenProgrammer).toEqual(programmer);
 
-    gottenPerson.firstname = "Joseph";
-    gottenPerson.save();
+      gottenProgrammer.firstname = "Joseph";
+      gottenProgrammer.save();
 
-    const BloggsPeople = await Person.findAll<Person>({
-      lastname: "Bloggs"
+      const BloggsPeople = await Programmer.findAll<Programmer>({
+        lastname: "Bloggs"
+      });
+
+      expect(BloggsPeople.length).toBe(1);
+      expect(BloggsPeople[0]).toEqual(gottenProgrammer);
     });
-
-    expect(BloggsPeople.length).toBe(1);
-    expect(BloggsPeople[0]).toEqual(gottenPerson);
   });
 
-  it("saves a person then deletes it", async () => {
-    const person = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    await person.save();
+  it("saves a programmer then deletes it", async () => {
+    await transaction(async () => {
+      const programmer = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      await programmer.save();
 
-    const gottenPerson = await Person.get<Person>(person.id);
-    expect(gottenPerson).toEqual(person);
+      const gottenProgrammer = await Programmer.get<Programmer>(programmer.id);
+      expect(gottenProgrammer).toEqual(programmer);
 
-    await person.delete();
+      await programmer.delete();
 
-    const allPeople = await Person.findAll<Person>();
-    expect(allPeople.length).toBe(0);
+      const allPeople = await Programmer.findAll<Programmer>();
+      expect(allPeople.length).toBe(0);
+    });
   });
 
   it("saves a few people then counts them", async () => {
-    const person1 = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    const person2 = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    const person3 = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    await person1.save();
-    await person2.save();
-    await person3.save();
+    await transaction(async () => {
+      const programmer1 = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      const programmer2 = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      const programmer3 = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      await programmer1.save();
+      await programmer2.save();
+      await programmer3.save();
 
-    const numPeople = await Person.count();
-    expect(numPeople).toBe(3);
+      const numPeople = await Programmer.count();
+      expect(numPeople).toBe(3);
+    });
   });
 
   it("saves a few people then finds some", async () => {
-    const JoeBloggs = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    const JaneBloggs = new Person({ firstname: "Jane", lastname: "Bloggs" });
-    const JohnSnow = new Person({ firstname: "John", lastname: "Snow" });
-    await JoeBloggs.save();
-    await JaneBloggs.save();
-    await JohnSnow.save();
+    await transaction(async () => {
+      const JoeBloggs = new Programmer({
+        firstname: "Joe",
+        lastname: "Bloggs"
+      });
+      const JaneBloggs = new Programmer({
+        firstname: "Jane",
+        lastname: "Bloggs"
+      });
+      const JohnSnow = new Programmer({ firstname: "John", lastname: "Snow" });
+      await JoeBloggs.save();
+      await JaneBloggs.save();
+      await JohnSnow.save();
 
-    const BloggsPeople = await Person.findAll<Person>({ lastname: "Bloggs" });
-    expect(BloggsPeople.length).toBe(2);
-    expect(BloggsPeople).toContainEqual(JoeBloggs);
-    expect(BloggsPeople).toContainEqual(JaneBloggs);
+      const BloggsPeople = await Programmer.findAll<Programmer>({
+        lastname: "Bloggs"
+      });
+      expect(BloggsPeople.length).toBe(2);
+      expect(BloggsPeople).toContainEqual(JoeBloggs);
+      expect(BloggsPeople).toContainEqual(JaneBloggs);
+    });
   });
 
   it("has a dervived column", () => {
-    const person = new Person({ firstname: "Joe", lastname: "Bloggs" });
-    expect(person.fullname).toEqual("Joe Bloggs");
+    const programmer = new Programmer({ firstname: "Joe", lastname: "Bloggs" });
+    expect(programmer.fullname).toEqual("Joe Bloggs");
   });
 });
 
