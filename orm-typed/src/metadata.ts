@@ -115,9 +115,8 @@ export class MetadataManager {
 
   private buildAssociations() {
     const models = ModelManager.getModels();
-    const _self = this;
     models.forEach(model => {
-      const entityMetadata = _self.getEntityMetadata(model);
+      const entityMetadata = this.getEntityMetadata(model);
       Object.values(entityMetadata.associations).forEach(association => {
         association.build();
       });
@@ -131,9 +130,8 @@ export class MetadataManager {
    */
   private buildSQLEntity() {
     const models = ModelManager.getModels();
-    const _self = this;
     models.forEach(model => {
-      const entityMetadata = _self.getEntityMetadata(model);
+      const entityMetadata = this.getEntityMetadata(model);
       const metadata = Object.assign({}, entityMetadata);
       const sqlTable = define(metadata);
       this.table[model.name.toLowerCase()] = sqlTable;
