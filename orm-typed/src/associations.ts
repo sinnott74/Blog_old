@@ -186,10 +186,14 @@ abstract class AbstractAssociation implements Association {
   }
 
   build() {
-    this.Target = this.TargetFn();
-    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
+    this.setTarget();
     this.defineForeignKey();
     this.defineGettersAndSetters();
+  }
+
+  setTarget() {
+    this.Target = this.TargetFn();
+    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
   }
 }
 
@@ -391,10 +395,12 @@ class ManyToManyAssociation extends AbstractAssociation {
       writable: false
     });
     defineColumn(Through, this.sourceIDName, {
-      type: INT
+      type: INT,
+      notNull: true
     });
     defineColumn(Through, this.targetIDName, {
-      type: INT
+      type: INT,
+      notNull: true
     });
     ModelManager.addModel(Through);
     return Through;
@@ -414,8 +420,7 @@ class ManyToManyAssociation extends AbstractAssociation {
   }
 
   build() {
-    this.Target = this.TargetFn();
-    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
+    this.setTarget();
     this.Through = this.defineThroughModel();
     super.build();
   }
