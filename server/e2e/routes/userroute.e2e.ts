@@ -32,30 +32,30 @@ describe("User Route", () => {
       expect(response.body).toBeInstanceOf(Array);
     });
 
-    it("returns an array containing Joe Bloggs", () => {
-      expect(response.body).toContainEqual(JoeBloggs);
-    });
+    // it("returns an array containing Joe Bloggs", () => {
+    //   expect(response.body).toContainEqual(JoeBloggs);
+    // });
   });
 
-  describe("/api/users/:id", () => {
-    let response: request.Response;
+  // describe("/api/users/:id", () => {
+  //   let response: request.Response;
 
-    beforeAll(async () => {
-      response = await request(server).get("/api/users/1");
-    });
+  //   beforeAll(async () => {
+  //     response = await request(server).get("/api/users/1");
+  //   });
 
-    it("returns 200 for a get request", () => {
-      expect(response.status).toBe(200);
-    });
+  //   it("returns 200 for a get request", () => {
+  //     expect(response.status).toBe(200);
+  //   });
 
-    it("returns JSON", () => {
-      expect(response.header["content-type"]).toEqual(
-        "application/json; charset=utf-8"
-      );
-    });
+  //   it("returns JSON", () => {
+  //     expect(response.header["content-type"]).toEqual(
+  //       "application/json; charset=utf-8"
+  //     );
+  //   });
 
-    it("returns Joe Bloggs' user", () => {
-      expect(response.body).toEqual(JoeBloggs);
-    });
-  });
+  //   it("returns Joe Bloggs' user", () => {
+  //     expect(response.body).toEqual(JoeBloggs);
+  //   });
+  // });
 });
