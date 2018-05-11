@@ -13,14 +13,19 @@ export interface ORMColumnDefinition extends ColumnDefinition<string, object> {
 export interface ORMEntityDefinition extends TableDefinition<string, any> {
   associations: ORMEntityAssociations;
 }
+
 export interface Tables {
   [entityName: string]: StarOverloadedSQLTable;
 }
 
 // Table.star() method should be able to take in a prefix option
-export type StarOverloadedSQLTable = {
-  star(obj?: { prefix: string }): Column<void, void>;
-} & Table<string, any>;
+export type StarOverloadedSQLTable = Table<string, any> & {
+  star(options?: starOptions): Column<void, void>;
+};
+
+export interface starOptions {
+  prefix: string;
+}
 
 export interface ORMEntityAssociations {
   [associationName: string]: Association;
