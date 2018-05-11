@@ -1,11 +1,17 @@
-import { transaction } from "sinnott-orm-typed";
+import { init, transaction, end } from "sinnott-orm-typed";
 import User from "../../dist/entity/User";
 import dbConfig from "../../dist/config/databaseConfig";
 import { v4 as uuidV4 } from "uuid";
 
+beforeAll(async () => {
+  await init(dbConfig);
+});
+
+afterAll(end);
+
 describe("User", () => {
   it("can be saved and read back by its username", async () => {
-    await transaction(dbConfig, async () => {
+    await transaction(async () => {
       const userDtls = {
         username: uuidV4().substring(30),
         firstname: "Joe",
@@ -21,7 +27,7 @@ describe("User", () => {
   });
 
   it("can check is a username is available", async () => {
-    await transaction(dbConfig, async () => {
+    await transaction(async () => {
       const userDtls = {
         username: uuidV4().substring(30),
         firstname: "Joe",
@@ -41,7 +47,7 @@ describe("User", () => {
 
   it("throws if the username is already taken", async () => {
     expect(
-      transaction(dbConfig, async () => {
+      transaction(async () => {
         const userDtls = {
           username: uuidV4().substring(30),
           firstname: "Joe",

@@ -1,11 +1,13 @@
 /**
  * Start Express server.
  */
-import Models from "./entity";
+import { init, sync, end } from "sinnott-orm-typed";
 import databaseConfig from "./config/databaseConfig";
-import { sync } from "sinnott-orm-typed";
+import "./entity";
 
-console.log(Models);
-sync(databaseConfig).then(() => {
-  console.log("Database successfully built");
-});
+init(databaseConfig)
+  .then(sync)
+  .then(end)
+  .then(() => {
+    console.log("Database successfully built");
+  });
