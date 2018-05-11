@@ -2,8 +2,8 @@ import { init, transaction, end } from "sinnott-orm-typed";
 import Tag from "../../dist/entity/Tag";
 import dbConfig from "../../dist/config/databaseConfig";
 
-beforeAll(async () => {
-  await init(dbConfig);
+beforeAll(() => {
+  init(dbConfig);
 });
 
 afterAll(end);

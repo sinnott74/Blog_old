@@ -25,7 +25,7 @@ class PhoneNumber extends BaseModel {
 }
 
 beforeAll(async () => {
-  await init(config);
+  init(config);
   await transaction(async () => {
     await PhoneNumber.drop();
     await Person.drop();

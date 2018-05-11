@@ -23,7 +23,7 @@ let pool: Pool;
  * Initialises the database connection
  * @param config
  */
-export async function init(config: PoolConfig) {
+export function init(config: PoolConfig) {
   // Store config & create pool
   databaseConfig = config;
   pool = createPGPool(databaseConfig);

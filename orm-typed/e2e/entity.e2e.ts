@@ -23,8 +23,8 @@ class Programmer extends BaseModel {
   fullname: string;
 }
 
-beforeAll(async () => {
-  await init(config);
+beforeAll(() => {
+  init(config);
 });
 
 afterAll(end);

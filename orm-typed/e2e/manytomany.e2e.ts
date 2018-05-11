@@ -13,7 +13,7 @@ import Teacher from "./testclasses/Teacher";
 import Student from "./testclasses/Student";
 
 beforeAll(async () => {
-  await init(config);
+  init(config);
   await transaction(async () => {
     if (ModelManager.getModel("TeacherStudent")) {
       await ModelManager.getModel("TeacherStudent").drop();

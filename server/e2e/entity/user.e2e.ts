@@ -3,8 +3,8 @@ import User from "../../dist/entity/User";
 import dbConfig from "../../dist/config/databaseConfig";
 import { v4 as uuidV4 } from "uuid";
 
-beforeAll(async () => {
-  await init(dbConfig);
+beforeAll(() => {
+  init(dbConfig);
 });
 
 afterAll(end);
