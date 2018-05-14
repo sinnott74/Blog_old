@@ -7,6 +7,16 @@ import Card from "core/components/Card";
 import "blog/components/TagChip";
 import "./ViewBlogPost.css";
 import TagChip from "blog/components/TagChip";
+import hljs from "highlight.js/lib/highlight";
+
+// import languages
+import javascript from "highlight.js/lib/languages/javascript";
+import java from "highlight.js/lib/languages/java";
+import xml from "highlight.js/lib/languages/xml";
+import "highlight.js/styles/github-gist.css";
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("java", java);
+hljs.registerLanguage("xml", xml);
 
 export default class ViewBlogPost extends React.Component {
   componentDidMount() {}
@@ -38,7 +48,10 @@ export default class ViewBlogPost extends React.Component {
         sanitize: true,
         breaks: true,
         gfm: true,
-        tables: true
+        tables: true,
+        highlight: function(code) {
+          return hljs.highlightAuto(code).value;
+        }
       });
       return { __html: rawMarkup };
     }

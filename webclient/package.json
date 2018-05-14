@@ -26,6 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "highlight.js": "^9.12.0",
     "history": "^4.7.2",
     "marked": "^0.3.12",
     "prop-types": "^15.6.0",
