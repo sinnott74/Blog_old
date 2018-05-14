@@ -49,7 +49,7 @@ const dynamicRoutes = routesConfigs.map((routeConfig, index) => {
   };
 
   let route;
-  if (routeConfig.authenticate) {
+  if (routeConfig.authenticated) {
     route = (
       <AuthenticatedRoute key={index} {...routeProps} component={component} />
     );
