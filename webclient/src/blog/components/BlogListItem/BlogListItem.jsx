@@ -5,26 +5,37 @@ import Link from "core/components/Link";
 import TagChip from "blog/components/TagChip";
 import "./BlogListItem.css";
 
-const BlogListItem = props => {
-  return (
-    <Card className="bloglistitem">
-      <div className="bloglistitem__heading">
-        <Link to={`/blog/${props.id}`} className="bloglistitem__link">
-          <span className="bloglistitem__title">{props.title}</span>
-        </Link>
-        <div className="bloglistitem__date">{props.date}</div>
-      </div>
-      <div className="bloglistitem__tags">
-        {props.tags && getTags(props.tags)}
-      </div>
-    </Card>
-  );
-};
+class BlogListItem extends React.PureComponent {
+  render() {
+    return (
+      <Card className="bloglistitem">
+        <div className="bloglistitem__heading">
+          <Link to={`/blog/${this.props.id}`} className="bloglistitem__link">
+            <span className="bloglistitem__title">{this.props.title}</span>
+          </Link>
+          <div className="bloglistitem__date">{this.props.date}</div>
+        </div>
+        <div className="bloglistitem__tags">
+          {this.props.tags && this.getTags()}
+        </div>
+      </Card>
+    );
+  }
 
-function getTags(propTags) {
-  return propTags.map(tag => {
-    return <TagChip tag={tag.name} />;
-  });
+  getTags() {
+    return this.props.tags.map(tag => {
+      return (
+        <TagChip
+          tag={tag.name}
+          onClick={() => {
+            if (this.props.onTagClick) {
+              this.props.onTagClick(tag.name);
+            }
+          }}
+        />
+      );
+    });
+  }
 }
 
 BlogListItem.propTypes = {
@@ -36,7 +47,8 @@ BlogListItem.propTypes = {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired
     })
-  )
+  ),
+  onTagClick: PropTypes.func
 };
 
 export default BlogListItem;
