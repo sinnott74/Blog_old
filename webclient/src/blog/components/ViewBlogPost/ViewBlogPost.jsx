@@ -7,16 +7,13 @@ import Card from "core/components/Card";
 import "blog/components/TagChip";
 import "./ViewBlogPost.css";
 import TagChip from "blog/components/TagChip";
-import hljs from "highlight.js/lib/highlight";
 
-// import languages
-import javascript from "highlight.js/lib/languages/javascript";
-import java from "highlight.js/lib/languages/java";
-import xml from "highlight.js/lib/languages/xml";
-import "highlight.js/styles/github-gist.css";
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("java", java);
-hljs.registerLanguage("xml", xml);
+// Prism
+import Prism from "prismjs";
+import "prismjs/themes/prism-coy.css";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-typescript";
 
 export default class ViewBlogPost extends React.Component {
   componentDidMount() {}
@@ -44,13 +41,17 @@ export default class ViewBlogPost extends React.Component {
 
   rawMarkup() {
     if (this.props.text) {
-      let rawMarkup = marked(this.props.text, {
+      const rawMarkup = marked(this.props.text, {
         sanitize: true,
         breaks: true,
         gfm: true,
         tables: true,
-        highlight: function(code) {
-          return hljs.highlightAuto(code).value;
+        // langPrefix: "language-",
+        highlight: function(code, lang) {
+          if (Prism.languages[lang]) {
+            const grammar = Prism.languages[lang];
+            return Prism.highlight(code, grammar, lang);
+          }
         }
       });
       return { __html: rawMarkup };
