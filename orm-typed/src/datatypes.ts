@@ -11,22 +11,20 @@ export abstract class AbstractDataType {
     throw new Error("get getSQLType must be implemented");
   }
 }
-export const ABSTRACT = AbstractDataType;
 
 /**
  * Boolean
  */
-export class BooleanDataType extends AbstractDataType {
+export class BOOLEAN extends AbstractDataType {
   static getSQLType() {
     return "BOOLEAN";
   }
 }
-export const BOOLEAN = BooleanDataType;
 
 /**
  * INT
  */
-export class IntDataType extends AbstractDataType {
+export class INT extends AbstractDataType {
   static getSQLType(attributeOptions?: DataTypeOption) {
     if (attributeOptions && attributeOptions.autoIncrement) {
       return "SERIAL";
@@ -35,12 +33,10 @@ export class IntDataType extends AbstractDataType {
   }
 }
 
-export const INT = IntDataType;
-
 /**
  * String
  */
-export class StringDataType extends AbstractDataType {
+export class STRING extends AbstractDataType {
   static getSQLType(attributeOptions?: DataTypeOption) {
     if (
       attributeOptions &&
@@ -54,27 +50,24 @@ export class StringDataType extends AbstractDataType {
       : "VARCHAR";
   }
 }
-export const STRING = StringDataType;
 
 /**
  * Text
  */
-export class TextDataType extends AbstractDataType {
+export class TEXT extends AbstractDataType {
   static getSQLType() {
     return "TEXT";
   }
 }
-export const TEXT = TextDataType;
 
 /**
  * Timestamp
  */
-export class TimeStampDataType extends AbstractDataType {
+export class TIMESTAMP extends AbstractDataType {
   static getSQLType() {
     return "TIMESTAMP WITH TIME ZONE";
   }
 }
-export const TIMESTAMP = TimeStampDataType;
 
 export function getSQLDataType(type: string) {
   switch (type.toUpperCase()) {
