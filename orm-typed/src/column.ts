@@ -1,11 +1,11 @@
 import BaseModel from "./basemodel";
 import metadata from "./metadata";
 import Attribute from "./attribute";
-import { AbstractDataType, INT, getSQLDataType } from "./datatypes";
+import { DataType, INT, getDataType } from "./datatypes";
 import "reflect-metadata";
 
 export interface ColumnOptions {
-  type?: typeof AbstractDataType;
+  type?: DataType;
   notNull?: boolean;
   primaryKey?: boolean;
   length?: number;
@@ -52,7 +52,7 @@ export function defineColumn(
   propertyName: string,
   options: ColumnOptions = {}
 ) {
-  const dataType = getDataType(entity, propertyName, options);
+  const dataType = getDataTypeString(entity, propertyName, options);
 
   defineDataAttributeGetterAndSetter(entity.prototype, propertyName);
 
@@ -105,15 +105,17 @@ export function defineDataAttributeGetterAndSetter(
  * @param column
  * @param options
  */
-function getDataType(
+function getDataTypeString(
   entity: typeof BaseModel,
   column: string,
   options: ColumnOptions
 ) {
   let type = options.type && options.type.getSQLType(options);
+
   if (!type) {
     const relectedType = getReflectedType(entity, column);
-    type = relectedType && getSQLDataType(relectedType);
+    const ormDataType = relectedType && getDataType(relectedType);
+    type = ormDataType && ormDataType.getSQLType(options);
   }
 
   if (!type) {
