@@ -23,39 +23,28 @@ before_install:
 # Bluemix
 deploy:
   - provider: cloudfoundry
-    username: ${BLUEMIX_USER}
+    username: ${IBM_CLOUD_USER}
     #########################
     ## Add BLUEMIX_PASSWORD environment variable to your Travis project's settings
     ## https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
     #########################
-    password: ${BLUEMIX_PASSWORD}
-    organization: ${BLUEMIX_USER}
+    password: ${IBM_CLOUD_PASSWORD}
+    organization: ${IBM_CLOUD_USER}
     space: production
     api: https://api.ng.bluemix.net/
     skip_cleanup: true
     on:
       branch: master
   - provider: cloudfoundry
-    username: ${BLUEMIX_USER}
+    username: ${IBM_CLOUD_USER}
     #########################
     ## Add BLUEMIX_PASSWORD environment variable to your Travis project's settings
     ## https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
     #########################
-    password: ${BLUEMIX_PASSWORD}
-    organization: ${BLUEMIX_USER}
+    password: ${IBM_CLOUD_PASSWORD}
+    organization: ${IBM_CLOUD_USER}
     space: staging
     api: https://api.ng.bluemix.net/
     skip_cleanup: true
     on:
       branch: staging
-
-# Deploy
-# Openshift
-# deploy:
-#   provider: openshift
-#   user: ${OPENSHIFT_USER}
-#   password: ${OPENSHIFT_PASSWORD}
-#   app: nodejs
-#   domain: ${OPENSHIFT_DOMAIN}
-#   on:
-#     repo: sinnott74/Sinnott
