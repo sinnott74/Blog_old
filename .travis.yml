@@ -31,6 +31,7 @@ deploy:
     password: ${IBM_CLOUD_PASSWORD}
     organization: ${IBM_CLOUD_USER}
     space: production
+    region: eu-gb
     api: https://api.ng.bluemix.net/
     skip_cleanup: true
     on:
@@ -44,6 +45,7 @@ deploy:
     password: ${IBM_CLOUD_PASSWORD}
     organization: ${IBM_CLOUD_USER}
     space: staging
+    region: eu-gb
     api: https://api.ng.bluemix.net/
     skip_cleanup: true
     on:
