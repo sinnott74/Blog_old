@@ -32,7 +32,7 @@ deploy:
     organization: ${IBM_CLOUD_USER}
     space: production
     region: eu-gb
-    api: https://api.ng.bluemix.net/
+    api: https://api.eu-gb.bluemix.net
     skip_cleanup: true
     on:
       branch: master
@@ -46,7 +46,7 @@ deploy:
     organization: ${IBM_CLOUD_USER}
     space: staging
     region: eu-gb
-    api: https://api.ng.bluemix.net/
+    api: https://api.eu-gb.bluemix.net
     skip_cleanup: true
     on:
       branch: staging
