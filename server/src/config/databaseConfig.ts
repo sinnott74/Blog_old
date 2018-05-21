@@ -1,11 +1,15 @@
-import cfenv from "cfenv";
+// import cfenv from "cfenv";
 
 let config;
 if (process.env.NODE_ENV === "production") {
   // Production
+  // config = {
+  //   connectionString: cfenv.getAppEnv().getServices("postgresql")["ElephantSQL"]
+  //     .credentials.uri,
+  //   max: 5
+  // };
   config = {
-    connectionString: cfenv.getAppEnv().getServices("postgresql")["ElephantSQL"]
-      .credentials.uri,
+    connectionString: process.env.POSTGRES_URL,
     max: 5
   };
 } else {
