@@ -10,7 +10,7 @@ import InformationalException from "../exception/InformationalException";
 
 @Entity()
 export default class User extends BaseModel {
-  @Column({ type: STRING, notNull: true, length: 30 })
+  @Column({ type: STRING, notNull: true, length: 30, unique: true })
   username: string;
 
   @Column({ type: STRING, notNull: true, length: 30 })
