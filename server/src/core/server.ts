@@ -4,12 +4,13 @@
 import path from "path";
 import express from "express";
 import helmet from "helmet";
-import cfenv from "cfenv"; // cloud foundry environment variables
+const cfenv: any = require("cfenv"); // cloud foundry environment variables
 import forceHttpsMiddleware from "../middleware/forceHttps";
 import compression from "compression";
 import bodyParser from "body-parser";
 import Auth from "./Auth";
 import { Request, Response } from "express";
+import "./orm";
 
 /**
  * Adds Sync support to express routers & needs to be above import of routes

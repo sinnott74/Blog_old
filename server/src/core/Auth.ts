@@ -3,7 +3,7 @@ import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
 import * as moment from "moment";
 import AuthenticationError from "../exception/AuthenticationException";
-import { User, Credential } from "../Entity";
+import { User, Credential } from "../entity";
 import { Request, Response, NextFunction } from "express";
 
 const SECRET = process.env.JWT_SECRET || "SECRET_SSSHHHHHHH";
@@ -29,7 +29,7 @@ class Auth {
    * @param {*} next
    */
   static middleware(req: Request, res: Response, next: NextFunction) {
-    Auth._authenticate((err: Error, user, info) => {
+    Auth._authenticate((err: Error, user: User, info: any) => {
       if (err || !user) {
         console.log(err);
         return next(new AuthenticationError());
@@ -70,7 +70,7 @@ class Auth {
 
     return new JWTStrategy(
       strategyConfig,
-      (req: Request, payload, done: Function) => {
+      (req: Request, payload: any, done: Function) => {
         User.readByUsername(payload.username)
           .then(user => {
             done(null, user);

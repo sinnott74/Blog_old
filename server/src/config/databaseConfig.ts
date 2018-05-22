@@ -1,6 +1,16 @@
 // import cfenv from "cfenv";
 
-let config;
+export interface ConnectionConfig {
+  user?: string;
+  database?: string;
+  password?: string;
+  port?: number;
+  host?: string;
+  connectionString?: string;
+  max?: number;
+}
+
+let config: ConnectionConfig;
 if (process.env.NODE_ENV === "production") {
   // Production
   // config = {

@@ -126,6 +126,7 @@ export function deleteBlogPost(id) {
       })
       .then(() => dispatch(removeBlogPost(id)))
       .then(() => dispatch(showToast("Blog post deleted")))
+      .then(() => dispatch(push(`/blog/`)))
       .catch(err => {
         dispatch(blogHasErrored(true));
         dispatch(showToast("Delete failed"));

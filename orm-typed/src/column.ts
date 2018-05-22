@@ -1,16 +1,17 @@
 import BaseModel from "./basemodel";
 import metadata from "./metadata";
 import Attribute from "./attribute";
-import { AbstractDataType, INT, getSQLDataType } from "./datatypes";
+import { DataType, INT, getDataType } from "./datatypes";
 import "reflect-metadata";
 
 export interface ColumnOptions {
-  type?: typeof AbstractDataType;
+  type?: DataType;
   notNull?: boolean;
   primaryKey?: boolean;
   length?: number;
   autoIncrement?: boolean;
   unique?: boolean;
+  name?: string;
 }
 /**
  * Decorator to define a model column
@@ -34,7 +35,8 @@ export function PrimaryColumn(options: ColumnOptions = {}) {
     options = Object.assign({}, options, {
       type: INT,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      notNull: true
     });
 
     defineColumn(<typeof BaseModel>object.constructor, propertyName, options);
@@ -47,19 +49,20 @@ export function PrimaryColumn(options: ColumnOptions = {}) {
  */
 export function defineColumn(
   entity: typeof BaseModel,
-  column: string,
+  propertyName: string,
   options: ColumnOptions = {}
 ) {
-  const dataType = getDataType(entity, column, options);
+  const dataType = getDataTypeString(entity, propertyName, options);
 
-  defineDataAttributeGetterAndSetter(entity.prototype, column);
+  defineDataAttributeGetterAndSetter(entity.prototype, propertyName);
 
   metadata.addColumn(entity, {
-    name: column,
+    name: options.name || propertyName.toLowerCase(),
+    property: propertyName,
     dataType: dataType,
-    primaryKey: options.primaryKey,
-    unique: options.unique,
-    notNull: options.notNull
+    primaryKey: options.primaryKey || false,
+    unique: options.unique || false,
+    notNull: options.notNull || false
   });
 }
 
@@ -102,15 +105,17 @@ export function defineDataAttributeGetterAndSetter(
  * @param column
  * @param options
  */
-function getDataType(
+function getDataTypeString(
   entity: typeof BaseModel,
   column: string,
   options: ColumnOptions
 ) {
   let type = options.type && options.type.getSQLType(options);
+
   if (!type) {
     const relectedType = getReflectedType(entity, column);
-    type = relectedType && getSQLDataType(relectedType);
+    const ormDataType = relectedType && getDataType(relectedType);
+    type = ormDataType && ormDataType.getSQLType(options);
   }
 
   if (!type) {

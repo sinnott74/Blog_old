@@ -8,18 +8,24 @@ export interface Metadata {
 }
 export interface ORMColumnDefinition extends ColumnDefinition<string, object> {
   name: string;
+  property: string;
 }
 export interface ORMEntityDefinition extends TableDefinition<string, any> {
   associations: ORMEntityAssociations;
 }
+
 export interface Tables {
   [entityName: string]: StarOverloadedSQLTable;
 }
 
 // Table.star() method should be able to take in a prefix option
-export type StarOverloadedSQLTable = {
-  star(obj?: { prefix: string }): Column<void, void>;
-} & Table<string, any>;
+export type StarOverloadedSQLTable = Table<string, any> & {
+  star(options?: starOptions): Column<void, void>;
+};
+
+export interface starOptions {
+  prefix: string;
+}
 
 export interface ORMEntityAssociations {
   [associationName: string]: Association;
@@ -42,7 +48,7 @@ export class MetadataManager {
    */
   addColumn(entity: typeof BaseModel, columnMetadata: ORMColumnDefinition) {
     const entityMetadata = this.getEntity(entity);
-    entityMetadata.columns[columnMetadata.name.toLowerCase()] = columnMetadata;
+    entityMetadata.columns[columnMetadata.name] = columnMetadata;
   }
 
   /**
@@ -109,9 +115,8 @@ export class MetadataManager {
 
   private buildAssociations() {
     const models = ModelManager.getModels();
-    const _self = this;
     models.forEach(model => {
-      const entityMetadata = _self.getEntityMetadata(model);
+      const entityMetadata = this.getEntityMetadata(model);
       Object.values(entityMetadata.associations).forEach(association => {
         association.build();
       });
@@ -125,12 +130,11 @@ export class MetadataManager {
    */
   private buildSQLEntity() {
     const models = ModelManager.getModels();
-    const _self = this;
     models.forEach(model => {
-      const entityMetadata = _self.getEntityMetadata(model);
+      const entityMetadata = this.getEntityMetadata(model);
       const metadata = Object.assign({}, entityMetadata);
       const sqlTable = define(metadata);
-      this.table[metadata.name.toLowerCase()] = sqlTable;
+      this.table[model.name.toLowerCase()] = sqlTable;
     });
   }
 }

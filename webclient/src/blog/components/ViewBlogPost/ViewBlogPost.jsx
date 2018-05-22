@@ -8,6 +8,13 @@ import "blog/components/TagChip";
 import "./ViewBlogPost.css";
 import TagChip from "blog/components/TagChip";
 
+// Prism
+import Prism from "prismjs";
+import "prismjs/themes/prism-coy.css";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-typescript";
+
 export default class ViewBlogPost extends React.Component {
   componentDidMount() {}
 
@@ -34,11 +41,18 @@ export default class ViewBlogPost extends React.Component {
 
   rawMarkup() {
     if (this.props.text) {
-      let rawMarkup = marked(this.props.text, {
+      const rawMarkup = marked(this.props.text, {
         sanitize: true,
         breaks: true,
         gfm: true,
-        tables: true
+        tables: true,
+        // langPrefix: "language-",
+        highlight: function(code, lang) {
+          if (Prism.languages[lang]) {
+            const grammar = Prism.languages[lang];
+            return Prism.highlight(code, grammar, lang);
+          }
+        }
       });
       return { __html: rawMarkup };
     }
@@ -52,7 +66,7 @@ export default class ViewBlogPost extends React.Component {
     ) {
       return (
         <div className="blogpost_actions">
-          <Link to={`/blog/${this.props.id}/edit`}>
+          <Link to={`/blog/${this.props.id}/delete`}>
             <Button raised={true} secondary>
               Delete
             </Button>

@@ -9,7 +9,7 @@ export default class OptionsMenu extends React.Component {
     return (
       <div
         className={
-          "options-menu " + (this.props.opened ? "options-menu__opened" : null)
+          "options-menu " + (this.props.opened ? "options-menu__opened" : "")
         }
       >
         <div className="options-scrim" onClick={this.props.handleScrimClick} />

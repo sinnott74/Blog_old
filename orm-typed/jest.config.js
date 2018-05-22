@@ -17,7 +17,7 @@ module.exports = {
       transform: {
         "^.+\\.tsx?$": "ts-jest"
       },
-      testEnvironment: "<rootDir>/dist/testenvironment",
+      testEnvironment: "node",
       moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
     }
   ]

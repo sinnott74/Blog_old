@@ -4,6 +4,7 @@ import TextField from "react-md/lib/TextFields/TextField";
 import Tab from "react-md/lib/Tabs/Tab";
 import Tabs from "react-md/lib/Tabs/Tabs";
 import TabsContainer from "react-md/lib/Tabs/TabsContainer";
+import CancelButton from "core/components/CancelButton";
 import SubmitButton from "core/components/SubmitButton";
 import TagChip from "blog/components/TagChip";
 import "./BlogEditor.css";
@@ -105,12 +106,15 @@ export default class BlogEditor extends React.Component {
                   });
                 }}
               />
-              <SubmitButton
-                isSubmitting={this.props.isSubmitting}
-                onClick={this.handleSubmit}
-              >
-                Save
-              </SubmitButton>
+              <div class="blogeditor_buttons">
+                <CancelButton link={`/blog/${this.props.id}`} />
+                <SubmitButton
+                  isSubmitting={this.props.isSubmitting}
+                  onClick={this.handleSubmit}
+                >
+                  Save
+                </SubmitButton>
+              </div>
             </Card>
           </Tab>
           <Tab label="preview">

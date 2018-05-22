@@ -1,20 +1,23 @@
 import BaseModel from "./basemodel";
 import ModelManager from "./modelmanager";
-// import metadata from "./metadata";
+import metadata from "./metadata";
 
-export interface EntityOptions {}
+export interface EntityOptions {
+  name?: string;
+  schema?: string;
+}
 
 /**
  * Decorator which defines an entity
  * @param options
  */
-export function Entity(options: EntityOptions = {}) {
+export function Entity(options?: EntityOptions) {
   return function<T extends typeof BaseModel>(constructor: T): T {
     // Cleanly mix BaseModel into given Entity
     // const extendedBaseModel = applyBaseModelMixin(constructor);
     // const constructor = constructor;
 
-    defineEntity(constructor);
+    defineEntity(constructor, options);
 
     // return to overwrite class constructor
     return constructor;
@@ -25,13 +28,44 @@ export function Entity(options: EntityOptions = {}) {
  * Adds the entity to the model manager & creates the metadata
  * @param entity
  */
-export function defineEntity(entity: typeof BaseModel) {
+export function defineEntity(
+  entity: typeof BaseModel,
+  options: EntityOptions = {}
+) {
+  if (options.name) {
+    updateTableName(entity, options.name);
+  }
+
+  if (options.schema) {
+    updateSchemaName(entity, options.schema);
+  }
+
   // Manage the model
   ModelManager.addModel(entity);
 
   // Finished and store the SQL entity object
   // metadata.buildEntityMetadata(entity);
   // metadata.build();
+}
+
+/**
+ * Updates the name of the table in the metadata for an entity
+ * @param entity
+ * @param tableName
+ */
+function updateTableName(entity: typeof BaseModel, tableName: string) {
+  const entityMetadata = metadata.getEntityMetadata(entity);
+  entityMetadata.name = tableName;
+}
+
+/**
+ * Updates the name of the schema for an entity
+ * @param entity
+ * @param schemaName
+ */
+function updateSchemaName(entity: typeof BaseModel, schemaName: string) {
+  const entityMetadata = metadata.getEntityMetadata(entity);
+  entityMetadata.schema = schemaName;
 }
 
 // /**

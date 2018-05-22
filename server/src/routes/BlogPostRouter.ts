@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BlogPost } from "../Entity";
+import { BlogPost } from "../entity";
 import Auth from "../core/Auth";
 const router = Router();
 
@@ -25,6 +25,12 @@ router.put("/:id", Auth.middleware, async function(req, res) {
   const blogpostData = { ...req.body };
   const blogPost = new BlogPost(blogpostData);
   await blogPost.save();
+  res.sendStatus(200);
+});
+
+router.delete("/:id", Auth.middleware, async function(req, res) {
+  const id = req.params.id;
+  await BlogPost.delete({ id });
   res.sendStatus(200);
 });
 

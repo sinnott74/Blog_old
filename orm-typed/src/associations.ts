@@ -1,6 +1,5 @@
 import BaseModel from "./basemodel";
 import metadata, { StarOverloadedSQLTable } from "./metadata";
-// import { defineEntity } from "./entity";
 import { defineColumn, defineDataAttributeGetterAndSetter } from "./column";
 import { TableNode } from "sql";
 import { asyncForEach } from "./util";
@@ -10,6 +9,7 @@ import { INT } from "./datatypes";
 export interface AssociationOptions {
   type(): typeof BaseModel;
   eager?: boolean;
+  onDelete?: "restrict" | "cascade" | "no action" | "set null" | "set default";
 }
 
 export interface ManyToManyAssociationOptions extends AssociationOptions {
@@ -25,18 +25,6 @@ export function OneToOne(options: AssociationOptions) {
     defineOneToOneAssociation(object, propertyName, options);
   };
 }
-
-// /**
-//  * Decorator to define a One to Many Association
-//  * @param object
-//  * @param propertyName
-//  * @param options
-//  */
-// export function OneToMany(options: AssociationOptions) {
-//   return function(object: BaseModel, propertyName: string) {
-//     defineOneToManyAssociation(object, propertyName, options);
-//   };
-// }
 
 /**
  * Decorator to define a One to Many Association
@@ -78,7 +66,8 @@ export function defineOneToOneAssociation(
     name: propertyName,
     TargetFn: options.type,
     sourcePrototype: object,
-    eager: options.eager
+    eager: options.eager,
+    onDelete: options.onDelete
   });
   metadata.addAssociation(oneToOneAssociation);
 }
@@ -99,31 +88,11 @@ export function defineManyToOneAssociation(
     name: propertyName,
     sourcePrototype: object,
     TargetFn: options.type,
-    eager: options.eager
+    eager: options.eager,
+    onDelete: options.onDelete
   });
   metadata.addAssociation(manyToOneAssociation);
 }
-
-// /**
-//  * Defines a One to Many Association
-//  * @param object
-//  * @param propertyName
-//  * @param options
-//  */
-// export function defineOneToManyAssociation(
-//   object: BaseModel,
-//   propertyName: string,
-//   options: AssociationOptions
-// ) {
-//   // Add ManyToOne association metadata
-//   const oneToManyAssociation = new OneToManyAssociation({
-//     name: propertyName,
-//     sourcePrototype: object,
-//     TargetFn: options.type,
-//     eager: options.eager
-//   });
-//   metadata.addAssociation(oneToManyAssociation);
-// }
 
 /**
  * Defines a One to One Association
@@ -142,7 +111,8 @@ export function defineManyToManyAssociation(
     TargetFn: options.type,
     sourcePrototype: object,
     throughName: options.throughName,
-    eager: options.eager
+    eager: options.eager,
+    onDelete: options.onDelete
   });
   metadata.addAssociation(manyToManyAssociation);
 }
@@ -153,6 +123,7 @@ export interface AssociationInput {
   sourcePrototype: BaseModel;
   eager?: boolean;
   throughName?: string;
+  onDelete?: "restrict" | "cascade" | "no action" | "set null" | "set default";
 }
 
 export interface Association extends AssociationInput {
@@ -178,6 +149,7 @@ abstract class AbstractAssociation implements Association {
   sourcePrototype: BaseModel;
   type: "OneToOne" | "OneToMany" | "ManyToOne" | "ManyToMany";
   eager?: boolean;
+  onDelete: "restrict" | "cascade" | "no action" | "set null" | "set default";
 
   abstract join(from: StarOverloadedSQLTable): TableNode;
   abstract save(source: BaseModel): void;
@@ -189,30 +161,39 @@ abstract class AbstractAssociation implements Association {
     this.sourcePrototype = options.sourcePrototype;
     this.Source = <typeof BaseModel>options.sourcePrototype.constructor;
     this.TargetFn = options.TargetFn;
-    this.targetIDName = `${this.name}_id`;
     this.eager = options.eager;
+    this.onDelete = options.onDelete || "cascade";
   }
 
   addMetadataColumnReference(
     Source: typeof BaseModel,
     Target: typeof BaseModel,
-    name: string
+    columnName: string
   ) {
+    const onDelete = this.onDelete;
+
     metadata.addColumn(Source, {
-      name: `${name.toLowerCase()}_id`,
+      name: columnName,
+      property: columnName,
       dataType: INT.getSQLType(),
       notNull: true,
       references: {
         column: "id",
-        table: Target.name.toLowerCase()
+        table: Target.name.toLowerCase(),
+        onDelete: onDelete
       }
     });
   }
 
   build() {
-    this.Target = this.TargetFn();
+    this.setTarget();
     this.defineForeignKey();
     this.defineGettersAndSetters();
+  }
+
+  setTarget() {
+    this.Target = this.TargetFn();
+    this.targetIDName = `${this.Target.name.toLowerCase()}_id`;
   }
 }
 
@@ -229,15 +210,13 @@ class ManyToOneAssociation extends AbstractAssociation {
     const targetSQLEntity = metadata.getSQLEntity(this.Target);
     return from
       .leftJoin(targetSQLEntity)
-      .on(
-        targetSQLEntity.id.equals(from[`${this.Target.name.toLowerCase()}_id`])
-      );
+      .on(targetSQLEntity.id.equals(from[this.targetIDName]));
   }
 
   async save(source: BaseModel) {
     const target = <BaseModel>source[this.name];
     await target.save();
-    source[`${this.Target.name.toLowerCase()}_id`] = target.id;
+    source[this.targetIDName] = target.id;
   }
 
   defineGettersAndSetters() {
@@ -264,11 +243,12 @@ class ManyToOneAssociation extends AbstractAssociation {
   }
 
   defineForeignKey() {
-    this.addMetadataColumnReference(this.Source, this.Target, this.Target.name);
-    defineDataAttributeGetterAndSetter(
-      this.sourcePrototype,
-      `${this.Target.name.toLowerCase()}_id`
+    this.addMetadataColumnReference(
+      this.Source,
+      this.Target,
+      this.targetIDName
     );
+    defineDataAttributeGetterAndSetter(this.sourcePrototype, this.targetIDName);
   }
 }
 
@@ -285,15 +265,13 @@ class OneToOneAssociation extends AbstractAssociation {
     const targetSQLEntity = metadata.getSQLEntity(this.Target);
     return from
       .leftJoin(targetSQLEntity)
-      .on(
-        targetSQLEntity.id.equals(from[`${this.Target.name.toLowerCase()}_id`])
-      );
+      .on(targetSQLEntity.id.equals(from[this.targetIDName]));
   }
 
   async save(source: BaseModel) {
     const target = <BaseModel>source[this.name];
     await target.save();
-    source[`${this.Target.name.toLowerCase()}_id`] = target.id;
+    source[this.targetIDName] = target.id;
   }
 
   defineGettersAndSetters() {
@@ -320,11 +298,12 @@ class OneToOneAssociation extends AbstractAssociation {
   }
 
   defineForeignKey() {
-    this.addMetadataColumnReference(this.Source, this.Target, this.Target.name);
-    defineDataAttributeGetterAndSetter(
-      this.sourcePrototype,
-      `${this.Target.name.toLowerCase()}_id`
+    this.addMetadataColumnReference(
+      this.Source,
+      this.Target,
+      this.targetIDName
     );
+    defineDataAttributeGetterAndSetter(this.sourcePrototype, this.targetIDName);
   }
 }
 
@@ -333,11 +312,13 @@ class OneToOneAssociation extends AbstractAssociation {
  */
 class ManyToManyAssociation extends AbstractAssociation {
   Through: typeof BaseModel;
+  sourceIDName: string;
 
   constructor(options: AssociationInput) {
     super(options);
     this.type = "ManyToMany";
     this.throughName = options.throughName;
+    this.sourceIDName = `${this.Source.name.toLowerCase()}_id`;
   }
 
   join(from: StarOverloadedSQLTable) {
@@ -346,17 +327,9 @@ class ManyToManyAssociation extends AbstractAssociation {
     const throughSQLEntity = metadata.getSQLEntity(this.Through);
     return from
       .leftJoin(throughSQLEntity)
-      .on(
-        throughSQLEntity[`${this.Source.name.toLowerCase()}_id`].equals(
-          sourceSQLEntity[`id`]
-        )
-      )
+      .on(throughSQLEntity[this.sourceIDName].equals(sourceSQLEntity.id))
       .leftJoin(targetSQLEntity)
-      .on(
-        throughSQLEntity[`${this.Target.name.toLowerCase()}_id`].equals(
-          targetSQLEntity.id
-        )
-      );
+      .on(throughSQLEntity[this.targetIDName].equals(targetSQLEntity.id));
   }
 
   async save(source: BaseModel) {
@@ -367,7 +340,7 @@ class ManyToManyAssociation extends AbstractAssociation {
 
     // delete all through rows for the source
     await this.Through.delete({
-      [`${this.Source.name.toLowerCase()}_id`]: source.id
+      [this.sourceIDName]: source.id
     });
     const throughs: BaseModel[] = [];
 
@@ -378,8 +351,8 @@ class ManyToManyAssociation extends AbstractAssociation {
 
       // create a through for each source/target
       const throughData = {
-        [`${this.Source.name.toLowerCase()}_id`]: source.id,
-        [`${this.Target.name.toLowerCase()}_id`]: target.id
+        [this.sourceIDName]: source.id,
+        [this.targetIDName]: target.id
       };
       const through = new this.Through(throughData);
       throughs.push(through);
@@ -421,11 +394,13 @@ class ManyToManyAssociation extends AbstractAssociation {
       value: throughName,
       writable: false
     });
-    defineColumn(Through, `${this.Source.name.toLowerCase()}_id`, {
-      type: INT
+    defineColumn(Through, this.sourceIDName, {
+      type: INT,
+      notNull: true
     });
-    defineColumn(Through, `${this.Target.name.toLowerCase()}_id`, {
-      type: INT
+    defineColumn(Through, this.targetIDName, {
+      type: INT,
+      notNull: true
     });
     ModelManager.addModel(Through);
     return Through;
@@ -435,68 +410,18 @@ class ManyToManyAssociation extends AbstractAssociation {
     this.addMetadataColumnReference(
       this.Through,
       this.Target,
-      this.Target.name
+      this.targetIDName
     );
     this.addMetadataColumnReference(
       this.Through,
       this.Source,
-      this.Source.name
+      this.sourceIDName
     );
   }
 
   build() {
-    this.Target = this.TargetFn();
+    this.setTarget();
     this.Through = this.defineThroughModel();
     super.build();
   }
 }
-
-// /**
-//  * One To Many Association
-//  */
-// class OneToManyAssociation extends AbstractAssociation {
-//   constructor(options: AssociationInput) {
-//     super(options);
-//     this.type = "OneToMany";
-//   }
-
-//   join(from: StarOverloadedSQLTable) {
-//     const targetSQLEntity = metadata.getSQLEntity(this.Target);
-//     return from
-//       .leftJoin(targetSQLEntity)
-//       .on(targetSQLEntity.id.equals(from[`${this.name}_id`]));
-//   }
-
-//   async save(source: BaseModel) {
-//     // const target = <BaseModel>source[this.name];
-//     // await target.save();
-//     // source[`${this.name}_id`] = target.id;
-//   }
-
-//   defineGettersAndSetters() {
-//     // const name = this.name;
-//     // const Target = this.Target;
-//     // const sourceObject = this.sourcePrototype;
-//     // // define ManyToOne Getter and setter
-//     // Object.defineProperty(sourceObject, name, {
-//     //   get: function() {
-//     //     return this.associationAttributes[name];
-//     //   },
-//     //   set: function(value: BaseModel | any[]) {
-//     //     // may be an array coming from the database
-//     //     if (Array.isArray(value) && value[0]) {
-//     //       value = new Target(value[0]);
-//     //     }
-//     //     if (value instanceof BaseModel) {
-//     //       this.associationAttributes[name] = value;
-//     //     }
-//     //   },
-//     //   enumerable: true
-//     // });
-//   }
-
-//   defineForeignKey() {
-//     this.addMetadataColumnReference(this.Target, this.Source, this.name);
-//     defineDataAttributeGetterAndSetter(this.sourcePrototype, this.targetIDName);
-//   }
-// }
