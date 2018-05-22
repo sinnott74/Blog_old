@@ -152,17 +152,17 @@ export class Query {
     );
 
     // Drop indexes
-    // await asyncForEach(indexColumns, async column => {
-    //   const createIndexQuery = sqlEntity
-    //     .indexes()
-    //     .drop(sqlEntity[column.property])
-    //     .toQuery();
-    //   createIndexQuery.text = createIndexQuery.text.replace(
-    //     "INDEX",
-    //     "INDEX IF EXISTS"
-    //   );
-    //   await this.executeSQLQuery(createIndexQuery);
-    // });
+    await asyncForEach(indexColumns, async column => {
+      const createIndexQuery = sqlEntity
+        .indexes()
+        .drop(sqlEntity[column.property])
+        .toQuery();
+      createIndexQuery.text = createIndexQuery.text.replace(
+        "INDEX",
+        "INDEX IF EXISTS"
+      );
+      await this.executeSQLQuery(createIndexQuery);
+    });
 
     // Create indexes
     await asyncForEach(indexColumns, async column => {
@@ -171,10 +171,11 @@ export class Query {
         .create()
         .on(sqlEntity[column.property])
         .toQuery();
-      createIndexQuery.text = createIndexQuery.text.replace(
-        "INDEX",
-        "INDEX IF NOT EXISTS"
-      );
+      // IF NOT EXISTS is postgres 9.5+ only, elephantsql is using 9.4
+      // createIndexQuery.text = createIndexQuery.text.replace(
+      //   "INDEX",
+      //   "INDEX IF NOT EXISTS"
+      // );
       await this.executeSQLQuery(createIndexQuery);
     });
 
