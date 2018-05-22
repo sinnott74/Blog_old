@@ -36,7 +36,7 @@ export default class Credential extends BaseModel {
   /**
    * Deactivates a user's active password
    */
-  private static async deactivePreviousCredential(credential) {
+  private static async deactivePreviousCredential(credential: Credential) {
     const previousCredential = await Credential.readActiveUserCredentialByUserID(
       credential.user_id
     );

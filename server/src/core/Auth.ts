@@ -29,7 +29,7 @@ class Auth {
    * @param {*} next
    */
   static middleware(req: Request, res: Response, next: NextFunction) {
-    Auth._authenticate((err: Error, user, info) => {
+    Auth._authenticate((err: Error, user: User, info: any) => {
       if (err || !user) {
         console.log(err);
         return next(new AuthenticationError());
@@ -70,7 +70,7 @@ class Auth {
 
     return new JWTStrategy(
       strategyConfig,
-      (req: Request, payload, done: Function) => {
+      (req: Request, payload: any, done: Function) => {
         User.readByUsername(payload.username)
           .then(user => {
             done(null, user);
