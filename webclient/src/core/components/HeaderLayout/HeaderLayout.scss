@@ -2,10 +2,7 @@
 .header {
   height: $header-height;
   color: $text-color-light;
-  background: radial-gradient(
-    adjust-hue($header-colour, -20%) 0%,
-    $header-colour 70%
-  );
+  background: $banner-background;
   position: fixed;
   top: 0;
   left: 0;
