@@ -1,7 +1,10 @@
 $banner-color-dark: #2d74da;
 $banner-color-light: #12a3b4;
-$banner-background: url("/images/bg-shapes.svg"),
-  linear-gradient(90deg, $banner-color-dark, $banner-color-light);
+$banner-background-gradient: linear-gradient(
+  90deg,
+  $banner-color-dark,
+  $banner-color-light
+);
 $primary-color: mix($banner-color-dark, $banner-color-light, 60%);
 $text-color-light: #fff;
 $text-color-dark: #444;
