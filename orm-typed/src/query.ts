@@ -4,6 +4,7 @@ import BaseModel, { FindOptions } from "./basemodel";
 import metadata, { StarOverloadedSQLTable } from "./metadata";
 import { Column } from "sql";
 import { Association } from "./associations";
+import { asyncForEach } from "./util";
 
 /**
  * Responsible for interacting with the Database.
@@ -142,6 +143,42 @@ export class Query {
       .ifNotExists()
       .toQuery();
     await this.executeSQLQuery(sqlQuery);
+
+    const entityMetadata = metadata.getEntityMetadata(model);
+    const indexColumns = Object.values(entityMetadata.columns).filter(
+      column => {
+        return column.index;
+      }
+    );
+
+    // Drop indexes
+    await asyncForEach(indexColumns, async column => {
+      const createIndexQuery = sqlEntity
+        .indexes()
+        .drop(sqlEntity[column.property])
+        .toQuery();
+      createIndexQuery.text = createIndexQuery.text.replace(
+        "INDEX",
+        "INDEX IF EXISTS"
+      );
+      await this.executeSQLQuery(createIndexQuery);
+    });
+
+    // Create indexes
+    await asyncForEach(indexColumns, async column => {
+      const createIndexQuery = sqlEntity
+        .indexes()
+        .create()
+        .on(sqlEntity[column.property])
+        .toQuery();
+      // IF NOT EXISTS is postgres 9.5+ only, elephantsql is using 9.4
+      // createIndexQuery.text = createIndexQuery.text.replace(
+      //   "INDEX",
+      //   "INDEX IF NOT EXISTS"
+      // );
+      await this.executeSQLQuery(createIndexQuery);
+    });
+
     return;
   }
 

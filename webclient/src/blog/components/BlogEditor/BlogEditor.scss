@@ -1,4 +1,5 @@
 @import "react-md/src/scss/react-md";
+@import "core/style/variable";
 
 .blogeditor__form {
   max-width: 1000px;
@@ -21,9 +22,18 @@
 
 .blogeditor_tabs {
   position: fixed;
-  width: 100%;
+  left: 0;
+  right: 0;
   z-index: 1;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+  background: $banner-background;
+  transition: left $transition;
+}
+
+@media (min-width: 1025px) {
+  .blogeditor_tabs {
+    left: $side-nav-max-width;
+  }
 }
 
 .blogeditor_tagchips {

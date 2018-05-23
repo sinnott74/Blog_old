@@ -181,7 +181,8 @@ abstract class AbstractAssociation implements Association {
         column: "id",
         table: Target.name.toLowerCase(),
         onDelete: onDelete
-      }
+      },
+      index: true
     });
   }
 

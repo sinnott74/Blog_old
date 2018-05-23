@@ -9,9 +9,11 @@ export interface Metadata {
 export interface ORMColumnDefinition extends ColumnDefinition<string, object> {
   name: string;
   property: string;
+  index?: boolean;
 }
 export interface ORMEntityDefinition extends TableDefinition<string, any> {
   associations: ORMEntityAssociations;
+  columns: { [x: string]: ORMColumnDefinition };
 }
 
 export interface Tables {

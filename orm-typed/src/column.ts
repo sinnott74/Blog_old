@@ -12,6 +12,7 @@ export interface ColumnOptions {
   autoIncrement?: boolean;
   unique?: boolean;
   name?: string;
+  index?: boolean;
 }
 /**
  * Decorator to define a model column
@@ -62,7 +63,8 @@ export function defineColumn(
     dataType: dataType,
     primaryKey: options.primaryKey || false,
     unique: options.unique || false,
-    notNull: options.notNull || false
+    notNull: options.notNull || false,
+    index: options.index || false
   });
 }
 

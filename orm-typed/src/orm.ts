@@ -34,7 +34,7 @@ export function init(config: PoolConfig) {
  * Ends the connection to the database
  */
 export async function end() {
-  await pool.end();
+  return pool.end();
 }
 
 /**
@@ -43,7 +43,7 @@ export async function end() {
 export async function sync() {
   const models = ModelManager.getModels();
   await Transaction.startTransaction(pool, async () => {
-    asyncForEach(models, async model => {
+    await asyncForEach(models, async model => {
       await model.sync();
     });
   });
