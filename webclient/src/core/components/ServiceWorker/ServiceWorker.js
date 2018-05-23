@@ -46,7 +46,7 @@ export default class ServiceWorker extends React.Component {
           registration.installing.onstatechange = function(event) {
             if (this.state === "installed") {
               var message = isUpdate
-                ? "App updated. Restart for the new version."
+                ? "App updated. Refresh for the new version."
                 : "App ready for offline use.";
               _self.props.handleMessage(message);
             }

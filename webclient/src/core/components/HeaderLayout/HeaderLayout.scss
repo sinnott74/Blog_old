@@ -2,7 +2,7 @@
 .header {
   height: $header-height;
   color: $text-color-light;
-  background: $banner-background;
+  background: url("../../images//bg-shapes.svg"), $banner-background-gradient;
   position: fixed;
   top: 0;
   left: 0;
