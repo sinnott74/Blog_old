@@ -16,11 +16,11 @@ export default class SideNavPanel extends React.Component {
         </div>
         <div className="sidenavpanel__body">
           <div className="sidenavpanel__links">
-            <SideNavLink to="/" icon="home">
-              Home
-            </SideNavLink>
-            <SideNavLink to="/blog" icon="create">
+            <SideNavLink to="/" icon="create">
               Blog
+            </SideNavLink>
+            <SideNavLink to="/about" icon="person_outline">
+              About
             </SideNavLink>
             <SideNavLink to="/code" icon="code">
               Code

@@ -1,8 +1,8 @@
 export default [
   {
-    path: "/",
+    path: "/about",
     loader: () =>
-      import(/* webpackChunkName: "HomePage" */ "core/pages/HomePage"),
+      import(/* webpackChunkName: "HomePage" */ "core/pages/AboutPage"),
     exact: true
   },
   {
