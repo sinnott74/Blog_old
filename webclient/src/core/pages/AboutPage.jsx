@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "core/components/Card";
 
-export default class HomePage extends React.Component {
+export default class AboutPage extends React.Component {
   componentDidMount() {
     document.title = "Sinnott";
   }

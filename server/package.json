@@ -11,7 +11,8 @@
     "prestart:dev": "yarn build",
     "start:dev":
       "concurrently --kill-others \"yarn compile:watch\" \"yarn start:server:watch\"",
-    "start:server:watch": "nodemon dist/index.js --watch . --watch ../orm",
+    "start:server:watch":
+      "nodemon dist/index.js --watch . --watch ../orm-typed",
     "build:database": "node dist/builddatabase.js",
     "compile": "tsc",
     "compile:watch": "tsc -w",

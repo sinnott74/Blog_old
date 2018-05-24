@@ -1,6 +1,6 @@
 export default [
   {
-    path: "/blog",
+    path: "/",
     loader: () =>
       import(/* webpackChunkName: "ListBlogPostPage" */ "blog/pages/BlogListPage"),
     exact: true
