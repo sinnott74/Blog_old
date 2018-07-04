@@ -78,6 +78,9 @@ export default class BaseModel {
     return filterData;
   }
 
+  /**
+   * Saves the models data & its associated models data
+   */
   public async save() {
     await this.saveAssociations();
     await this.modelOnlySave();
