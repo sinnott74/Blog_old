@@ -3,6 +3,7 @@ import {
   objectToIDKeyedObject,
   addToArrayAndSort
 } from "core/redux/util";
+import { SERVER_PATH } from "core/constants";
 import { showToast } from "core/ducks/toast";
 import { push } from "react-router-redux";
 import { createSelector } from "reselect";
@@ -111,7 +112,7 @@ function storeBlogPost(blogPost) {
 export function deleteBlogPost(id) {
   return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${id}`, {
+    fetch(`${SERVER_PATH}/api/blogposts/${id}`, {
       method: "DELETE",
       headers: new Headers({
         Authorization: getState().auth.token
@@ -137,7 +138,7 @@ export function deleteBlogPost(id) {
 export function addBlogPost(blogpost) {
   return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
-    fetch("/api/blogposts/", {
+    fetch(`${SERVER_PATH}/api/blogposts/`, {
       method: "POST",
       body: JSON.stringify(blogpost),
       headers: new Headers({
@@ -170,7 +171,7 @@ export function addBlogPost(blogpost) {
 export function editBlogPost(blogpost) {
   return function(dispatch, getState) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${blogpost.id}`, {
+    fetch(`${SERVER_PATH}/api/blogposts/${blogpost.id}`, {
       method: "PUT",
       body: JSON.stringify(blogpost),
       headers: new Headers({
@@ -200,7 +201,7 @@ export function editBlogPost(blogpost) {
 export function loadBlogPosts() {
   return function(dispatch) {
     dispatch(loadingBlogPosts(true));
-    fetch("/api/blogposts")
+    fetch(`${SERVER_PATH}/api/blogposts`)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -220,7 +221,7 @@ export function loadBlogPosts() {
 export function loadBlogPost(id) {
   return function(dispatch) {
     dispatch(loadingBlogPosts(true));
-    fetch(`/api/blogposts/${id}`)
+    fetch(`${SERVER_PATH}/api/blogposts/${id}`)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);

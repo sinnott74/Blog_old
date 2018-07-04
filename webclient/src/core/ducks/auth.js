@@ -3,6 +3,7 @@
  */
 import reducerRegistry from "core/redux/ReducerRegistry";
 import { showToast } from "core/ducks/toast";
+import { SERVER_PATH } from "core/constants";
 
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_OUT = "LOG_OUT";
@@ -92,7 +93,7 @@ function loginSuccess(credentials) {
 export function login(username, password) {
   return function(dispatch) {
     dispatch(loginLoading(true));
-    fetch("/api/auth/login", {
+    fetch(`${SERVER_PATH}/api/auth/login`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: new Headers({
@@ -120,7 +121,7 @@ export function login(username, password) {
 export function signUp(user) {
   return function(dispatch) {
     dispatch(loginLoading(true));
-    fetch("/api/auth/signup", {
+    fetch(`${SERVER_PATH}/api/auth/signup`, {
       method: "POST",
       body: JSON.stringify(user),
       headers: new Headers({
