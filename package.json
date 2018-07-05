@@ -4,7 +4,7 @@
   "workspaces": ["server", "webclient", "orm-typed"],
   "version": "0.0.1",
   "engines": {
-    "node": "^10",
+    "node": "^9",
     "yarn": "*"
   },
   "description": "",

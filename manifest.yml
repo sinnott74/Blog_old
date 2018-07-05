@@ -5,4 +5,4 @@ applications:
   name: sinnott
   random-route: true
   disk_quota: 1024M
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.24
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.20
