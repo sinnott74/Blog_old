@@ -4,8 +4,8 @@
 import path from "path";
 import express from "express";
 import helmet from "helmet";
-// const cfenv: any = require("cfenv"); // cloud foundry environment variables
-// import forceHttpsMiddleware from "../middleware/forceHttps";
+const cfenv: any = require("cfenv"); // cloud foundry environment variables
+import forceHttpsMiddleware from "../middleware/forceHttps";
 import compression from "compression";
 import bodyParser from "body-parser";
 import Auth from "./Auth";
@@ -26,9 +26,9 @@ const server = express();
 /**
  * Force https when not localhost
  */
-// if (!cfenv.getAppEnv().isLocal) {
-//   server.use(forceHttpsMiddleware);
-// }
+if (!cfenv.getAppEnv().isLocal) {
+  server.use(forceHttpsMiddleware);
+}
 
 /**
  * Use helmet for security
